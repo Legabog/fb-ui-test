@@ -1,32 +1,90 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import Feed from "./Feed";
-import Widgets from "./Widgets";
-import Login from "./Login";
-import { useStateValue } from "./StateProvider";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { Switch, Route, withRouter } from "react-router-dom";
 
-function App() {
-  const [{ user }, dispatch] = useStateValue();
+import { setUser } from "./redux/user-reducer";
+import { auth, autoLogin, logout } from "./redux/auth-reducer";
 
-  return (
-    <div className="app">
-      {!user ? (
-        <Login />
-      ) : (
-        <>
-          <Header />
+import Login from "./components/Login/Login";
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Feed from "./components/Feed/Feed";
+import Widgets from "./components/Widgets/Widgets";
 
-          <div className="app__body">
-            <Sidebar />
-            <Feed />
-            <Widgets />
-          </div>
-        </>
-      )}
-    </div>
-  );
+import ErrorRoute from "./components/common/ErrorRoute/ErrorRoute";
+import Preloader from "./components/common/Preloader/Preloader";
+
+class App extends React.Component {
+  componentDidMount() {
+    this.props.autoLogin();
+  }
+
+  render() {
+    if (!!this.props.token) {
+      return (
+        <div className="app">
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() =>
+                this.props.fetching ? (
+                  <Preloader />
+                ) : (
+                  <>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <Sidebar />
+                      <Feed />
+                      <Widgets />
+                    </div>
+                  </>
+                )
+              }
+            />
+            <Route render={() => <ErrorRoute />} />
+          </Switch>
+        </div>
+      );
+    } else {
+      return (
+        <div className="app">
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Login
+                  setUser={this.props.setUser}
+                  auth={this.props.auth}
+                  logout={this.props.logout}
+                />
+              )}
+            />
+            <Route render={() => <ErrorRoute />} />
+          </Switch>
+        </div>
+      );
+    }
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer.user,
+    token: state.authReducer.token,
+    fetching: state.authReducer.fetching,
+  };
+};
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, {
+    setUser,
+    auth,
+    autoLogin,
+    logout,
+  })
+)(App);
