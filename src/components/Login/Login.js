@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { NavLink } from "react-router-dom";
-import Axios from "axios";
 
 const Login = (props) => {
   const [inputEmail, setInputEmail] = useState("");
@@ -17,7 +16,7 @@ const Login = (props) => {
 
   const loginButtonSignInHandler = (e) => {
     e.preventDefault();
-    props.auth(inputEmail, inputPassword, true);
+    props.signIn(inputEmail, inputPassword, true);
     setInputEmail("");
     setInputPassword("");
   };
@@ -85,7 +84,7 @@ const Login = (props) => {
                   <NavLink
                     className="create__an__account__button"
                     to={"/"}
-                    onClick={registerButtonSignUpHandler}
+                    onClick={props.displayRegistrationBlockTrue}
                   >
                     Create an account
                   </NavLink>
@@ -93,14 +92,7 @@ const Login = (props) => {
               </form>
             </div>
             <div className="login__signinblock__help">
-              <NavLink to={"/"} onClick={(e) => {
-                Axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyB6fVPBle0emEYn8Jg-tqAQ4fCSC-JTeFI`, {
-                  "requestType":"VERIFY_EMAIL",
-                  "idToken":"z4W0bjBgPYcQLbygAT6ErL6qz3T2"
-                })
-              }}>
-                Create a Page
-              </NavLink>
+              <NavLink to={"/"}>Create a Page</NavLink>
               &nbsp; of a celebrity, music band or company.
             </div>
           </div>

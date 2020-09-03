@@ -1,4 +1,5 @@
 import Axios from "axios";
+import {firebaseConfig} from "../utils/firebase/firebase"
 
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const AUTH_LOGOUT = "AUTH_LOGOUT";
@@ -62,6 +63,32 @@ export const auth = (email, password, isLogin) => {
     dispatch(autoLogout(data.expiresIn));
   };
 };
+
+export const signIn = (email, password) => {
+  return async (dispatch) => {
+    const signInData = {
+      email, password,
+      returnSecureToken: true,
+    }
+
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`
+
+    const response = await Axios.post(url, signInData);
+
+    const data = response.data;
+
+    const expirationDate = new Date(
+      new Date().getTime() + data.expiresIn * 1000
+    );
+
+    localStorage.setItem("token", data.idToken);
+    localStorage.setItem("userId", data.localId);
+    localStorage.setItem("expirationDate", expirationDate);
+
+    dispatch(authSuccess(data.idToken));
+    dispatch(autoLogout(data.expiresIn));
+  }
+}
 
 export const authSuccess = (token) => {
   return {

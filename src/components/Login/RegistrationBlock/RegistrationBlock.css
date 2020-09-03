@@ -1,1 +1,698 @@
-123
+.registrationtable {
+    opacity: 1;
+    min-width: 472px;
+    padding-top: 25px;
+    left: 0;
+    min-height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: table;
+    height: 100% !important;
+    table-layout: fixed;
+    width: 100%;
+    outline: none;
+    background: transparent;
+    transition: opacity 200ms linear, visibility 200ms linear;
+}
+
+.registrationblock {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.registrationblock__main {
+    display: inline-block;
+    margin: 20px;
+    position: relative;
+    text-align: left;
+    z-index: 100;
+}
+
+.registrationblock__main__q {
+    background-color: transparent;
+    overflow: visible;
+    padding: 0;
+    width: 432px;
+    text-align: left;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.registrationblock__top {
+    background-color: #fff;
+    margin-top: 0;
+    padding-top: 10px;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+    box-sizing: border-box;
+    padding: 10px 16px;
+    position: relative;
+    width: 432px;
+    text-align: left;
+   
+}
+
+.registrationblock__top__main {
+    color: #1c1e21;
+    font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    line-height: 38px;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+
+.registrationblock__top__description {
+    color: #606770;
+    font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.close__icon {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+.registrationblock__body {
+    display: block;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.fullname__field {
+    display: flex;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-bottom: 10px;
+}
+
+.namefield {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    padding-right: 11px;
+}
+
+.nameinput {
+    width: 170px;
+    padding: 11px;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 16px;
+    background: #f5f6f7;
+    border-color: #ccd0d5;
+    border-radius: 5px;
+    margin: 0;
+    border: 1px solid #ccd0d5;
+    color: #1c1e21;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    font: 400 13.3333px Arial;
+}
+
+.nameinput:focus {
+    outline: none;
+}
+
+.sernamefield {
+    width: 194px;
+    background: white;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+
+.sernameinput {
+    width: 170px;
+    padding: 11px;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 16px;
+    background: #f5f6f7;
+    border-color: #ccd0d5;
+    border-radius: 5px;
+    margin: 0;
+    border: 1px solid #ccd0d5;
+    color: #1c1e21;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    font: 400 13.3333px Arial;
+}
+
+.sernameinput:focus {
+    outline: none;
+}
+
+.email__field {
+    width: 400px;
+    padding-left: 16px;
+    background: white;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.emailinput {
+    padding: 11px;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 16px;
+    background: #f5f6f7;
+    border-color: #ccd0d5;
+    width: 375px;
+    border-radius: 5px;
+    margin: 0;
+    position: relative;
+    border: 1px solid #ccd0d5;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    font: 400 13.3333px Arial;
+}
+
+.emailinput:focus {
+    outline: none;
+}
+
+.telephone__field {
+    width: 400px;
+    padding-left: 16px;
+    background: white;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.telephoneinput {
+    padding: 11px;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 16px;
+    background: #f5f6f7;
+    border-color: #ccd0d5;
+    width: 375px;
+    border-radius: 5px;
+    margin: 0;
+    position: relative;
+    border: 1px solid #ccd0d5;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    font: 400 13.3333px Arial;
+}
+
+.telephoneinput:focus {
+    outline: none;
+}
+
+.password__field {
+    width: 400px;
+    padding-left: 16px;
+    background: white;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.passwordinput {
+    padding: 11px;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 16px;
+    background: #f5f6f7;
+    border-color: #ccd0d5;
+    width: 375px;
+    border-radius: 5px;
+    margin: 0;
+    position: relative;
+    border: 1px solid #ccd0d5;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    font: 400 13.3333px Arial;
+}
+
+.passwordinput:focus {
+    outline: none;
+}
+
+.birthday {
+    padding-left: 16px;
+}
+
+.birthday__description {
+    color: #606770;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 2px;
+}
+
+.birthday__description > button {
+    width: 10px;
+    height: 10px;
+    padding-left: 12px;
+}
+
+.birthday__selects {
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.birthday__day {
+    border-radius: 4px;
+    color: #1c1e21;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    height: 36px;
+    line-height: 20px;
+    width: 125px;
+    padding: 5px;
+    background-color: #fff;
+    overflow: visible !important;
+    border: 1px solid #ccd0d5;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    cursor: default;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
+
+.birthday__day:focus {
+    outline: none;
+}
+
+.birthday__month__div {
+    padding-left: 12px;
+}
+
+.birthday__month {
+    border-radius: 4px;
+    color: #1c1e21;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    height: 36px;
+    line-height: 20px;
+    width: 125px;
+    padding: 5px;
+    background-color: #fff;
+    overflow: visible !important;
+    border: 1px solid #ccd0d5;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    cursor: default;
+    margin: 0em;
+    font: 400 13.3333px Arial;   
+}
+
+.birthday__month:focus {
+    outline: none;
+}
+
+.birthday__year__div {
+    padding-left: 12px;
+}
+
+.birthday__year {
+    border-radius: 4px;
+    color: #1c1e21;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    height: 36px;
+    line-height: 20px;
+    width: 125px;
+    padding: 5px;
+    background-color: #fff;
+    overflow: visible !important;
+    border: 1px solid #ccd0d5;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    cursor: default;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
+
+.birthday__year:focus {
+    outline: none;
+}
+
+.gender {
+    padding-left: 16px;
+}
+
+.gender__description {
+    color: #606770;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 2px;
+}
+
+.gender__description > button {
+    width: 10px;
+    height: 10px;
+    padding-left: 12px;
+}
+
+.gender__selects {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -8px -6px -6px;
+    width: 411px;
+}
+
+.gender__female {
+    background-color: #fff;
+    border: 1px solid #ccd0d5;
+    box-sizing: border-box;
+    display: inline-block;
+    flex: 1 0 auto;
+    font-weight: normal;
+    height: 36px;
+    margin: 8px 6px 6px;
+    padding: 0;
+    position: relative;
+    width: auto;
+    border-radius: 4px;
+}
+
+.gender__female__label {
+    box-sizing: border-box;
+    color: #1c1e21;
+    display: inline-block;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 36px;
+    padding: 0 28px 0 10px;
+    width: 100%;
+    font-weight: normal;
+    cursor: default;
+}
+
+.gender__female__input {
+    height: 36px;
+    margin: 0;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    cursor: default;
+    appearance: radio;
+    box-sizing: border-box;
+    padding: initial;
+    border: initial;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-rtl-ordering: logical;
+    font: 400 13.3333px Arial;
+}
+
+.gender__male {
+    background-color: #fff;
+    border: 1px solid #ccd0d5;
+    box-sizing: border-box;
+    display: inline-block;
+    flex: 1 0 auto;
+    font-weight: normal;
+    height: 36px;
+    margin: 8px 6px 6px;
+    padding: 0;
+    position: relative;
+    width: auto;
+    border-radius: 4px;
+}
+
+.gender__male__label {
+    box-sizing: border-box;
+    color: #1c1e21;
+    display: inline-block;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 36px;
+    padding: 0 28px 0 10px;
+    width: 100%;
+    font-weight: normal;
+    cursor: default;
+}
+
+.gender__male__input {
+    height: 36px;
+    margin: 0;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    cursor: default;
+    appearance: radio;
+    box-sizing: border-box;
+    padding: initial;
+    border: initial;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-rtl-ordering: logical;
+    font: 400 13.3333px Arial;
+}
+
+.gender__other {
+    background-color: #fff;
+    border: 1px solid #ccd0d5;
+    box-sizing: border-box;
+    display: inline-block;
+    flex: 1 0 auto;
+    font-weight: normal;
+    height: 36px;
+    margin: 8px 6px 6px;
+    padding: 0;
+    position: relative;
+    width: auto;
+    border-radius: 4px;
+}
+
+.gender__other__label {
+    box-sizing: border-box;
+    color: #1c1e21;
+    display: inline-block;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 36px;
+    padding: 0 28px 0 10px;
+    width: 100%;
+    font-weight: normal;
+    cursor: default;
+}
+
+.gender__other__input {
+    height: 36px;
+    margin: 0;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    cursor: default;
+    appearance: radio;
+    box-sizing: border-box;
+    padding: initial;
+    border: initial;
+
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-rtl-ordering: logical;
+    font: 400 13.3333px Arial;
+}
+
+.gender__male {
+    background-color: #fff;
+    border: 1px solid #ccd0d5;
+    box-sizing: border-box;
+    display: inline-block;
+    flex: 1 0 auto;
+    font-weight: normal;
+    height: 36px;
+    margin: 8px 6px 6px;
+    padding: 0;
+    position: relative;
+    width: auto;
+    border-radius: 4px;
+}
+
+.policy__message {
+    padding-left: 16px;
+    position: relative;
+    width: 400px;
+}
+
+.policy__message > p {
+    width: auto;
+    color: #777;
+    font-size: 11px;
+    margin: 1em 0;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.registration__button {
+    text-align: center;
+    padding-bottom: 16px;
+}
+
+.regbutton {
+    font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif !important;
+    font-weight: bold;
+    background: none;
+    background-color: #00a400;
+    border: none;
+    border-radius: 6px;
+    box-shadow: none;
+    color: #fff;
+    font-size: 18px;
+    height: 36px;
+    overflow: hidden;
+    padding-left: 32px;
+    padding-right: 32px;
+    text-shadow: none;
+    line-height: 126%;
+    min-width: 194px;
+    padding: 7px 20px;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    letter-spacing: 1px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.regbutton:focus {
+    outline: none;
+}
+

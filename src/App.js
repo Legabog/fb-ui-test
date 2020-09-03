@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 
 import { setUser } from "./redux/user-reducer";
-import { auth, autoLogin, logout } from "./redux/auth-reducer";
+import { auth, signIn, autoLogin, logout } from "./redux/auth-reducer";
 
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -15,8 +15,22 @@ import Widgets from "./components/Widgets/Widgets";
 
 import ErrorRoute from "./components/common/ErrorRoute/ErrorRoute";
 import Preloader from "./components/common/Preloader/Preloader";
+import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
 
 class App extends React.Component {
+  state = {
+    visibilityRegistrationBlock: "hidden",
+    opacityRegistrationBlock: 0,
+  };
+
+  displayRegistrationBlockTrue = () => {
+    this.setState({ visibilityRegistrationBlock: "visible", opacityRegistrationBlock: 1 });
+  };
+
+  displayRegistrationBlockFalse = () => {
+    this.setState({ visibilityRegistrationBlock: "hidden", opacityRegistrationBlock: 0 });
+  };
+
   componentDidMount() {
     this.props.autoLogin();
   }
@@ -50,22 +64,40 @@ class App extends React.Component {
       );
     } else {
       return (
-        <div className="app">
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={() => (
-                <Login
-                  setUser={this.props.setUser}
-                  auth={this.props.auth}
-                  logout={this.props.logout}
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <>
+                <div className="app">
+                  <Login
+                    displayRegistrationBlockTrue={
+                      this.displayRegistrationBlockTrue
+                    }
+                    setUser={this.props.setUser}
+                    auth={this.props.auth}
+                    logout={this.props.logout}
+                    signIn={this.props.signIn}
+                  />
+                </div>
+                <RegistrationBlock
+                  displayRegistrationBlockFalse={
+                    this.displayRegistrationBlockFalse }
+                    visibilityRegistrationBlock={this.state.visibilityRegistrationBlock}
+                    opacityRegistrationBlock={this.state.opacityRegistrationBlock}
                 />
-              )}
-            />
-            <Route render={() => <ErrorRoute />} />
-          </Switch>
-        </div>
+              </>
+            )}
+          />
+          <Route
+            render={() => (
+              <div className="app">
+                <ErrorRoute />
+              </div>
+            )}
+          />
+        </Switch>
       );
     }
   }
@@ -84,6 +116,7 @@ export default compose(
   connect(mapStateToProps, {
     setUser,
     auth,
+    signIn,
     autoLogin,
     logout,
   })
