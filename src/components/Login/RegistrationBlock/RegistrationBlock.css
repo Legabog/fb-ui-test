@@ -84,6 +84,23 @@
     background-color: #fff;
 }
 
+.registration__error {
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+    background: #ffebe8;
+    border: 1px solid #dd3c10;
+    line-height: 15px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 12px;
+}
+
+.registration__error__main {
+    padding: 7px 3px;
+    line-height: 15px;
+}
+
 .fullname__field {
     display: flex;
     padding-top: 16px;
@@ -95,7 +112,6 @@
     display: inline-block;
     position: relative;
     text-align: left;
-    padding-right: 11px;
 }
 
 .nameinput {
@@ -132,6 +148,7 @@
 
 .sernamefield {
     width: 194px;
+    margin-left: 11px;
     background: white;
     border-radius: 5px;
     display: inline-block;
@@ -692,7 +709,32 @@
     margin-bottom: 10px;
 }
 
+.regbutton:hover {
+    filter: opacity(80%)
+}
+
 .regbutton:focus {
     outline: none;
 }
 
+.error__icon {
+    right: 10px;
+    top: 8px;
+    transform: scale(.65);
+    position: absolute;
+    color: red;
+}
+
+.error__birthday {
+    position: absolute;
+    right: 25px;
+    transform: scale(.65);
+    color: red;
+}
+
+.error__gender {
+    position: absolute;
+    right: 25px;
+    transform: scale(.65);
+    color: red;
+}

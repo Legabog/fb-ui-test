@@ -1,11 +1,11 @@
-import React, { Suspense } from "react";
+import React from "react";
 import "./App.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 
 import { setUser } from "./redux/user-reducer";
-import { auth, signIn, autoLogin, logout } from "./redux/auth-reducer";
+import { auth, signIn, signUp, autoLogin, logout } from "./redux/auth-reducer";
 
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -24,11 +24,17 @@ class App extends React.Component {
   };
 
   displayRegistrationBlockTrue = () => {
-    this.setState({ visibilityRegistrationBlock: "visible", opacityRegistrationBlock: 1 });
+    this.setState({
+      visibilityRegistrationBlock: "visible",
+      opacityRegistrationBlock: 1,
+    });
   };
 
   displayRegistrationBlockFalse = () => {
-    this.setState({ visibilityRegistrationBlock: "hidden", opacityRegistrationBlock: 0 });
+    this.setState({
+      visibilityRegistrationBlock: "hidden",
+      opacityRegistrationBlock: 0,
+    });
   };
 
   componentDidMount() {
@@ -83,9 +89,14 @@ class App extends React.Component {
                 </div>
                 <RegistrationBlock
                   displayRegistrationBlockFalse={
-                    this.displayRegistrationBlockFalse }
-                    visibilityRegistrationBlock={this.state.visibilityRegistrationBlock}
-                    opacityRegistrationBlock={this.state.opacityRegistrationBlock}
+                    this.displayRegistrationBlockFalse
+                  }
+                  visibilityRegistrationBlock={
+                    this.state.visibilityRegistrationBlock
+                  }
+                  opacityRegistrationBlock={this.state.opacityRegistrationBlock}
+                  signUp={this.props.signUp}
+                  registrationError={this.props.registrationError}
                 />
               </>
             )}
@@ -108,6 +119,7 @@ const mapStateToProps = (state) => {
     user: state.userReducer.user,
     token: state.authReducer.token,
     fetching: state.authReducer.fetching,
+    registrationError: state.authReducer.registrationError
   };
 };
 
@@ -117,6 +129,7 @@ export default compose(
     setUser,
     auth,
     signIn,
+    signUp,
     autoLogin,
     logout,
   })

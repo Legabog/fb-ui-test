@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Preloader.css";
+import  "./Preloader.css";
 
 const Preloader = (props) => {
   return <div className="ldsdualring"></div>;

@@ -1,13 +1,15 @@
 import Axios from "axios";
-import {firebaseConfig} from "../utils/firebase/firebase"
+import { firebaseConfig } from "../utils/firebase/firebase";
 
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const AUTH_LOGOUT = "AUTH_LOGOUT";
-const TOGGLE_FETCHING = "TOGGLE_FETCHING"
+const TOGGLE_FETCHING = "TOGGLE_FETCHING";
+const TOGGLE_REGISTRATION_ERROR = "TOGGLE_REGISTRATION_ERROR"
 
 let initialState = {
   token: null,
-  fetching: false
+  fetching: false,
+  registrationError: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,10 +25,15 @@ const authReducer = (state = initialState, action) => {
         token: null,
       };
     case TOGGLE_FETCHING:
-        return {
-            ...state,
-            fetching: action.fetching
-        }  
+      return {
+        ...state,
+        fetching: action.fetching,
+      };
+    case TOGGLE_REGISTRATION_ERROR: 
+      return {
+        ...state,
+        registrationError: action.boolean
+      }  
     default:
       return state;
   }
@@ -45,10 +52,10 @@ export const auth = (email, password, isLogin) => {
     if (isLogin) {
       url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB6fVPBle0emEYn8Jg-tqAQ4fCSC-JTeFI`;
     }
-    dispatch(toggleFetching(true))
+    dispatch(toggleFetching(true));
 
     const response = await Axios.post(url, authData);
-    dispatch(toggleFetching(false))
+    dispatch(toggleFetching(false));
     const data = response.data;
 
     const expirationDate = new Date(
@@ -67,11 +74,12 @@ export const auth = (email, password, isLogin) => {
 export const signIn = (email, password) => {
   return async (dispatch) => {
     const signInData = {
-      email, password,
+      email,
+      password,
       returnSecureToken: true,
-    }
+    };
 
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`;
 
     const response = await Axios.post(url, signInData);
 
@@ -87,8 +95,32 @@ export const signIn = (email, password) => {
 
     dispatch(authSuccess(data.idToken));
     dispatch(autoLogout(data.expiresIn));
-  }
-}
+  };
+};
+
+export const signUp = (email, password) => {
+  return async (dispatch) => {
+    const signUpData = {
+      email,
+      password,
+      returnSecureToken: true,
+    };
+
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`;
+
+    Axios.post(url, signUpData)
+    .then( response => {
+      dispatch(toggleRegistrationError(false))
+      const data = response.data;
+      Axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${firebaseConfig.apiKey}`,
+        { requestType: "VERIFY_EMAIL", idToken: data.idToken }
+      );
+      console.log(data);
+    })
+    .catch((e) => dispatch(toggleRegistrationError(true)));
+  };
+};
 
 export const authSuccess = (token) => {
   return {
@@ -136,9 +168,17 @@ export const logout = () => {
 };
 
 export const toggleFetching = (fetching) => {
-    return {
-        type: TOGGLE_FETCHING,
-        fetching
-    }
+  return {
+    type: TOGGLE_FETCHING,
+    fetching,
+  };
+};
+
+export const toggleRegistrationError = (boolean) => {
+  return {
+    type: TOGGLE_REGISTRATION_ERROR,
+    boolean
+  }
 }
+
 export default authReducer;

@@ -57,3 +57,11 @@
     text-shadow: none;
     vertical-align: middle;
 }
+
+.button__back:hover {
+    background-color: #36a420;
+}
+
+.button__back:focus {
+    outline: none;
+}

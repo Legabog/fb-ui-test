@@ -4,7 +4,20 @@ import { NavLink } from "react-router-dom";
 
 const Login = (props) => {
   const [inputEmail, setInputEmail] = useState("");
+  // -------Focus attribute
+  const [focusInputEmail, setFocusInputEmail] = useState(false);
+  const focusedInputEmail = (boolean) => {
+    setFocusInputEmail(boolean);
+  };
+  //
+
   const [inputPassword, setInputPassword] = useState("");
+  // -------Focus attribute
+  const [focusInputPassword, setFocusInputPassword] = useState(false);
+  const focusedInputPassword = (boolean) => {
+    setFocusInputPassword(boolean);
+  };
+  //
 
   const inputEmailHandler = (e) => {
     setInputEmail(e.target.value);
@@ -21,11 +34,11 @@ const Login = (props) => {
     setInputPassword("");
   };
 
-  const registerButtonSignUpHandler = (e) => {
-    props.auth(inputEmail, inputPassword, false);
-    setInputEmail("");
-    setInputPassword("");
-  };
+  // const registerButtonSignUpHandler = (e) => {
+  //   props.auth(inputEmail, inputPassword, false);
+  //   setInputEmail("");
+  //   setInputPassword("");
+  // };
 
   return (
     <div className="login">
@@ -51,6 +64,16 @@ const Login = (props) => {
                       placeholder="Email"
                       value={inputEmail}
                       onChange={inputEmailHandler}
+                      onFocus={() => {
+                        focusedInputEmail(true);
+                      }}
+                      onBlur={() => {
+                        focusedInputEmail(false);
+                      }}
+                      style={{
+                        borderColor: focusInputEmail ? "#1877f2" : null,
+                        boxShadow: focusInputEmail ? "0 0 0 2px #e7f3ff" : null,
+                      }}
                     />
                   </div>
                   <div className="login__signinblock__inputs_password">
@@ -62,6 +85,18 @@ const Login = (props) => {
                       placeholder="Password"
                       value={inputPassword}
                       onChange={inputPasswordHandler}
+                      onFocus={() => {
+                        focusedInputPassword(true);
+                      }}
+                      onBlur={() => {
+                        focusedInputPassword(false);
+                      }}
+                      style={{
+                        borderColor: focusInputPassword ? "#1877f2" : null,
+                        boxShadow: focusInputPassword
+                          ? "0 0 0 2px #e7f3ff"
+                          : null,
+                      }}
                     />
                   </div>
                 </div>
