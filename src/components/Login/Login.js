@@ -34,12 +34,6 @@ const Login = (props) => {
     setInputPassword("");
   };
 
-  // const registerButtonSignUpHandler = (e) => {
-  //   props.auth(inputEmail, inputPassword, false);
-  //   setInputEmail("");
-  //   setInputPassword("");
-  // };
-
   return (
     <div className="login">
       <div className="login__mainblock">

@@ -717,6 +717,18 @@
     outline: none;
 }
 
+.registration__loader {
+    margin-left: 10px;
+    position: relative;
+    top: 3px;
+    text-align: center;
+}
+
+.regloader {
+    width: 16px;
+    height: 10px;
+}
+
 .error__icon {
     right: 10px;
     top: 8px;

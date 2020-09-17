@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 
 import { setUser } from "./redux/user-reducer";
-import { auth, signIn, signUp, autoLogin, logout } from "./redux/auth-reducer";
+import { signIn, signUp, autoLogin, logout, toggleLoginError } from "./redux/auth-reducer";
 
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -16,6 +16,8 @@ import Widgets from "./components/Widgets/Widgets";
 import ErrorRoute from "./components/common/ErrorRoute/ErrorRoute";
 import Preloader from "./components/common/Preloader/Preloader";
 import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
+import ConfirmEmailRoute from "./components/common/ConfirmEmailRoute/ConfirmEmailRoute";
+import LoginRoute from "./components/Login/LoginRoute/LoginRoute";
 
 class App extends React.Component {
   state = {
@@ -82,9 +84,8 @@ class App extends React.Component {
                       this.displayRegistrationBlockTrue
                     }
                     setUser={this.props.setUser}
-                    auth={this.props.auth}
-                    logout={this.props.logout}
                     signIn={this.props.signIn}
+                    loginError={this.props.loginError}
                   />
                 </div>
                 <RegistrationBlock
@@ -96,6 +97,46 @@ class App extends React.Component {
                   }
                   opacityRegistrationBlock={this.state.opacityRegistrationBlock}
                   signUp={this.props.signUp}
+                  registrationFetching={this.props.registrationFetching}
+                  registrationError={this.props.registrationError}
+                />
+              </>
+            )}
+          />
+          <Route
+            path="/confirm_email"
+            exact
+            render={() => (
+              <div className="app">
+                <ConfirmEmailRoute />
+              </div>
+            )}
+          />
+          <Route
+            path="/login"
+            exact
+            render={() => (
+              <>
+                <div className="app">
+                  <LoginRoute
+                    signIn={this.props.signIn}
+                    displayRegistrationBlockTrue={
+                      this.displayRegistrationBlockTrue
+                    }
+                    loginError={this.props.loginError}
+                    toggleLoginError={this.props.toggleLoginError}
+                  />
+                </div>
+                <RegistrationBlock
+                  displayRegistrationBlockFalse={
+                    this.displayRegistrationBlockFalse
+                  }
+                  visibilityRegistrationBlock={
+                    this.state.visibilityRegistrationBlock
+                  }
+                  opacityRegistrationBlock={this.state.opacityRegistrationBlock}
+                  signUp={this.props.signUp}
+                  registrationFetching={this.props.registrationFetching}
                   registrationError={this.props.registrationError}
                 />
               </>
@@ -119,7 +160,9 @@ const mapStateToProps = (state) => {
     user: state.userReducer.user,
     token: state.authReducer.token,
     fetching: state.authReducer.fetching,
-    registrationError: state.authReducer.registrationError
+    registrationFetching: state.authReducer.registrationFetching,
+    registrationError: state.authReducer.registrationError,
+    loginError: state.authReducer.loginError
   };
 };
 
@@ -127,10 +170,10 @@ export default compose(
   withRouter,
   connect(mapStateToProps, {
     setUser,
-    auth,
     signIn,
     signUp,
     autoLogin,
     logout,
+    toggleLoginError
   })
 )(App);

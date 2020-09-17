@@ -6,7 +6,7 @@ const ErrorRoute = (props) => {
   return (
     <div className="errorRoute">
         <div className="errorRoute__header">
-            <h1>Oops, this page not available</h1>
+            <h1>Oops, this page is not available</h1>
         </div>
         <div className="errorRoute__body">
             <h2>You may have used an invalid link or a page may have been deleted.</h2>

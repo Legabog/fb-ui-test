@@ -1,15 +1,19 @@
 import Axios from "axios";
-import { firebaseConfig } from "../utils/firebase/firebase";
+import db, { firebaseConfig } from "../utils/firebase/firebase";
 
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const AUTH_LOGOUT = "AUTH_LOGOUT";
 const TOGGLE_FETCHING = "TOGGLE_FETCHING";
-const TOGGLE_REGISTRATION_ERROR = "TOGGLE_REGISTRATION_ERROR"
+const TOGGLE_REGISTRATION_ERROR = "TOGGLE_REGISTRATION_ERROR";
+const TOGGLE_REGISTRATION_FETCHING = "TOGGLE_REGISTRATION_FETCHING";
+const TOGGLE_LOGIN_ERROR = "TOGGLE_LOGIN_ERROR";
 
 let initialState = {
   token: null,
   fetching: false,
-  registrationError: false
+  registrationError: false,
+  registrationFetching: false,
+  loginError: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -29,46 +33,25 @@ const authReducer = (state = initialState, action) => {
         ...state,
         fetching: action.fetching,
       };
-    case TOGGLE_REGISTRATION_ERROR: 
+    case TOGGLE_REGISTRATION_ERROR:
       return {
         ...state,
-        registrationError: action.boolean
-      }  
+        registrationError: action.boolean,
+      };
+
+    case TOGGLE_REGISTRATION_FETCHING:
+      return {
+        ...state,
+        registrationFetching: action.fetching,
+      };
+    case TOGGLE_LOGIN_ERROR:
+      return {
+        ...state,
+        loginError: action.error,
+      };
     default:
       return state;
   }
-};
-
-export const auth = (email, password, isLogin) => {
-  return async (dispatch) => {
-    const authData = {
-      email,
-      password,
-      returnSecureToken: true,
-    };
-
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB6fVPBle0emEYn8Jg-tqAQ4fCSC-JTeFI`;
-
-    if (isLogin) {
-      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB6fVPBle0emEYn8Jg-tqAQ4fCSC-JTeFI`;
-    }
-    dispatch(toggleFetching(true));
-
-    const response = await Axios.post(url, authData);
-    dispatch(toggleFetching(false));
-    const data = response.data;
-
-    const expirationDate = new Date(
-      new Date().getTime() + data.expiresIn * 1000
-    );
-
-    localStorage.setItem("token", data.idToken);
-    localStorage.setItem("userId", data.localId);
-    localStorage.setItem("expirationDate", expirationDate);
-
-    dispatch(authSuccess(data.idToken));
-    dispatch(autoLogout(data.expiresIn));
-  };
 };
 
 export const signIn = (email, password) => {
@@ -79,26 +62,42 @@ export const signIn = (email, password) => {
       returnSecureToken: true,
     };
 
+    dispatch(toggleFetching(true));
+
     let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`;
 
-    const response = await Axios.post(url, signInData);
+    Axios.post(url, signInData)
+      .then((response) => {
+        const data = response.data;
+        const expirationDate = new Date(
+          new Date().getTime() + data.expiresIn * 1000
+        );
 
-    const data = response.data;
+        localStorage.setItem("token", data.idToken);
+        localStorage.setItem("userId", data.localId);
+        localStorage.setItem("expirationDate", expirationDate);
 
-    const expirationDate = new Date(
-      new Date().getTime() + data.expiresIn * 1000
-    );
-
-    localStorage.setItem("token", data.idToken);
-    localStorage.setItem("userId", data.localId);
-    localStorage.setItem("expirationDate", expirationDate);
-
-    dispatch(authSuccess(data.idToken));
-    dispatch(autoLogout(data.expiresIn));
+        dispatch(authSuccess(data.idToken));
+        dispatch(autoLogout(data.expiresIn));
+        dispatch(toggleFetching(false));
+      })
+      .catch((e) => {
+        dispatch(toggleLoginError(true));
+      });
   };
 };
 
-export const signUp = (email, password) => {
+export const signUp = (
+  name,
+  sername,
+  telephone,
+  email,
+  password,
+  bday,
+  mday,
+  yday,
+  sex
+) => {
   return async (dispatch) => {
     const signUpData = {
       email,
@@ -109,16 +108,41 @@ export const signUp = (email, password) => {
     let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`;
 
     Axios.post(url, signUpData)
-    .then( response => {
-      dispatch(toggleRegistrationError(false))
-      const data = response.data;
-      Axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${firebaseConfig.apiKey}`,
-        { requestType: "VERIFY_EMAIL", idToken: data.idToken }
-      );
-      console.log(data);
-    })
-    .catch((e) => dispatch(toggleRegistrationError(true)));
+      .then((response) => {
+        dispatch(toggleRegistrationError(false));
+        dispatch(toggleRegistrationFetching(true));
+        const data = response.data;
+        Axios.post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${firebaseConfig.apiKey}`,
+          { requestType: "VERIFY_EMAIL", idToken: data.idToken }
+        );
+
+        // add user to db
+        db.collection("users_database").add({
+          Name: name.trim(),
+          Sername: sername.trim(),
+          "Telephone number": telephone.trim(),
+          Email: email.trim(),
+          Password: password.trim(),
+          Birthday_data: `${bday}.${mday}.${yday}`,
+          Gender:
+            sex === 1
+              ? "Female"
+              : sex === 2
+              ? "Male"
+              : sex === -1
+              ? "Other"
+              : "None",
+        });
+        //
+
+        // route to confirm registration of account
+        window.location.href = "/confirm_email";
+        //
+      })
+      .catch((e) => dispatch(toggleRegistrationError(true)));
+
+    dispatch(toggleRegistrationFetching(false));
   };
 };
 
@@ -174,11 +198,25 @@ export const toggleFetching = (fetching) => {
   };
 };
 
+export const toggleRegistrationFetching = (fetching) => {
+  return {
+    type: TOGGLE_REGISTRATION_FETCHING,
+    fetching,
+  };
+};
+
 export const toggleRegistrationError = (boolean) => {
   return {
     type: TOGGLE_REGISTRATION_ERROR,
-    boolean
-  }
-}
+    boolean,
+  };
+};
+
+export const toggleLoginError = (error) => {
+  return {
+    type: TOGGLE_LOGIN_ERROR,
+    error,
+  };
+};
 
 export default authReducer;

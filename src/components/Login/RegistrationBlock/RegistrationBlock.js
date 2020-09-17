@@ -7,8 +7,7 @@ import ErrorIcon from "@material-ui/icons/Error";
 import { IconButton } from "@material-ui/core";
 
 import is from "is_js";
-import db from "../../../utils/firebase/firebase";
-import Axios from "axios";
+import RegistrationLoader from "../../common/RegistrationLoader/RegistrationLoader";
 
 const RegistrationBlock = (props) => {
   const [name, setName] = useState("");
@@ -159,6 +158,18 @@ const RegistrationBlock = (props) => {
     return sex !== 1 && sex !== 2 && sex !== -1;
   };
 
+  const validationInputsFields = () => {
+    nameValidator() ? checkNameField(true) : checkNameField(false);
+    sernameValidator() ? checkSernameField(true) : checkSernameField(false);
+    telephoneValidator()
+      ? checkTelephoneField(true)
+      : checkTelephoneField(false);
+    emailValidator() ? checkEmailField(true) : checkEmailField(false);
+    passwordValidator() ? checkPasswordField(true) : checkPasswordField(false);
+    birthdayValidator() ? checkBirthdayField(true) : checkBirthdayField(false);
+    sexValidator() ? validSexInput(false) : validSexInput(true);
+  };
+
   const validationResult = () => {
     if (nameValidator()) {
       return null;
@@ -181,39 +192,16 @@ const RegistrationBlock = (props) => {
                 if (sex === 0) {
                   return null;
                 } else {
-                  db.collection("users_database").add({
-                    Name: name,
-                    Sername: sername,
-                    "Telephone number": telephone,
-                    Email: email,
-                    Password: password,
-                    "Birthday data": `${bday}.${mday}.${yday}`,
-                    Gender:
-                      sex === 1
-                        ? "Female"
-                        : sex === 2
-                        ? "Male"
-                        : sex === -1
-                        ? "Other"
-                        : "None",
-                  });
-
-                  console.log(
-                    "Name: " + name,
-                    "Sername: " + sername,
-                    "Telephone number: " + telephone,
-                    "Email: " + email,
-                    "Password: " + password,
-                    "Birthday data: " + bday + "." + mday + "." + yday,
-                    `Gender: ${
-                      sex === 1
-                        ? "Female"
-                        : sex === 2
-                        ? "Male"
-                        : sex === -1
-                        ? "Other"
-                        : "None"
-                    }`
+                  props.signUp(
+                    name,
+                    sername,
+                    telephone,
+                    email,
+                    password,
+                    bday,
+                    mday,
+                    yday,
+                    sex
                   );
                 }
               }
@@ -290,7 +278,10 @@ const RegistrationBlock = (props) => {
               }}
             />
             <div className="registrationblock__body">
-              <div className="registration__error" style={{display: props.registrationError ? null : "none"}}>
+              <div
+                className="registration__error"
+                style={{ display: props.registrationError ? null : "none" }}
+              >
                 <div className="registration__error__main">
                   We could not create your account.
                   <br />
@@ -774,33 +765,15 @@ const RegistrationBlock = (props) => {
                   type="submit"
                   className="regbutton"
                   onClick={() => {
-                    nameValidator()
-                      ? checkNameField(true)
-                      : checkNameField(false);
-                    sernameValidator()
-                      ? checkSernameField(true)
-                      : checkSernameField(false);
-                    telephoneValidator()
-                      ? checkTelephoneField(true)
-                      : checkTelephoneField(false);
-                    emailValidator()
-                      ? checkEmailField(true)
-                      : checkEmailField(false);
-                    passwordValidator()
-                      ? checkPasswordField(true)
-                      : checkPasswordField(false);
-                    birthdayValidator()
-                      ? checkBirthdayField(true)
-                      : checkBirthdayField(false);
-                    sexValidator() ? validSexInput(false) : validSexInput(true);
-
+                    validationInputsFields();
                     validationResult();
-
-                    props.signUp(email, password);
                   }}
                 >
                   Registration
                 </button>
+                <span className="registration__loader" style={{display: props.registrationFetching ? null : "none"}}>
+                  <img className="regloader" src="https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/vF9DX0rAdyp.gif" alt="loader" />
+                </span>
               </div>
             </div>
           </div>
