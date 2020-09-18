@@ -37,9 +37,9 @@ const RegistrationBlock = (props) => {
   const [checkedTelephone, setCheckedTelephone] = useState(false);
 
   const checkTelephoneField = (boolean) => {
-    // if ( boolean === false && (telephone === "" || telephone.split("")[0] === "+")) {
-    //   setTelephone("+7");
-    // }
+    if ( boolean === false && (is.empty(telephone) || telephone.trim().split("")[0] !== "+" || telephone.trim().split("")[1] !== "7")) {
+      setTelephone("+7");
+    }
     setCheckedTelephone(boolean);
   };
   //
@@ -97,18 +97,7 @@ const RegistrationBlock = (props) => {
   };
 
   const inputTelephoneHandler = (e) => {
-
-    let regexp = /^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$/;
-
-    if (!regexp.test(e.target.value)) {
-      setTelephone(e.target.value)
-    }
-
-    // if (telephone.split("")[0] === "+" && telephone.split("")[1] === "7") {
-    //   setTelephone(e.target.value);
-    // } else if (telephone.split("")[0] === "+") {
-    //   setTelephone("+7");
-    // }
+    setTelephone(e.target.value)
   };
 
   const inputEmailHandler = (e) => {
@@ -152,7 +141,7 @@ const RegistrationBlock = (props) => {
   };
 
   const telephoneValidator = () => {
-    return is.empty(telephone) || !spacesValidator(telephone);
+    return is.empty(telephone) || !spacesValidator(telephone) || (telephone.trim().split("")[0] !== "+" || telephone.trim().split("")[1] !== "7");
   };
 
   const emailValidator = () => {
