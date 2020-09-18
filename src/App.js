@@ -4,8 +4,15 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 
+
 import { setUser } from "./redux/user-reducer";
-import { signIn, signUp, autoLogin, logout, toggleLoginError } from "./redux/auth-reducer";
+import {
+  signIn,
+  signUp,
+  autoLogin,
+  logout,
+  toggleLoginError,
+} from "./redux/auth-reducer";
 
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -162,7 +169,7 @@ const mapStateToProps = (state) => {
     fetching: state.authReducer.fetching,
     registrationFetching: state.authReducer.registrationFetching,
     registrationError: state.authReducer.registrationError,
-    loginError: state.authReducer.loginError
+    loginError: state.authReducer.loginError,
   };
 };
 
@@ -174,6 +181,6 @@ export default compose(
     signUp,
     autoLogin,
     logout,
-    toggleLoginError
+    toggleLoginError,
   })
 )(App);

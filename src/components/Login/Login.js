@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 const Login = (props) => {
+  let history = useHistory();
+
   const [inputEmail, setInputEmail] = useState("");
   // -------Focus attribute
   const [focusInputEmail, setFocusInputEmail] = useState(false);
@@ -28,8 +30,10 @@ const Login = (props) => {
   };
 
   const loginButtonSignInHandler = (e) => {
+    // let qwe = history.push("/login")
+
     e.preventDefault();
-    props.signIn(inputEmail, inputPassword, true);
+    props.signIn(inputEmail, inputPassword, history, "/login")    
     setInputEmail("");
     setInputPassword("");
   };

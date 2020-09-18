@@ -1,24 +1,13 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import "./LoginRoute.css";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
 const LoginRoute = (props) => {
+  let history = useHistory();
 
   const [inputEmail, setInputEmail] = useState("");
-  // -------Focus attribute
-  const [focusInputEmail, setFocusInputEmail] = useState(false);
-  const focusedInputEmail = (boolean) => {
-    setFocusInputEmail(boolean);
-  };
-  //
-
   const [inputPassword, setInputPassword] = useState("");
-  // -------Focus attribute
-  const [focusInputPassword, setFocusInputPassword] = useState(false);
-  const focusedInputPassword = (boolean) => {
-    setFocusInputPassword(boolean);
-  };
-  //
 
   const inputEmailHandler = (e) => {
     setInputEmail(e.target.value);
@@ -30,7 +19,7 @@ const LoginRoute = (props) => {
 
   const loginButtonSignInHandler = (e) => {
     e.preventDefault();
-    props.signIn(inputEmail, inputPassword, true)
+    props.signIn(inputEmail, inputPassword, history, "/login");
     setInputEmail("");
     setInputPassword("");
   };
@@ -49,25 +38,39 @@ const LoginRoute = (props) => {
           </div>
           <div className="loginRoute__form__body">
             <div className="loginRoute__email">
-              <input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="Email"
-                className="loginRoute__einput"
-                value={inputEmail}
-                onChange={inputEmailHandler}
-                onFocus={() => {
-                  focusedInputEmail(true);
-                }}
-                onBlur={() => {
-                  focusedInputEmail(false);
-                }}
-                style={{
-                  borderColor: focusInputEmail ? "#1877f2" : props.loginError ? "red" : null ,
-                  boxShadow: focusInputEmail ? "0 0 0 2px #e7f3ff" : null,
-                }}
-              />
+              <div className="loginRoute__errorIcon">
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  className="loginRoute__einput"
+                  value={inputEmail}
+                  onChange={inputEmailHandler}
+                  style={{
+                    borderColor: props.loginError ? "red" : null,
+                  }}
+                />
+                <WarningRoundedIcon
+                  className="warning__icon"
+                  style={{
+                    display: props.loginError ? null : "none",
+                  }}
+                />
+              </div>
+              <div
+                className="error__info"
+                style={{ display: props.loginError ? null : "none" }}
+              >
+                The email address or phone number that you've entered doesn't
+                match any account.
+                <NavLink
+                  to={"/login"}
+                  onClick={props.displayRegistrationBlockTrue}
+                >
+                  Sign up for an account.
+                </NavLink>
+              </div>
             </div>
 
             <div className="loginRoute__password">
@@ -79,16 +82,6 @@ const LoginRoute = (props) => {
                 className="loginRoute__passinput"
                 value={inputPassword}
                 onChange={inputPasswordHandler}
-                onFocus={() => {
-                  focusedInputPassword(true);
-                }}
-                onBlur={() => {
-                  focusedInputPassword(false);
-                }}
-                style={{
-                  borderColor: focusInputPassword ? "#1877f2" : null,
-                  boxShadow: focusInputPassword ? "0 0 0 2px #e7f3ff" : null,
-                }}
               />
             </div>
 

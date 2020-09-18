@@ -54,7 +54,7 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export const signIn = (email, password) => {
+export const signIn = (email, password, history, URL) => {
   return async (dispatch) => {
     const signInData = {
       email,
@@ -66,7 +66,7 @@ export const signIn = (email, password) => {
 
     let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`;
 
-    Axios.post(url, signInData)
+     Axios.post(url, signInData)
       .then((response) => {
         const data = response.data;
         const expirationDate = new Date(
@@ -80,9 +80,13 @@ export const signIn = (email, password) => {
         dispatch(authSuccess(data.idToken));
         dispatch(autoLogout(data.expiresIn));
         dispatch(toggleFetching(false));
+        dispatch(toggleLoginError(false));
+        history.push("/")
       })
-      .catch((e) => {
+      .catch((e) => { 
+        history.push(`${URL}`)
         dispatch(toggleLoginError(true));
+        dispatch(toggleFetching(false));
       });
   };
 };
@@ -121,7 +125,7 @@ export const signUp = (
         db.collection("users_database").add({
           Name: name.trim(),
           Sername: sername.trim(),
-          "Telephone number": telephone.trim(),
+          Telephone_number: telephone.trim(),
           Email: email.trim(),
           Password: password.trim(),
           Birthday_data: `${bday}.${mday}.${yday}`,

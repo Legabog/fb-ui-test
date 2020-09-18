@@ -5,7 +5,7 @@
 }
 
 .loginRoute__body {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .loginRoute__header {
@@ -55,6 +55,7 @@
     border-radius: 6px;
     font-size: 17px;
     padding: 14px 16px;
+    padding-right:40px;
     width: 330px;
 
     border: 1px solid #dddfe2;
@@ -80,6 +81,7 @@
 
 .loginRoute__einput:focus {
     outline: none;
+    box-shadow: 0 0 0 2px #e7f3ff;
 }
 
 .loginRoute__password {
@@ -117,6 +119,7 @@
 
 .loginRoute__passinput:focus {
     outline: none;
+    box-shadow: 0 0 0 2px #e7f3ff;
 }
 
 .loginRoute__loginButton {
@@ -222,4 +225,31 @@
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
+}
+
+.loginRoute__errorIcon {
+    display: flex;
+}
+
+.warning__icon {
+    position: absolute;
+    color: red;
+    margin-top: 14px;
+    margin-left: 330px;
+}
+
+.error__info {
+    color: #f02849;
+    font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 16px;
+    margin-top: 8px;
+    text-align: left;
+}
+
+.error__info > a {
+    color: #f02849;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
 }

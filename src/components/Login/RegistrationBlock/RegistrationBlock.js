@@ -7,7 +7,6 @@ import ErrorIcon from "@material-ui/icons/Error";
 import { IconButton } from "@material-ui/core";
 
 import is from "is_js";
-import RegistrationLoader from "../../common/RegistrationLoader/RegistrationLoader";
 
 const RegistrationBlock = (props) => {
   const [name, setName] = useState("");
@@ -38,6 +37,9 @@ const RegistrationBlock = (props) => {
   const [checkedTelephone, setCheckedTelephone] = useState(false);
 
   const checkTelephoneField = (boolean) => {
+    // if ( boolean === false && (telephone === "" || telephone.split("")[0] === "+")) {
+    //   setTelephone("+7");
+    // }
     setCheckedTelephone(boolean);
   };
   //
@@ -95,7 +97,18 @@ const RegistrationBlock = (props) => {
   };
 
   const inputTelephoneHandler = (e) => {
-    setTelephone(e.target.value);
+
+    let regexp = /^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$/;
+
+    if (!regexp.test(e.target.value)) {
+      setTelephone(e.target.value)
+    }
+
+    // if (telephone.split("")[0] === "+" && telephone.split("")[1] === "7") {
+    //   setTelephone(e.target.value);
+    // } else if (telephone.split("")[0] === "+") {
+    //   setTelephone("+7");
+    // }
   };
 
   const inputEmailHandler = (e) => {
@@ -771,8 +784,17 @@ const RegistrationBlock = (props) => {
                 >
                   Registration
                 </button>
-                <span className="registration__loader" style={{display: props.registrationFetching ? null : "none"}}>
-                  <img className="regloader" src="https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/vF9DX0rAdyp.gif" alt="loader" />
+                <span
+                  className="registration__loader"
+                  style={{
+                    display: props.registrationFetching ? null : "none",
+                  }}
+                >
+                  <img
+                    className="regloader"
+                    src="https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/vF9DX0rAdyp.gif"
+                    alt="loader"
+                  />
                 </span>
               </div>
             </div>
