@@ -1,87 +1,75 @@
 import React, { useState } from "react";
 import "./RegistrationBlock.css";
 import BackDrop from "../../common/BackDrop/BackDrop";
-import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import HelpOutlinedIcon from "@material-ui/icons/HelpOutlined";
-import ErrorIcon from "@material-ui/icons/Error";
-import { IconButton } from "@material-ui/core";
-
+import RegistrationBlockHeader from "./RegistrationBlockHeader/RegistrationBlockHeader";
+import RegistrationBlockBody from "./RegistrationBlockBody/RegistrationBlockBody";
 import is from "is_js";
 
 const RegistrationBlock = (props) => {
-  const [name, setName] = useState("");
-
-  // -----------Check filed handler
-
   // ----------Name input
+  const [name, setName] = useState("");
   const [checkedName, setCheckedName] = useState(false);
-
   const checkNameField = (boolean) => {
     setCheckedName(boolean);
   };
   //
 
-  const [sername, setSername] = useState("");
-
-  // ----------Sername input
-  const [checkedSername, setCheckedSername] = useState(false);
-
-  const checkSernameField = (boolean) => {
-    setCheckedSername(boolean);
+  // ---------Surname input
+  const [surname, setSurname] = useState("");
+  const [checkedSurname, setCheckedSurname] = useState(false);
+  const checkSurnameField = (boolean) => {
+    setCheckedSurname(boolean);
   };
   //
 
-  const [telephone, setTelephone] = useState("");
-
   // ----------Telephone input
+  const [telephone, setTelephone] = useState("");
   const [checkedTelephone, setCheckedTelephone] = useState(false);
-
   const checkTelephoneField = (boolean) => {
-    if ( boolean === false && (is.empty(telephone) || telephone.trim().split("")[0] !== "+" || telephone.trim().split("")[1] !== "7")) {
+    if (
+      boolean === false &&
+      (is.empty(telephone) ||
+        telephone.trim().split("")[0] !== "+" ||
+        telephone.trim().split("")[1] !== "7")
+    ) {
       setTelephone("+7");
     }
     setCheckedTelephone(boolean);
   };
   //
 
-  const [email, setEmail] = useState("");
-
   // ----------Email input
-  const [checkedEmail, setCheckedEmail] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [checkedEmail, setCheckedEmail] = useState(false);
   const checkEmailField = (boolean) => {
     setCheckedEmail(boolean);
   };
   //
 
-  const [password, setPassword] = useState("");
-
   // ----------Password input
+  const [password, setPassword] = useState("");
   const [checkedPassword, setCheckedPassword] = useState(false);
-
   const checkPasswordField = (boolean) => {
     setCheckedPassword(boolean);
   };
   //
 
+  // ----------Birthday input
+
   const [bday, setBday] = useState("00");
   const [mday, setMday] = useState("00");
   const [yday, setYday] = useState("0000");
-
-  // ----------Birthday input
   const [checkedBirthdayInput, setCheckedBirthday] = useState(false);
-
   const checkBirthdayField = (boolean) => {
     setCheckedBirthday(boolean);
   };
   //
 
+  // ---------Gender input
+
   const [sex, setSex] = useState(0);
-
-  // ---------Valid sex input
-
   const [validSex, setValidSex] = useState(true);
-
   const validSexInput = (boolean) => {
     setValidSex(boolean);
   };
@@ -92,12 +80,12 @@ const RegistrationBlock = (props) => {
     setName(e.target.value);
   };
 
-  const inputSernameHandler = (e) => {
-    setSername(e.target.value);
+  const inputSurnameHandler = (e) => {
+    setSurname(e.target.value);
   };
 
   const inputTelephoneHandler = (e) => {
-    setTelephone(e.target.value)
+    setTelephone(e.target.value.replace(/[^0-9+]/, ''));
   };
 
   const inputEmailHandler = (e) => {
@@ -136,12 +124,18 @@ const RegistrationBlock = (props) => {
     return is.empty(name) || !spacesValidator(name);
   };
 
-  const sernameValidator = () => {
-    return is.empty(sername) || !spacesValidator(sername);
+  const surnameValidator = () => {
+    return is.empty(surname) || !spacesValidator(surname);
   };
 
   const telephoneValidator = () => {
-    return is.empty(telephone) || !spacesValidator(telephone) || (telephone.trim().split("")[0] !== "+" || telephone.trim().split("")[1] !== "7");
+    return (
+      is.empty(telephone) ||
+      !spacesValidator(telephone) ||
+      telephone.trim().split("")[0] !== "+" ||
+      telephone.trim().split("")[1] !== "7" ||
+      telephone.trim().split("").length !== 12
+    );
   };
 
   const emailValidator = () => {
@@ -149,7 +143,11 @@ const RegistrationBlock = (props) => {
   };
 
   const passwordValidator = () => {
-    return is.empty(password) || !spacesValidator(password);
+    return (
+      is.empty(password) ||
+      !spacesValidator(password) ||
+      password.trim().split("").length < 6
+    );
   };
 
   const birthdayValidator = () => {
@@ -162,7 +160,7 @@ const RegistrationBlock = (props) => {
 
   const validationInputsFields = () => {
     nameValidator() ? checkNameField(true) : checkNameField(false);
-    sernameValidator() ? checkSernameField(true) : checkSernameField(false);
+    surnameValidator() ? checkSurnameField(true) : checkSurnameField(false);
     telephoneValidator()
       ? checkTelephoneField(true)
       : checkTelephoneField(false);
@@ -176,7 +174,7 @@ const RegistrationBlock = (props) => {
     if (nameValidator()) {
       return null;
     } else {
-      if (sernameValidator()) {
+      if (surnameValidator()) {
         return null;
       } else {
         if (telephoneValidator()) {
@@ -196,7 +194,7 @@ const RegistrationBlock = (props) => {
                 } else {
                   props.signUp(
                     name,
-                    sername,
+                    surname,
                     telephone,
                     email,
                     password,
@@ -219,8 +217,8 @@ const RegistrationBlock = (props) => {
     setName("");
     setCheckedName(false);
 
-    setSername("");
-    setCheckedSername(false);
+    setSurname("");
+    setCheckedSurname(false);
 
     setTelephone("");
     setCheckedTelephone(false);
@@ -256,22 +254,12 @@ const RegistrationBlock = (props) => {
       <div className="registrationblock">
         <div className="registrationblock__main">
           <div className="registrationblock__main__q">
-            <div className="registrationblock__top">
-              <div className="registrationblock__top__main">Registration</div>
-              <div className="registrationblock__top__description">
-                Fast and easily
-              </div>
-              <div className="close__icon">
-                <IconButton
-                  onClick={() => {
-                    props.displayRegistrationBlockFalse();
-                    setDefaultInputsValues();
-                  }}
-                >
-                  <CloseOutlinedIcon />
-                </IconButton>
-              </div>
-            </div>
+            <RegistrationBlockHeader
+              displayRegistrationBlockFalse={
+                props.displayRegistrationBlockFalse
+              }
+              setDefaultInputsValues={setDefaultInputsValues}
+            />
             <hr
               style={{
                 height: "0",
@@ -279,514 +267,56 @@ const RegistrationBlock = (props) => {
                 borderTop: "1px solid #f0ecec",
               }}
             />
-            <div className="registrationblock__body">
-              <div
-                className="registration__error"
-                style={{ display: props.registrationError ? null : "none" }}
-              >
-                <div className="registration__error__main">
-                  We could not create your account.
-                  <br />
-                  We were not able to register you on our Social network.
-                  <br />
-                  It is possible that an account with such mail already exists.
-                </div>
-              </div>
-              <div className="fullname__field">
-                <div className="namefield">
-                  <input
-                    type="text"
-                    className="nameinput"
-                    data-type="text"
-                    name="firstname"
-                    placeholder="Name"
-                    value={name}
-                    onChange={inputNameHandler}
-                    onBlur={() => {
-                      checkNameField(true);
-                    }}
-                    onFocus={() => {
-                      checkNameField(false);
-                    }}
-                    style={{
-                      border:
-                        checkedName && nameValidator() ? "1px solid red" : null,
-                    }}
-                  />
-
-                  <ErrorIcon
-                    className="error__icon"
-                    style={{
-                      display: checkedName && nameValidator() ? null : "none",
-                    }}
-                  />
-                </div>
-                <div className="sernamefield">
-                  <input
-                    type="text"
-                    className="sernameinput"
-                    data-type="text"
-                    name="secondname"
-                    placeholder="Sername"
-                    value={sername}
-                    onChange={inputSernameHandler}
-                    onBlur={() => {
-                      checkSernameField(true);
-                    }}
-                    onFocus={() => {
-                      checkSernameField(false);
-                    }}
-                    style={{
-                      border:
-                        checkedSername && sernameValidator()
-                          ? "1px solid red"
-                          : null,
-                    }}
-                  />
-                  <ErrorIcon
-                    className="error__icon"
-                    style={{
-                      display:
-                        checkedSername && sernameValidator() ? null : "none",
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="telephone__field">
-                <input
-                  type="text"
-                  className="telephoneinput"
-                  datatype="text"
-                  name="telephone"
-                  placeholder="Telephone number"
-                  value={telephone}
-                  onChange={inputTelephoneHandler}
-                  onBlur={() => {
-                    checkTelephoneField(true);
-                  }}
-                  onFocus={() => {
-                    checkTelephoneField(false);
-                  }}
-                  style={{
-                    border:
-                      checkedTelephone && telephoneValidator()
-                        ? "1px solid red"
-                        : null,
-                  }}
-                />
-                <ErrorIcon
-                  className="error__icon"
-                  style={{
-                    display:
-                      checkedTelephone && telephoneValidator() ? null : "none",
-                  }}
-                />
-              </div>
-              <div className="email__field">
-                <input
-                  type="text"
-                  className="emailinput"
-                  datatype="text"
-                  name="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={inputEmailHandler}
-                  onBlur={() => {
-                    checkEmailField(true);
-                  }}
-                  onFocus={() => {
-                    checkEmailField(false);
-                  }}
-                  style={{
-                    border:
-                      checkedEmail && emailValidator() ? "1px solid red" : null,
-                  }}
-                />
-                <ErrorIcon
-                  className="error__icon"
-                  style={{
-                    display: checkedEmail && emailValidator() ? null : "none",
-                  }}
-                />
-              </div>
-              <div className="password__field">
-                <input
-                  type="password"
-                  className="passwordinput"
-                  datatype="text"
-                  name="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={inputPasswordHandler}
-                  onBlur={() => {
-                    checkPasswordField(true);
-                  }}
-                  onFocus={() => {
-                    checkPasswordField(false);
-                  }}
-                  style={{
-                    border:
-                      checkedPassword && passwordValidator()
-                        ? "1px solid red"
-                        : null,
-                  }}
-                />
-                <ErrorIcon
-                  className="error__icon"
-                  style={{
-                    display:
-                      checkedPassword && passwordValidator() ? null : "none",
-                  }}
-                />
-              </div>
-              <div className="birthday">
-                <div className="birthday__description">
-                  Date of birth
-                  <IconButton>
-                    <HelpOutlinedIcon
-                      style={{ width: "12px", height: "12px" }}
-                    />
-                  </IconButton>
-                  <ErrorIcon
-                    className="error__birthday"
-                    style={{
-                      display:
-                        checkedBirthdayInput && birthdayValidator()
-                          ? null
-                          : "none",
-                    }}
-                  />
-                </div>
-                <div className="birthday__selects">
-                  <div className="birthday__day__div">
-                    <select
-                      className="birthday__day"
-                      id="birthday__day__input"
-                      onClick={bdayHandler}
-                      onBlur={() => {
-                        checkBirthdayField(true);
-                      }}
-                      onFocus={() => {
-                        checkBirthdayField(false);
-                      }}
-                      style={{
-                        border:
-                          checkedBirthdayInput && birthdayValidator()
-                            ? "1px solid red"
-                            : null,
-                      }}
-                    >
-                      <option value={"00"} defaultValue>
-                        Day
-                      </option>
-                      <option value={"01"}>1</option>
-                      <option value={"02"}>2</option>
-                      <option value={"03"}>3</option>
-                      <option value={"04"}>4</option>
-                      <option value={"05"}>5</option>
-                      <option value={"06"}>6</option>
-                      <option value={"07"}>7</option>
-                      <option value={"08"}>8</option>
-                      <option value={"09"}>9</option>
-                      <option value={"10"}>10</option>
-                      <option value={"11"}>11</option>
-                      <option value={"12"}>12</option>
-                      <option value={"13"}>13</option>
-                      <option value={"14"}>14</option>
-                      <option value={"15"}>15</option>
-                      <option value={"16"}>16</option>
-                      <option value={"17"}>17</option>
-                      <option value={"18"}>18</option>
-                      <option value={"19"}>19</option>
-                      <option value={"20"}>20</option>
-                      <option value={"21"}>21</option>
-                      <option value={"22"}>22</option>
-                      <option value={"23"}>23</option>
-                      <option value={"24"}>24</option>
-                      <option value={"25"}>25</option>
-                      <option value={"26"}>26</option>
-                      <option value={"27"}>27</option>
-                      <option value={"28"}>28</option>
-                      <option value={"29"}>29</option>
-                      <option value={"30"}>30</option>
-                      <option value={"31"}>31</option>
-                    </select>
-                  </div>
-
-                  <div className="birthday__month__div">
-                    <select
-                      className="birthday__month"
-                      id="birthday__month__input"
-                      onClick={mdayHandler}
-                      onBlur={() => {
-                        checkBirthdayField(true);
-                      }}
-                      onFocus={() => {
-                        checkBirthdayField(false);
-                      }}
-                      style={{
-                        border:
-                          checkedBirthdayInput && birthdayValidator()
-                            ? "1px solid red"
-                            : null,
-                      }}
-                    >
-                      <option value={"00"} defaultValue>
-                        Month
-                      </option>
-                      <option value={"01"}>Jan</option>
-                      <option value={"02"}>Feb</option>
-                      <option value={"03"}>Mar</option>
-                      <option value={"04"}>Apr</option>
-                      <option value={"05"}>May</option>
-                      <option value={"06"}>Jun</option>
-                      <option value={"07"}>Jul</option>
-                      <option value={"08"}>Aug</option>
-                      <option value={"09"}>Sep</option>
-                      <option value={"10"}>Oct</option>
-                      <option value={"11"}>Nov</option>
-                      <option value={"12"}>Dec</option>
-                    </select>
-                  </div>
-
-                  <div className="birthday__year__div">
-                    <select
-                      className="birthday__year"
-                      id="birthday__year__input"
-                      onClick={ydayHandler}
-                      onBlur={() => {
-                        checkBirthdayField(true);
-                      }}
-                      onFocus={() => {
-                        checkBirthdayField(false);
-                      }}
-                      style={{
-                        border:
-                          checkedBirthdayInput && birthdayValidator()
-                            ? "1px solid red"
-                            : null,
-                      }}
-                    >
-                      <option value={"0000"} defaultValue>
-                        Year
-                      </option>
-                      <option value={"2020"} defaultValue>
-                        2020
-                      </option>
-                      <option value={"2019"} defaultValue>
-                        2019
-                      </option>
-                      <option value={"2018"} defaultValue>
-                        2018
-                      </option>
-                      <option value={"2017"} defaultValue>
-                        2017
-                      </option>
-                      <option value={"2016"} defaultValue>
-                        2016
-                      </option>
-                      <option value={"2015"} defaultValue>
-                        2015
-                      </option>
-                      <option value={"2014"} defaultValue>
-                        2014
-                      </option>
-                      <option value={"2013"} defaultValue>
-                        2013
-                      </option>
-                      <option value={"2012"} defaultValue>
-                        2012
-                      </option>
-                      <option value={"2011"} defaultValue>
-                        2011
-                      </option>
-                      <option value={"2010"} defaultValue>
-                        2010
-                      </option>
-                      <option value={"2009"} defaultValue>
-                        2009
-                      </option>
-                      <option value={"2008"} defaultValue>
-                        2008
-                      </option>
-                      <option value={"2007"} defaultValue>
-                        2007
-                      </option>
-                      <option value={"2006"} defaultValue>
-                        2006
-                      </option>
-                      <option value={"2005"} defaultValue>
-                        2005
-                      </option>
-                      <option value={"2004"} defaultValue>
-                        2004
-                      </option>
-                      <option value={"2003"} defaultValue>
-                        2003
-                      </option>
-                      <option value={"2002"} defaultValue>
-                        2002
-                      </option>
-                      <option value={"2001"} defaultValue>
-                        2001
-                      </option>
-                      <option value={"2000"} defaultValue>
-                        2000
-                      </option>
-                      <option value={"1999"} defaultValue>
-                        1999
-                      </option>
-                      <option value={"1998"} defaultValue>
-                        1998
-                      </option>
-                      <option value={"1997"} defaultValue>
-                        1997
-                      </option>
-                      <option value={"1996"} defaultValue>
-                        1996
-                      </option>
-                      <option value={"1995"} defaultValue>
-                        1995
-                      </option>
-                      <option value={"1994"} defaultValue>
-                        1994
-                      </option>
-                      <option value={"1993"} defaultValue>
-                        1993
-                      </option>
-                      <option value={"1992"} defaultValue>
-                        1992
-                      </option>
-                      <option value={"1991"} defaultValue>
-                        1991
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="gender">
-                <div className="gender__description">
-                  Gender
-                  <IconButton>
-                    <HelpOutlinedIcon
-                      style={{ width: "12px", height: "12px" }}
-                    />
-                  </IconButton>
-                  <ErrorIcon
-                    className="error__gender"
-                    style={{
-                      display: !validSex && sexValidator() ? null : "none",
-                    }}
-                  />
-                </div>
-                <div className="gender__selects">
-                  <div
-                    className="gender__female"
-                    style={{
-                      border:
-                        !validSex && sexValidator() ? "1px solid red" : null,
-                    }}
-                  >
-                    <label
-                      className="gender__female__label"
-                      htmlFor="gender__female__input"
-                    >
-                      Female
-                    </label>
-                    <input
-                      name="gender"
-                      id="femaleinput"
-                      className="gender__female__input"
-                      type="radio"
-                      value={sex}
-                      onClick={() => {
-                        sexHandler(1);
-                      }}
-                    />
-                  </div>
-                  <div
-                    className="gender__male"
-                    style={{
-                      border:
-                        !validSex && sexValidator() ? "1px solid red" : null,
-                    }}
-                  >
-                    <label
-                      className="gender__male__label"
-                      htmlFor="gender__male__input"
-                    >
-                      Male
-                    </label>
-                    <input
-                      name="gender"
-                      id="maleinput"
-                      className="gender__male__input"
-                      type="radio"
-                      value={sex}
-                      onClick={() => {
-                        sexHandler(2);
-                      }}
-                    />
-                  </div>
-                  <div
-                    className="gender__other"
-                    style={{
-                      border:
-                        !validSex && sexValidator() ? "1px solid red" : null,
-                    }}
-                  >
-                    <label
-                      className="gender__other__label"
-                      htmlFor="gender__other__input"
-                    >
-                      Other
-                    </label>
-                    <input
-                      name="gender"
-                      id="otherinput"
-                      className="gender__other__input"
-                      type="radio"
-                      value={sex}
-                      onClick={() => {
-                        sexHandler(-1);
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="policy__message">
-                <p>
-                  Нажимая кнопку Регистрация, вы принимаете Условия, Политику
-                  использования данных и Политику в отношении файлов cookie. Вы
-                  можете получать от нас SMS-уведомления, отказаться от которых
-                  можно в любой момент.
-                </p>
-              </div>
-              <div className="registration__button">
-                <button
-                  type="submit"
-                  className="regbutton"
-                  onClick={() => {
-                    validationInputsFields();
-                    validationResult();
-                  }}
-                >
-                  Registration
-                </button>
-                <span
-                  className="registration__loader"
-                  style={{
-                    display: props.registrationFetching ? null : "none",
-                  }}
-                >
-                  <img
-                    className="regloader"
-                    src="https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/vF9DX0rAdyp.gif"
-                    alt="loader"
-                  />
-                </span>
-              </div>
-            </div>
+            <RegistrationBlockBody
+              {...props}
+              name={name}
+              inputNameHandler={inputNameHandler}
+              checkNameField={checkNameField}
+              checkedName={checkedName}
+              nameValidator={nameValidator}
+              // -------------------------
+              surname={surname}
+              inputSurnameHandler={inputSurnameHandler}
+              checkSurnameField={checkSurnameField}
+              checkedSurname={checkedSurname}
+              surnameValidator={surnameValidator}
+              // ------------------------
+              telephone={telephone}
+              inputTelephoneHandler={inputTelephoneHandler}
+              checkTelephoneField={checkTelephoneField}
+              checkedTelephone={checkedTelephone}
+              telephoneValidator={telephoneValidator}
+              // ------------------------
+              email={email}
+              inputEmailHandler={inputEmailHandler}
+              checkEmailField={checkEmailField}
+              checkedEmail={checkedEmail}
+              emailValidator={emailValidator}
+              // ------------------------
+              password={password}
+              inputPasswordHandler={inputPasswordHandler}
+              checkPasswordField={checkPasswordField}
+              checkedPassword={checkedPassword}
+              passwordValidator={passwordValidator}
+              // ------------------------
+              bday={bday}
+              mday={mday}
+              yday={yday}
+              bdayHandler={bdayHandler}
+              mdayHandler={mdayHandler}
+              ydayHandler={ydayHandler}
+              checkedBirthdayInput={checkedBirthdayInput}
+              birthdayValidator={birthdayValidator}
+              checkBirthdayField={checkBirthdayField}
+              // ------------------------
+              sex={sex}
+              sexHandler={sexHandler}
+              validSex={validSex}
+              sexValidator={sexValidator}
+              // ------------------------
+              validationInputsFields={validationInputsFields}
+              validationResult={validationResult}
+            />
           </div>
         </div>
       </div>
