@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 
-
 import { setUser } from "./redux/user-reducer";
 import {
   signIn,
@@ -25,6 +24,7 @@ import Preloader from "./components/common/Preloader/Preloader";
 import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
 import ConfirmEmailRoute from "./components/common/ConfirmEmailRoute/ConfirmEmailRoute";
 import LoginRoute from "./components/Login/LoginRoute/LoginRoute";
+import ConfirmedEmailRoute from "./components/common/ConfirmedEmailRoute/ConfirmedEmailRoute";
 
 class App extends React.Component {
   state = {
@@ -58,26 +58,29 @@ class App extends React.Component {
             <Route
               path="/"
               exact
-              render={() =>
-                this.props.fetching ? (
-                  <Preloader />
-                ) : (
-                  <>
-                    <Header logout={this.props.logout} />
-                    <div className="app__body">
-                      <Sidebar />
-                      <Feed />
-                      <Widgets />
-                    </div>
-                  </>
-                )
-              }
+              render={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <Sidebar />
+                    <Feed />
+                    <Widgets />
+                  </div>
+                </>
+              )}
             />
             <Route render={() => <ErrorRoute />} />
           </Switch>
         </div>
       );
     } else {
+      if (this.props.fetching === true) {
+        return (
+          <div className="app">
+            <Preloader />
+          </div>
+        );
+      }
       return (
         <Switch>
           <Route
@@ -115,7 +118,21 @@ class App extends React.Component {
             exact
             render={() => (
               <div className="app">
-                <ConfirmEmailRoute />
+                <ConfirmEmailRoute
+                  displayRegistrationBlockFalse={
+                    this.displayRegistrationBlockFalse
+                  }
+                />
+              </div>
+            )}
+          />
+
+          <Route
+            path="/confirmed_email"
+            exact
+            render={() => (
+              <div className="app">
+                <ConfirmedEmailRoute />
               </div>
             )}
           />

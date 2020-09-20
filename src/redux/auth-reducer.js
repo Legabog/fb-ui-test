@@ -61,12 +61,10 @@ export const signIn = (email, password, history, URL) => {
       password,
       returnSecureToken: true,
     };
-
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`;
     dispatch(toggleFetching(true));
 
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`;
-
-     Axios.post(url, signInData)
+    Axios.post(url, signInData)
       .then((response) => {
         const data = response.data;
         const expirationDate = new Date(
@@ -81,10 +79,10 @@ export const signIn = (email, password, history, URL) => {
         dispatch(autoLogout(data.expiresIn));
         dispatch(toggleFetching(false));
         dispatch(toggleLoginError(false));
-        history.push("/")
+        history.push("/");
       })
-      .catch((e) => { 
-        history.push(`${URL}`)
+      .catch((e) => {
+        history.push(`${URL}`);
         dispatch(toggleLoginError(true));
         dispatch(toggleFetching(false));
       });
@@ -100,7 +98,9 @@ export const signUp = (
   bday,
   mday,
   yday,
-  sex
+  sex,
+  history,
+  URL
 ) => {
   return async (dispatch) => {
     const signUpData = {
@@ -110,43 +110,54 @@ export const signUp = (
     };
 
     let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`;
+    dispatch(toggleRegistrationFetching(true));
 
     Axios.post(url, signUpData)
       .then((response) => {
         dispatch(toggleRegistrationError(false));
-        dispatch(toggleRegistrationFetching(true));
-        const data = response.data;
-        Axios.post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${firebaseConfig.apiKey}`,
-          { requestType: "VERIFY_EMAIL", idToken: data.idToken }
-        );
 
         // add user to db
-        db.collection("users_database").add({
-          Name: name.trim(),
-          Sername: sername.trim(),
-          Telephone_number: telephone.trim(),
-          Email: email.trim(),
-          Password: password.trim(),
-          Birthday_data: `${bday}.${mday}.${yday}`,
-          Gender:
-            sex === 1
-              ? "Female"
-              : sex === 2
-              ? "Male"
-              : sex === -1
-              ? "Other"
-              : "None",
-        });
-        //
-
-        // route to confirm registration of account
-        window.location.href = "/confirm_email";
-        //
+        db.collection("users_database")
+          .add({
+            Name: name.trim(),
+            Sername: sername.trim(),
+            Telephone_number: telephone.trim(),
+            Email: email.trim(),
+            Password: password.trim(),
+            Birthday_data: `${bday}.${mday}.${yday}`,
+            Gender:
+              sex === 1
+                ? "Female"
+                : sex === 2
+                ? "Male"
+                : sex === -1
+                ? "Other"
+                : "None",
+          })
+          .then(() => {
+            // verify message
+            Axios.post(
+              `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${firebaseConfig.apiKey}`,
+              { requestType: "VERIFY_EMAIL", idToken: response.data.idToken }
+            )
+              .then(() => {
+                dispatch(toggleRegistrationFetching(false));
+                history.push("/confirm_email");
+              })
+              .catch(() => {
+                dispatch(toggleRegistrationFetching(false));
+                dispatch(toggleRegistrationError(true));
+              });
+          })
+          .catch(() => {
+            dispatch(toggleRegistrationFetching(false));
+            dispatch(toggleRegistrationError(true));
+          });
       })
-      .catch((e) => dispatch(toggleRegistrationError(true)));
-
-    dispatch(toggleRegistrationFetching(false));
+      .catch((e) => {
+        dispatch(toggleRegistrationFetching(false));
+        dispatch(toggleRegistrationError(true));
+      });
   };
 };
 
