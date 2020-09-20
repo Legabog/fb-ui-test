@@ -1,0 +1,19 @@
+.header__input {
+    display: flex;
+    height: 20px;
+    align-items: center;
+    background-color: #eff2f5;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 999px;
+}
+
+.header__input > .MuiSvgIcon-root {
+    color: gray;
+}
+
+.header__input > input {
+    border: none;
+    background-color: transparent;
+    outline-width: 0;
+}

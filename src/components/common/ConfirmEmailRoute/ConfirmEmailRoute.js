@@ -18,7 +18,11 @@ const ConfirmEmailRoute = (props) => {
           </h2>
         </div>
         <div className="confirmEmailRoute__buttonBack">
-          <NavLink className="buttonBack" to={""}>
+          <NavLink
+            className="buttonBack"
+            to={""}
+            onClick={props.displayRegistrationBlockFalse}
+          >
             Back to main page
           </NavLink>
         </div>
