@@ -20,7 +20,7 @@ const GenderField = (props) => {
       : setDisplayGenderInfo("none");
   };
 
-  const focusInput = (id) => {
+  const focusComponent = (id) => {
     document.getElementById(`${id}`).focus();
   };
 
@@ -28,7 +28,15 @@ const GenderField = (props) => {
     <div className="gender">
       <div className="gender__description">
         Gender
-        <IconButton onClick={toggleDisplayGenderInfo}>
+        <IconButton
+          id="gender__help__button"
+          onBlur={toggleDisplayGenderInfo}
+          onFocus={toggleDisplayGenderInfo}
+          onClick={(e) => {
+            e.preventDefault();
+            focusComponent("gender__help__button");
+          }}
+        >
           <HelpOutlinedIcon style={{ width: "12px", height: "12px" }} />
         </IconButton>
         <ErrorIcon
@@ -38,7 +46,7 @@ const GenderField = (props) => {
           }}
           onClick={() => {
             toggleDisplayGenderError();
-            focusInput("femaleinput");
+            focusComponent("femaleinput");
           }}
         />
       </div>

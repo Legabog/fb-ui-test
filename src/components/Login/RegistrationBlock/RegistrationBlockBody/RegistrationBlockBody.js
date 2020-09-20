@@ -10,6 +10,7 @@ import BirthdayField from "./BirthdayField/BirthdayField";
 import GenderField from "./GenderField/GenderField";
 import PolicyMessage from "./PolicyMessage/PolicyMessage";
 import RegistrationButton from "./RegistrationButton/RegistrationButton";
+import ConfirmPasswordField from "./ConfirmPasswordField/ConfirmPasswordField";
 
 const RegistrationBlockBody = (props) => {
   return (
@@ -22,6 +23,7 @@ const RegistrationBlockBody = (props) => {
       <TelephoneField {...props} />
       <EmailField {...props} />
       <PasswordField {...props} />
+      <ConfirmPasswordField {...props}/>
       <BirthdayField {...props} />
       <GenderField {...props} />
       <PolicyMessage />

@@ -4,8 +4,11 @@ import BackDrop from "../../common/BackDrop/BackDrop";
 import RegistrationBlockHeader from "./RegistrationBlockHeader/RegistrationBlockHeader";
 import RegistrationBlockBody from "./RegistrationBlockBody/RegistrationBlockBody";
 import is from "is_js";
+import { useHistory } from "react-router-dom";
 
 const RegistrationBlock = (props) => {
+  let history = useHistory();
+
   // ----------Name input
   const [name, setName] = useState("");
   const [checkedName, setCheckedName] = useState(false);
@@ -55,6 +58,13 @@ const RegistrationBlock = (props) => {
   };
   //
 
+  // -----------Confirm password input
+  const [confirmPasword, setConfirmPassword] = useState("");
+  const [checkedConfirmPassword, setCheckedConfirmPassword] = useState(false);
+  const checkConfirmPasswordField = (boolean) => {
+    setCheckedConfirmPassword(boolean);
+  };
+  //
   // ----------Birthday input
 
   const [bday, setBday] = useState("00");
@@ -85,7 +95,7 @@ const RegistrationBlock = (props) => {
   };
 
   const inputTelephoneHandler = (e) => {
-    setTelephone(e.target.value.replace(/[^0-9+]/, ''));
+    setTelephone(e.target.value.replace(/[^0-9+]/, ""));
   };
 
   const inputEmailHandler = (e) => {
@@ -94,6 +104,10 @@ const RegistrationBlock = (props) => {
 
   const inputPasswordHandler = (e) => {
     setPassword(e.target.value);
+  };
+
+  const inputConfirmPasswordHandler = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
   // ---------Selects handlers
@@ -150,6 +164,10 @@ const RegistrationBlock = (props) => {
     );
   };
 
+  const confirmPasswordValidator = () => {
+    return is.empty(password) || confirmPasword !== password;
+  };
+
   const birthdayValidator = () => {
     return bday === "00" || mday === "00" || yday === "0000";
   };
@@ -166,6 +184,9 @@ const RegistrationBlock = (props) => {
       : checkTelephoneField(false);
     emailValidator() ? checkEmailField(true) : checkEmailField(false);
     passwordValidator() ? checkPasswordField(true) : checkPasswordField(false);
+    confirmPasswordValidator()
+      ? checkConfirmPasswordField(true)
+      : checkConfirmPasswordField(false);
     birthdayValidator() ? checkBirthdayField(true) : checkBirthdayField(false);
     sexValidator() ? validSexInput(false) : validSexInput(true);
   };
@@ -192,17 +213,22 @@ const RegistrationBlock = (props) => {
                 if (sex === 0) {
                   return null;
                 } else {
-                  props.signUp(
-                    name,
-                    surname,
-                    telephone,
-                    email,
-                    password,
-                    bday,
-                    mday,
-                    yday,
-                    sex
-                  );
+                  if (confirmPasswordValidator()) {
+                    return null;
+                  } else {
+                    props.signUp(
+                      name,
+                      surname,
+                      telephone,
+                      email,
+                      password,
+                      bday,
+                      mday,
+                      yday,
+                      sex,
+                      history
+                    );
+                  }
                 }
               }
             }
@@ -228,6 +254,9 @@ const RegistrationBlock = (props) => {
 
     setPassword("");
     setCheckedPassword(false);
+
+    setConfirmPassword("");
+    setCheckedConfirmPassword(false);
 
     document.getElementById("birthday__day__input").selectedIndex = 0;
     document.getElementById("birthday__month__input").selectedIndex = 0;
@@ -298,6 +327,12 @@ const RegistrationBlock = (props) => {
               checkPasswordField={checkPasswordField}
               checkedPassword={checkedPassword}
               passwordValidator={passwordValidator}
+              // ------------------------
+              confirmPasword={confirmPasword}
+              inputConfirmPasswordHandler={inputConfirmPasswordHandler}
+              checkConfirmPasswordField={checkConfirmPasswordField}
+              checkedConfirmPassword={checkedConfirmPassword}
+              confirmPasswordValidator={confirmPasswordValidator}
               // ------------------------
               bday={bday}
               mday={mday}

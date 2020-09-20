@@ -110,7 +110,7 @@ const Login = (props) => {
                   </button>
                 </div>
                 <div className="login__signinblock__restore__password">
-                  <a href="/">Forgotten your password?</a>
+                  <a href="/">Forgotten password?</a>
                 </div>
                 <div className="login__signinblock__hr"></div>
                 <div className="login__signinblock__create_account_button">

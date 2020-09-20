@@ -20,7 +20,7 @@ const BirthdayField = (props) => {
       : setDisplayBirthdayInfo("none");
   };
 
-  const focusInput = (id) => {
+  const focusComponent = (id) => {
     document.getElementById(`${id}`).focus();
   };
 
@@ -29,9 +29,12 @@ const BirthdayField = (props) => {
       <div className="birthday__description">
         Date of birth
         <IconButton
+          id="birthday__help__button"
+          onBlur={toggleDisplayBirthdayInfo}
+          onFocus={toggleDisplayBirthdayInfo}
           onClick={(e) => {
             e.preventDefault();
-            toggleDisplayBirthdayInfo();
+            focusComponent("birthday__help__button");
           }}
         >
           <HelpOutlinedIcon style={{ width: "12px", height: "12px" }} />
@@ -46,7 +49,7 @@ const BirthdayField = (props) => {
           }}
           onClick={() => {
             toggleDisplayBirthdayError();
-            focusInput("birthday__day__input");
+            focusComponent("birthday__day__input");
           }}
         />
       </div>
