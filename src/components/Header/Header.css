@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    padding: 10px 10px 0px;
+    height: 60px;
     justify-content: space-between;
     position: sticky;
     background-color: white;
