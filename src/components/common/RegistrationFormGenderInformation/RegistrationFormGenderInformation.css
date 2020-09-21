@@ -6,7 +6,7 @@
 .information__gbody {
     width: 352px;
     margin-left: -320px;
-    margin-top: -80px;
+    margin-top: -70px;
 }
 
 .information__gform {
@@ -19,7 +19,7 @@
 }
 
 .information__gicon {
-    margin-top: -106px;
+    margin-top: -120px;
     background-image: url(https://en-gb.facebook.com/rsrc.php/v3/yN/r/bn50JeIPkQ7.png);
     background-repeat: no-repeat;
     background-size: auto;
@@ -67,4 +67,8 @@
     text-align: center;
     text-shadow: none;
     vertical-align: middle;
+}
+
+.information__gbutton:hover {
+    filter: opacity(80%)
 }

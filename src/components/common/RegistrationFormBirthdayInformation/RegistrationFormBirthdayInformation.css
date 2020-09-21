@@ -68,3 +68,7 @@
     text-shadow: none;
     vertical-align: middle;
 }
+
+.information__button:hover {
+    filter: opacity(80%)
+}

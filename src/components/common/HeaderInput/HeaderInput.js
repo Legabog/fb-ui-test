@@ -3,10 +3,35 @@ import SearchIcon from "@material-ui/icons/Search";
 import "./HeaderInput.css";
 
 const HeaderInput = (props) => {
+  const focusInput = (componentId) => {
+    document.getElementById("headerinputsearch").focus();
+  };
+
   return (
-    <div className="header__input">
-      <SearchIcon />
-      <input type="text" placeholder="Search Social Network" />
+    <div
+      className={props.activeInput ? "header__input__active" : "header__input"}
+    >
+      {props.activeInput ? null : (
+        <SearchIcon
+          onClick={(e) => {
+            e.preventDefault();
+            focusInput("headerinputsearch");
+            props.toggleActiveInput();
+          }}
+          // onBlur={props.toggleActiveInput}
+        />
+      )}
+      <input
+        type="text"
+        id="headerinputsearch"
+        placeholder="Search Social Network"
+        onClick={(e) => {
+          e.preventDefault();
+          focusInput("headerinputsearch");
+          props.toggleActiveInput();
+        }}
+        onBlur={props.toggleActiveInput}
+      />
     </div>
   );
 };
