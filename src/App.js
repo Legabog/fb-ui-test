@@ -95,6 +95,19 @@ class App extends React.Component {
                 </>
               )}
             />
+
+            <Route
+              path="/messages"
+              exact
+              render={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app">
+                    <Preloader />
+                  </div>
+                </>
+              )}
+            />
             <Route render={() => <ErrorRoute />} />
           </Switch>
         </div>
