@@ -13,6 +13,13 @@
     border-bottom: none;
 }
 
+.header__option__friends:active {
+    background-color: #e9ebec;
+    border-radius: 10px;
+    align-items: center;
+    border-bottom: none;
+}
+
 .header__option__friends__wrapper > .MuiSvgIcon-root {
     color: gray;
     padding-top: 5px;

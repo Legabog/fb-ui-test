@@ -2,15 +2,8 @@ import React, { useState } from "react";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import HomeIcon from "@material-ui/icons/Home";
 import "./HeaderNavigationBarHome.css";
-import { NavLink } from "react-router-dom";
 
 const HeaderNavigationBarHome = (props) => {
-  const [clicked, setClicked] = useState(false);
-
-  const toggleClick = () => {
-    setClicked(true);
-  };
-
   return (
     <div
       className={
@@ -20,13 +13,14 @@ const HeaderNavigationBarHome = (props) => {
       }
       onClick={() => {
         props.toggleActiveLink("/");
-        if (clicked === false) {
-          toggleClick();
-          props.toggleHelpHome();
-        }
+        props.toggleHelpHome(false)
       }}
-      onMouseEnter={props.toggleHelpHome}
-      onMouseLeave={props.toggleHelpHome}
+      onMouseEnter={() => {
+        props.toggleHelpHome(true)
+      }}
+      onMouseLeave={() => {
+        props.toggleHelpHome(false)
+      }}
     >
       <div
         className={
@@ -35,7 +29,7 @@ const HeaderNavigationBarHome = (props) => {
             : "header__option__home__wrapper"
         }
       >
-        {props.activeLink ? (
+        {props.activeLink === "/" ? (
           <HomeIcon fontSize="large" />
         ) : (
           <HomeOutlinedIcon fontSize="large" />

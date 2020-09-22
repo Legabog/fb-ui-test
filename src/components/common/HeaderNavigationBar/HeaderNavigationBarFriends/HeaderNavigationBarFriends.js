@@ -1,7 +1,6 @@
 import React from "react";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import "./HeaderNavigationBarFriends.css";
-import { NavLink } from "react-router-dom";
 
 const HeaderNavigationBarFriends = (props) => {
   return (
@@ -13,9 +12,14 @@ const HeaderNavigationBarFriends = (props) => {
       }
       onClick={() => {
         props.toggleActiveLink("/friends");
+        props.toggleHelpFriends(false);
       }}
-      onMouseEnter={props.toggleHelp}
-      onMouseLeave={props.toggleHelp}
+      onMouseEnter={() => {
+        props.toggleHelpFriends(true);
+      }}
+      onMouseLeave={() => {
+        props.toggleHelpFriends(false);
+      }}
     >
       <div
         className={

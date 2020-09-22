@@ -1,7 +1,6 @@
 import React from "react";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import "./HeaderNavigationBarGroups.css";
-import { NavLink } from "react-router-dom";
 
 const HeaderNavigationBarGroups = (props) => {
   return (
@@ -13,9 +12,14 @@ const HeaderNavigationBarGroups = (props) => {
       }
       onClick={() => {
         props.toggleActiveLink("/groups");
+        props.toggleHelpGroups(false);
       }}
-      onMouseEnter={props.toggleHelp}
-      onMouseLeave={props.toggleHelp}
+      onMouseEnter={() => {
+        props.toggleHelpGroups(true);
+      }}
+      onMouseLeave={() => {
+        props.toggleHelpGroups(false);
+      }}
     >
       <div
         className={

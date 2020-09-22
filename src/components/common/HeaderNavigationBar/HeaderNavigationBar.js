@@ -7,24 +7,57 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const HeaderNavigationBar = (props) => {
   // ----------Help Home
-  const [helpHome, setHelpHome] = useState("none");
+  const [helpHomeOpacity, setHelpHomeOpacity] = useState(0);
+  const [helpHomeVisibility, setHelpHomeVisibility] = useState("hidden");
 
-  const toggleHelpHome = () => {
-    helpHome === "none" ? setHelpHome() : setHelpHome("none");
+  const turnOnHomeHelp = () => {
+    setHelpHomeOpacity(1);
+    setHelpHomeVisibility("visible");
+  };
+
+  const turnOffHomeHelp = () => {
+    setHelpHomeOpacity(0);
+    setHelpHomeVisibility("hidden");
+  };
+
+  const toggleHelpHome = (boolean) => {
+    boolean ? turnOnHomeHelp() : turnOffHomeHelp();
   };
 
   // ----------Help Friends
-  const [helpFriends, setHelpFriends] = useState("none");
+  const [helpFriendsOpacity, setHelpFriendsOpacity] = useState(0);
+  const [helpFriendsVisibility, setHelpFriendsVisibility] = useState("hidden");
 
-  const toggleHelpFriends = () => {
-    helpFriends === "none" ? setHelpFriends() : setHelpFriends("none");
+  const turnOnFriendsHelp = () => {
+    setHelpFriendsOpacity(1);
+    setHelpFriendsVisibility("visible");
+  };
+
+  const turnOffFriendsHelp = () => {
+    setHelpFriendsOpacity(0);
+    setHelpFriendsVisibility("hidden");
+  };
+
+  const toggleHelpFriends = (boolean) => {
+    boolean ? turnOnFriendsHelp() : turnOffFriendsHelp();
   };
 
   // ----------Help Groups
-  const [helpGroups, setHelpGroups] = useState("none");
+  const [helpGroupsOpacity, setHelpGroupsOpacity] = useState(0);
+  const [helpGroupsVisibility, setHelpGroupsVisibility] = useState("hidden");
 
-  const toggleHelpGroups = () => {
-    helpGroups === "none" ? setHelpGroups() : setHelpGroups("none");
+  const turnOnGroupsHelp = () => {
+    setHelpGroupsOpacity(1);
+    setHelpGroupsVisibility("visible");
+  };
+
+  const turnOffGroupsHelp = () => {
+    setHelpGroupsOpacity(0);
+    setHelpGroupsVisibility("hidden");
+  };
+
+  const toggleHelpGroups = (boolean) => {
+    boolean ? turnOnGroupsHelp() : turnOffGroupsHelp();
   };
 
   //-----------Active link focus
@@ -44,7 +77,11 @@ const HeaderNavigationBar = (props) => {
       if (location.pathname === "/friends") {
         toggleActiveLink("/friends");
       } else {
-        toggleActiveLink("/groups");
+        if (location.pathname === "/groups") {
+          toggleActiveLink("/groups");
+        } else {
+          toggleActiveLink(location.pathname);
+        }
       }
     }
   };
@@ -65,39 +102,45 @@ const HeaderNavigationBar = (props) => {
         />
       </NavLink>
 
-      {/* <div className="header__option__home__help" style={{ display: helpHome }}>
+      <div
+        className="header__option__home__help"
+        style={{ opacity: helpHomeOpacity, visibility: helpHomeVisibility }}
+      >
         <span>Home</span>
-      </div> */}
+      </div>
 
       <NavLink to={"/friends"}>
         <HeaderNavigationBarFriends
           activeLink={activeLink}
           toggleActiveLink={toggleActiveLink}
-          toggleHelp={toggleHelpFriends}
+          toggleHelpFriends={toggleHelpFriends}
         />
       </NavLink>
 
-      {/* <div
+      <div
         className="header__option__friends__help"
-        style={{ display: helpFriends }}
+        style={{
+          opacity: helpFriendsOpacity,
+          visibility: helpFriendsVisibility,
+        }}
       >
         <span>Friends</span>
-      </div> */}
+      </div>
 
       <NavLink to={"/groups"}>
         <HeaderNavigationBarGroups
           activeLink={activeLink}
           toggleActiveLink={toggleActiveLink}
-          toggleHelp={toggleHelpGroups}
+          toggleHelpGroups={toggleHelpGroups}
         />
       </NavLink>
 
-      {/* <div
+      <div
         className="header__option__groups__help"
-        style={{ display: helpGroups }}
+        style={{ opacity: helpGroupsOpacity, visibility: helpGroupsVisibility }}
       >
         <span>Groups</span>
-      </div> */}
+      </div>
     </div>
   );
 };
