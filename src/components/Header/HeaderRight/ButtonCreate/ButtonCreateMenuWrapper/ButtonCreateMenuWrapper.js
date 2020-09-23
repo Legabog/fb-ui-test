@@ -18,7 +18,7 @@ const ButtonCreateMenuWrapper = (props) => {
       }
     >
       <div className="button__create__menu__header">
-        <h1>Create</h1>
+        <h2>Create</h2>
       </div>
       <div className="button__create__menu__body">
         <div className="button__create__section__border">

@@ -69,12 +69,12 @@
 }
 
 .button__create__section__border:hover {
-    background-color: #eff2f5;
+    background-color: #e9ebec;
     cursor: pointer;
 }
 
 .button__create__section__border:active {
-    background-color: #e9ebec;
+    background-color: #bfc2c4;
     cursor: pointer;
 }
 

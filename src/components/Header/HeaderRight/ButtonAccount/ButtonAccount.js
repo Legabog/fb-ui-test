@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import "./ButtonAccount.css";
+import ButtonAccountHelp from "./ButtonAccountHelp/ButtonAccountHelp";
+import ButtonAccountMenuWrapper from "./ButtonAccountMenuWrapper/ButtonAccountMenuWrapper";
+import ButtonAccountWrapper from "./ButtonAccountWrapper/ButtonAccountWrapper";
 
 const ButtonAccount = (props) => {
   // ----------Help Account
@@ -17,7 +18,7 @@ const ButtonAccount = (props) => {
     setHelpAccountVisibility("hidden");
   };
 
-  const toggleHelpNotifications = (boolean) => {
+  const toggleAccountHelp = (boolean) => {
     boolean ? turnOnAccountHelp() : turnOffAccountHelp();
   };
 
@@ -25,51 +26,12 @@ const ButtonAccount = (props) => {
 
   return (
     <>
-      <div className={"button__account__wrapper"}>
-        <div
-          className={
-            props.activeButton === 3
-              ? "button__account__active"
-              : "button__account"
-          }
-          onClick={() => {
-            props.activeButton === 3
-              ? props.toggleActiveButton()
-              : props.toggleActiveButton(3);
-            toggleHelpNotifications(false);
-          }}
-          onMouseEnter={() => {
-            toggleHelpNotifications(true);
-          }}
-          onMouseLeave={() => {
-            toggleHelpNotifications(false);
-          }}
-        >
-          <AccountCircleIcon />
-        </div>
-      </div>
-      <div
-        className="header__option__account__help"
-        style={{
-          opacity: helpAccountOpacity,
-          visibility: helpAccountVisibility,
-        }}
-      >
-        <span onClick={props.logout}>Account</span>
-      </div>
-      <div
-        className={"button__account__menu__wrapper"}
-        style={
-          props.activeButton === 3
-            ? { opacity: 1, visibility: "visible" }
-            : { opacity: 0, visibility: "hidden" }
-        }
-      >
-        <div className="button__account__menu__header">
-          <h1 onClick={props.logout}>Account</h1>
-        </div>
-        <div className="button__account__menu__body"></div>
-      </div>
+      <ButtonAccountWrapper {...props} toggleAccountHelp={toggleAccountHelp} />
+      <ButtonAccountHelp
+        helpAccountOpacity={helpAccountOpacity}
+        helpAccountVisibility={helpAccountVisibility}
+      />
+      <ButtonAccountMenuWrapper {...props} />
     </>
   );
 };
