@@ -1,0 +1,12 @@
+.bodyAlbumsList {
+  display: block;
+}
+
+.bodyAlbumsList hr {
+  margin: 0;
+}
+
+.lastBlock {
+  height: 60px;
+}
+

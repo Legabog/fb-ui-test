@@ -1,0 +1,58 @@
+.playList {
+    display: flex;
+    margin-bottom: 10px;
+}
+.playList hr {
+    width: 710px;
+    margin: 0;
+    margin-top: 200px;
+    margin-left: -700px;
+  }
+  
+.playList {
+    margin-left: 30px;
+    display: flex;
+}
+
+
+.playList img {
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    border-radius: 8px;
+}
+
+.playList__arrowRight svg{
+    margin-top: 70px;
+    margin-left: 60px;
+    width: 50px;
+    height: 50px;
+}
+
+.playList:hover .playList__arrowRight svg {
+    margin-left: 10px;
+}
+
+.playList:hover {
+    cursor: pointer;
+    background-color: rgb(214, 233, 255);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.playList:hover h3 {
+    color: #F62A54;
+    margin-left: 80px;
+}
+
+.playList h3 {
+    width: 600px;
+    font-size: 250%;
+    margin-top: 70px;
+    margin-left: 30px;
+    color: #1877F2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
