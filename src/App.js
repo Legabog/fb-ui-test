@@ -12,12 +12,23 @@ import {
   logout,
   toggleLoginError,
 } from "./redux/auth-reducer";
+import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
+import {
+  addToPlayList,
+  switchStateOfPlayLists,
+  addTrackToPlayList,
+  getMyOwnPlayLists,
+  createNewPlayList,
+  deleteOwnPlayList,
+  deleteTrackFromPlayList,
+} from "./redux/musicalplaylists-reducer";
 
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Feed from "./components/Feed/Feed";
 import Widgets from "./components/Widgets/Widgets";
+import Music from "./components/Music/Music";
 
 import ErrorRoute from "./components/common/ErrorRoute/ErrorRoute";
 import Preloader from "./components/common/Preloader/Preloader";
@@ -25,6 +36,13 @@ import RegistrationBlock from "./components/Login/RegistrationBlock/Registration
 import ConfirmEmailRoute from "./components/common/ConfirmEmailRoute/ConfirmEmailRoute";
 import LoginRoute from "./components/Login/LoginRoute/LoginRoute";
 import ConfirmedEmailRoute from "./components/common/ConfirmedEmailRoute/ConfirmedEmailRoute";
+import MusicList from "./components/Music/MusicList/MusicList";
+import ArtistsList from "./components/Music/MusicList/Artists/Artists";
+import ArtistItemRouter from "./components/Music/ArtistItemRouter/ArtistItemRouter";
+import MusicPlayer from "./components/Music/MusicPlayer/MusicPlayer";
+import AlbumsList from "./components/Music/MusicList/Albums/Albums";
+import PlayLists from "./components/Music/MusicList/PlayLists/PlayLists";
+import CreateAlbum from "./components/Music/MusicList/CreateAlbum/CreateAlbum";
 
 class App extends React.Component {
   state = {
@@ -48,6 +66,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.autoLogin();
+    this.props.getMusicAlbumsData();
+    this.props.getMyOwnPlayLists();
   }
 
   render() {
@@ -69,6 +89,138 @@ class App extends React.Component {
                 </>
               )}
             />
+            {/* ---------------Music player Routes Start------------- */}
+            <Route
+              path="/music"
+              exact
+              render={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <Music />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              exact
+              path="/music-list"
+              component={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <MusicList />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              exact
+              path="/music-list/artists"
+              component={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <ArtistsList />
+                  </div>
+                </>
+              )}
+            />
+
+            {this.props.musicAlbums.map((e) => (
+              <Route
+                key={e._id}
+                exact
+                path={`/music-list/artists/${e.author}`}
+                component={() => (
+                  <>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <ArtistItemRouter nameArtist={e.author} />
+                    </div>
+                  </>
+                )}
+              />
+            ))}
+
+            {this.props.musicAlbums.map((e) => (
+              <Route
+                key={Math.random()}
+                exact
+                path={`/music-player/${e.author}/${e.title}`}
+                component={() => (
+                  <>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <MusicPlayer
+                        nameArtist={e.author}
+                        albumTitle={e.title}
+                        img={e.albumcoverUrl}
+                        switchStateOfPlayLists={
+                          this.props.switchStateOfPlayLists
+                        }
+                        addTrackToPlayList={this.props.addTrackToPlayList}
+                        playPlayer={this.props.playPlayer}
+                        setMusicForPlayer={this.props.setMusicForPlayer}
+                        setIndexOfTrack={this.props.setIndexOfTrack}
+                        musicPlayerPlayList={this.props.musicPlayerPlayList}
+                        indexOfPlayingTrack={this.props.indexOfPlayingTrack}
+                        isPlaying={this.props.isPlaying}
+                        activeTrack={this.props.activeTrack}
+                        disablerButtonPlay={this.props.disablerButtonPlay}
+                      />
+                    </div>
+                  </>
+                )}
+              />
+            ))}
+
+            <Route
+              exact
+              path="/music-list/albums"
+              component={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <AlbumsList />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              exact
+              path="/music-list/playlists"
+              component={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <PlayLists />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              exact
+              path="/music-list/playlists/create"
+              component={() => (
+                <>
+                  <Header logout={this.props.logout} />
+                  <div className="app__body">
+                    <CreateAlbum
+                      fetch={this.props.fetch}
+                      addToPlayList={this.props.createNewPlayList}
+                      update={this.props.getMyOwnPlayLists}
+                    />
+                  </div>
+                </>
+              )}
+            />
+
+            {/* ---------------Music player Routes Finish------------- */}
 
             <Route
               path="/friends"
@@ -226,6 +378,11 @@ const mapStateToProps = (state) => {
     registrationFetching: state.authReducer.registrationFetching,
     registrationError: state.authReducer.registrationError,
     loginError: state.authReducer.loginError,
+    musicAlbums: state.musicAlbumsReducer.musicAlbums,
+    Fetching: state.musicAlbumsReducer.Fetching,
+    recentlyPlayed: state.musicAlbumsReducer.recentlyPlayed,
+    musicAlbumsSwitcher: state.musicAlbumsReducer.musicAlbumsSwitcher,
+    ownPlayLists: state.musicPlayListReducer.ownPlayLists,
   };
 };
 
@@ -238,5 +395,13 @@ export default compose(
     autoLogin,
     logout,
     toggleLoginError,
+    getMusicAlbumsData,
+    addToPlayList,
+    switchStateOfPlayLists,
+    addTrackToPlayList,
+    getMyOwnPlayLists,
+    createNewPlayList,
+    deleteOwnPlayList,
+    deleteTrackFromPlayList,
   })
 )(App);
