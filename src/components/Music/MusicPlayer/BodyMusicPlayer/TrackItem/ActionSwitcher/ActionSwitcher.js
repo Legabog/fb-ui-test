@@ -69,7 +69,7 @@ export const ActionSwitcher = (props) => {
               <h3>{props.title}</h3>
               <p>{props.author}</p>
             </div>
-            <CloseIcon onClick={handleClose} style={{color: "#1877F2"}}/> 
+            <CloseIcon onClick={handleClose} style={{color: "rgb(163, 163, 163)"}}/> 
           </div>
 
           <hr />
@@ -91,7 +91,7 @@ export const ActionSwitcher = (props) => {
             to={`/music-list/playlists`}
           >
             <div className={"ActionSwitcher__addToPlayList"}>
-              <AddIcon style={{color: "#1877F2"}}/>
+              <AddIcon style={{color: "rgb(163, 163, 163)"}}/>
               <h3>Add to a Playlist</h3>
             </div>
           </NavLink>

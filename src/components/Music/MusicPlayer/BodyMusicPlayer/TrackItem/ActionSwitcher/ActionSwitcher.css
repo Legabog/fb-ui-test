@@ -74,7 +74,7 @@
 .ActionSwitcher__addToPlayList h3 {
   margin-top: 3px;
   margin-left: 150px;
-  color: #1877F2;
+  color: rgb(163, 163, 163);
 }
 
 .ActionSwitcher__addToPlayList svg {

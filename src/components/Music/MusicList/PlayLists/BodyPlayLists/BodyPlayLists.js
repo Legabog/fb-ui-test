@@ -1,13 +1,13 @@
 import React from "react";
-import "./BodyPlayLists.css"
+import "./BodyPlayLists.css";
 
 import PhotoAdd from "../../../../../utils/assets/apple theme/playlist_add.jpg";
 
 import { NavLink } from "react-router-dom";
 import PlayList from "../PlayList/PlayList.js";
+import PlaylistPreloader from "./PlaylistsPreloader/PlaylistsPreloader";
 
 const BodyPlayLists = (props) => {
-  
   return (
     <div className={"bodyPlayLists"}>
       {props.playListSwitcher ? null : (
@@ -19,22 +19,25 @@ const BodyPlayLists = (props) => {
           <hr />
         </NavLink>
       )}
-
-      {props.ownPlayLists.map((e) => (
-        <PlayList
-          key={Math.random()}
-          img={e.playlistcoverUrl}
-          name={e.title}
-          description={e.description}
-          id={e._id}
-          tracks={e.tracks}
-          tempTrack={props.tempTrack}
-          updatePlaylist={props.updatePlaylist}
-          playListSwitcher={props.playListSwitcher}
-          addTrackToPlayList={props.addTrackToPlayList}
-          switchStateOfPlayLists={props.switchStateOfPlayLists}
-        />
-      ))}
+      {props.fetch ? (
+        <PlaylistPreloader />
+      ) : (
+        props.ownPlayLists.map((e) => (
+          <PlayList
+            key={Math.random()}
+            img={e.playlistcoverUrl}
+            name={e.title}
+            description={e.description}
+            id={e._id}
+            tracks={e.tracks}
+            tempTrack={props.tempTrack}
+            updatePlaylist={props.updatePlaylist}
+            playListSwitcher={props.playListSwitcher}
+            addTrackToPlayList={props.addTrackToPlayList}
+            switchStateOfPlayLists={props.switchStateOfPlayLists}
+          />
+        ))
+      )}
       <div className={"lastBlock"}></div>
     </div>
   );
