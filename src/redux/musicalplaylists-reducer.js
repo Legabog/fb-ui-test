@@ -5,6 +5,7 @@ const SWITCH_STATE_OF_PLAYLISTS = "SWITCH_STATE_OF_PLAYLISTS";
 const ADD_TRACK_TO_PLAYLIST = "ADD_TRACK_TO_PLAYLIST";
 const SET_MY_OWN_PLAYLISTS_DATA = "SET_MY_OWN_PLAYLISTS_DATA";
 const TOGGLE_FETCH = "TOGGLE_FETCH";
+const TOGGLE_DELETE_TRACK_FETCH = "TOGGLE_DELET_TRACK_FETCH";
 
 
 let initialState = {
@@ -12,8 +13,8 @@ let initialState = {
   playListSwitcher: false,
   tempTrack: null,
   fetch: false,
+  deleteTrackFetch: false,
   tempTrackPayLoad: null,
-  
 };
 
 const musicPlayListReducer = (state = initialState, action) => {
@@ -47,6 +48,12 @@ const musicPlayListReducer = (state = initialState, action) => {
         ...state,
         fetch: action.value,
       };
+    
+    case TOGGLE_DELETE_TRACK_FETCH:
+      return {
+        ...state,
+        deleteTrackFetch: action.value,
+      }
     default:
       return state;
   }
@@ -55,6 +62,13 @@ const musicPlayListReducer = (state = initialState, action) => {
 export const toggleFetch = (value) => {
   return {
     type: TOGGLE_FETCH,
+    value,
+  };
+};
+
+export const toggleDeleteTrackFetch = (value) => {
+  return {
+    type: TOGGLE_DELETE_TRACK_FETCH,
     value,
   };
 };
@@ -103,16 +117,20 @@ export const createNewPlayList = (data) => {
 
 export const deleteOwnPlayList = (id) => {
   return (dispatch) => {
+    dispatch(toggleFetch(true));
     userAPI.deleteOwnPlayList(id).then(() => {
       dispatch(getMyOwnPlayLists());
+      dispatch(toggleFetch(false));
     });
   };
 };
 
 export const deleteTrackFromPlayList = (id, pid) => {
   return (dispatch) => {
+    dispatch(toggleDeleteTrackFetch(true))
     userAPI.deleteTrack(id, pid).then(() => {
       dispatch(getMyOwnPlayLists());
+      dispatch(toggleDeleteTrackFetch(false))
     });
   };
 };

@@ -22,6 +22,17 @@ import {
   deleteOwnPlayList,
   deleteTrackFromPlayList,
 } from "./redux/musicalplaylists-reducer";
+import {
+  setMusicForPlayer,
+  toggleIsPlaying,
+  playPlayer,
+  pausePlayer,
+  setIndexOfTrack,
+  nextTrack,
+  previousTrack,
+  shuffleMusic,
+  setActiveTrackAndPlayerPlayListNull,
+} from "./redux/musicplayer-reducer";
 
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -43,6 +54,8 @@ import MusicPlayer from "./components/Music/MusicPlayer/MusicPlayer";
 import AlbumsList from "./components/Music/MusicList/Albums/Albums";
 import PlayLists from "./components/Music/MusicList/PlayLists/PlayLists";
 import CreateAlbum from "./components/Music/MusicList/CreateAlbum/CreateAlbum";
+import OwnPlayListsRouter from "./components/Music/OwnPlayListsRouter/OwnPlayListsRouter";
+import MusicPlayerPanel from "./components/MusicPlayerPanel/MusicPlayerPanel";
 
 class App extends React.Component {
   state = {
@@ -220,6 +233,41 @@ class App extends React.Component {
               )}
             />
 
+            {this.props.ownPlayLists.map((e) => (
+              <Route
+                key={Math.random()}
+                exact
+                path={`/music-playlists/${e.title}/`}
+                component={() => (
+                  <>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <OwnPlayListsRouter
+                        id={e._id}
+                        img={e.playlistcoverUrl}
+                        title={e.title}
+                        description={e.description}
+                        tracks={e.tracks}
+                        deleteOwnPlayList={this.props.deleteOwnPlayList}
+                        deleteTrackFromPlayList={
+                          this.props.deleteTrackFromPlayList
+                        }
+                        deleteTrackFetch={this.props.deleteTrackFetch}
+                        playPlayer={this.props.playPlayer}
+                        setMusicForPlayer={this.props.setMusicForPlayer}
+                        setIndexOfTrack={this.props.setIndexOfTrack}
+                        musicPlayerPlayList={this.props.musicPlayerPlayList}
+                        indexOfPlayingTrack={this.props.indexOfPlayingTrack}
+                        isPlaying={this.props.isPlaying}
+                        activeTrack={this.props.activeTrack}
+                        disablerButtonPlay={this.props.disablerButtonPlay}
+                      />
+                    </div>
+                  </>
+                )}
+              />
+            ))}
+
             {/* ---------------Music player Routes Finish------------- */}
 
             <Route
@@ -262,6 +310,21 @@ class App extends React.Component {
             />
             <Route render={() => <ErrorRoute />} />
           </Switch>
+          <MusicPlayerPanel
+              isPlaying={this.props.isPlaying}
+              playPlayer={this.props.playPlayer}
+              pausePlayer={this.props.pausePlayer}
+              musicPlayerPlayList={this.props.musicPlayerPlayList}
+              indexOfPlayingTrack={this.props.indexOfPlayingTrack}
+              toggleIsPlaying={this.props.toggleIsPlaying}
+              activeTrack={this.props.activeTrack}
+              nextTrack={this.props.nextTrack}
+              previousTrack={this.props.previousTrack}
+              disablerButtonNext={this.props.disablerButtonNext}
+              setActiveTrackAndPlayerPlayListNull={
+                this.props.setActiveTrackAndPlayerPlayListNull
+              }
+            />
         </div>
       );
     } else {
@@ -383,6 +446,13 @@ const mapStateToProps = (state) => {
     recentlyPlayed: state.musicAlbumsReducer.recentlyPlayed,
     musicAlbumsSwitcher: state.musicAlbumsReducer.musicAlbumsSwitcher,
     ownPlayLists: state.musicPlayListReducer.ownPlayLists,
+    deleteTrackFetch: state.musicPlayListReducer.deleteTrackFetch,
+    isPlaying: state.musicPlayerReducer.isPlaying,
+    musicPlayerPlayList: state.musicPlayerReducer.musicPlayerPlayList,
+    indexOfPlayingTrack: state.musicPlayerReducer.indexOfPlayingTrack,
+    activeTrack: state.musicPlayerReducer.activeTrack,
+    disablerButtonNext: state.musicPlayerReducer.disablerButtonNext,
+    disablerButtonPlay: state.musicPlayerReducer.disablerButtonPlay,
   };
 };
 
@@ -403,5 +473,14 @@ export default compose(
     createNewPlayList,
     deleteOwnPlayList,
     deleteTrackFromPlayList,
+    setMusicForPlayer,
+    toggleIsPlaying,
+    playPlayer,
+    pausePlayer,
+    setIndexOfTrack,
+    nextTrack,
+    previousTrack,
+    shuffleMusic,
+    setActiveTrackAndPlayerPlayListNull,
   })
 )(App);

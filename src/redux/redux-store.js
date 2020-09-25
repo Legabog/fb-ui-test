@@ -4,6 +4,7 @@ import userReducer from "./user-reducer";
 import authReducer from "./auth-reducer"
 import musicAlbumsReducer from "./musicalbums-reducer"
 import musicPlayListReducer from "./musicalplaylists-reducer"
+import musicPlayerReducer from "./musicplayer-reducer"
 
 import thunk from "redux-thunk";
 
@@ -12,7 +13,8 @@ let root_reducer = combineReducers({
   userReducer,
   authReducer,
   musicAlbumsReducer,
-  musicPlayListReducer
+  musicPlayListReducer,
+  musicPlayerReducer
 });
 
 let store = createStore(root_reducer, applyMiddleware(thunk));
