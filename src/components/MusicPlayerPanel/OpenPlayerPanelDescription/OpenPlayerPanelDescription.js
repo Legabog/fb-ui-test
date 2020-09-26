@@ -11,9 +11,9 @@ const OpenPlayerPanelDescription = (props) => {
         alt={musicCover}
         onClick={props.toggleMusicPanel}
       />
-      <h2 onClick={props.toggleMusicPanel}>
+      <h3 onClick={props.toggleMusicPanel}>
         {props.activeTrack !== null ? props.activeTrack.title : "Not Playing"}
-      </h2>
+      </h3>
     </React.Fragment>
   );
 };

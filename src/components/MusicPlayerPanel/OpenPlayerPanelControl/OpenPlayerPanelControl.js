@@ -1,4 +1,5 @@
 import React from "react";
+import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
@@ -10,6 +11,115 @@ const OpenPlayerPanelControl = (props) => {
   return (
     <React.Fragment>
       <div className={"MusicPlayerPanel__close__controlPanel"}>
+        <button
+          disabled={props.disablerButtonNext}
+          onClick={() => {
+            if (props.activeTrack !== null) {
+              switch (props.repeatState) {
+                case 0:
+                  if (props.activeTrack !== null && audio.currentTime > 3) {
+                    audio.currentTime = 0;
+                  } else {
+                    if (props.indexOfPlayingTrack - 1 >= 0) {
+                      props.previousTrack(
+                        {
+                          albumCover:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].albumCover !== undefined
+                              ? props.musicPlayerPlayList.tracks[
+                                  props.indexOfPlayingTrack - 1
+                                ].albumCover
+                              : props.musicPlayerPlayList.albumCover,
+                          album:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].albumTitle !== undefined
+                              ? props.musicPlayerPlayList.tracks[
+                                  props.indexOfPlayingTrack - 1
+                                ].albumTitle
+                              : props.musicPlayerPlayList.title,
+                          author:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].author !== undefined
+                              ? props.musicPlayerPlayList.tracks[
+                                  props.indexOfPlayingTrack - 1
+                                ].author
+                              : props.musicPlayerPlayList.author,
+                          title:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].title,
+                          trackUrl:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].trackUrl,
+                        },
+                        props.indexOfPlayingTrack - 1
+                      );
+                    }
+                  }
+                  break;
+                case 1:
+                  if (props.activeTrack !== null && audio.currentTime > 3) {
+                    audio.currentTime = 0;
+                  } else {
+                    if (props.indexOfPlayingTrack - 1 >= 0) {
+                      props.previousTrack(
+                        {
+                          albumCover:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].albumCover !== undefined
+                              ? props.musicPlayerPlayList.tracks[
+                                  props.indexOfPlayingTrack - 1
+                                ].albumCover
+                              : props.musicPlayerPlayList.albumCover,
+                          album:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].albumTitle !== undefined
+                              ? props.musicPlayerPlayList.tracks[
+                                  props.indexOfPlayingTrack - 1
+                                ].albumTitle
+                              : props.musicPlayerPlayList.title,
+                          author:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].author !== undefined
+                              ? props.musicPlayerPlayList.tracks[
+                                  props.indexOfPlayingTrack - 1
+                                ].author
+                              : props.musicPlayerPlayList.author,
+                          title:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].title,
+                          trackUrl:
+                            props.musicPlayerPlayList.tracks[
+                              props.indexOfPlayingTrack - 1
+                            ].trackUrl,
+                        },
+                        props.indexOfPlayingTrack - 1
+                      );
+                    }
+                  }
+                  break;
+                case 2:
+                  audio.currentTime = 0;
+                  audio.play();
+
+                  break;
+                default:
+                  break;
+              }
+            }
+          }}
+        >
+          <SkipPreviousIcon />
+        </button>
+
         <button
           disabled={props.disablerButtonNext}
           aria-label="music_panel_play_pause"

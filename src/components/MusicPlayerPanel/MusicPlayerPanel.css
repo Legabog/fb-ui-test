@@ -1,12 +1,12 @@
 /* Closed panel */
 .MusicPlayerPanel__close {
     display: flex;
+    justify-content: center;
     position: fixed;
     max-width: 400px;
-    min-height: 55px;
+    min-height: 60px;
     width: 100%;
-    height: 55px;
-    padding-bottom: 5px;
+    height: 60px;
     right:0;
     bottom:0;
     z-index: 100;
@@ -26,12 +26,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
 }
 
-.MusicPlayerPanel__close h2 {
-    width: 250px;
+.MusicPlayerPanel__close h3 {
+    width: 210px;
+    width: 210px;
+    height: 25px;
+    margin-top: 17.5px;
+    margin-left: 5px;
     height: fit-content;
     color: #1877F2;
-    margin-top: 10px;
-    margin-left: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -42,13 +44,17 @@
 }
 
 .MusicPlayerPanel__close__controlPanel {
-    margin-top: 10px;
+    margin-top: 12.5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    height: fit-content;
 }
 
 .MusicPlayerPanel__close__controlPanel button svg {
     width: 25px;
     height: 25px;
     margin-top: 5px;
+    margin-left: -1px;
     color: #1877F2;
 }
 
@@ -63,21 +69,27 @@
 }
 
 .MusicPlayerPanel__close__controlPanel button:hover {
-    filter: opacity(70%);
+    background-color: #eff2f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
     cursor: pointer;
 }
 
-.MusicPlayerPanel__close__controlPanel button:hover svg {
-    transform: scale(0.95);
+.MusicPlayerPanel__close__controlPanel button:active {
+    transform: scale(0.90);
 }
 
 .MusicPlayerPanel__close__controlPanel button:focus {
     outline: none;
 }
 
+.MusicPlayerPanel__close__controlPanel button:disabled {
+    cursor: not-allowed;
+}
+
 /*  */
 
 /* Opened panel */
+
 .MusicPlayerPanel__open {
     z-index: 100;
     display: block;
@@ -102,30 +114,33 @@
     text-align: center;
 }
 
-.MusicPlayerPanel__open__dropDown {
+.MusicPlayerPanel__open__dropDown svg {
     cursor: pointer;
 }
 
 .MusicPlayerPanel__open__dropDown svg {
-    width: 50px;
-    height: 50px; 
-    border-radius: 80px;
+    width: 30px;
+    height: 30px; 
+    border-radius: 4px;
     color: #1877F2;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
 }
 
-.MusicPlayerPanel__open__dropDown:hover svg {
-    filter: opacity(70%);
+.MusicPlayerPanel__open__dropDown svg:hover {
+    background-color: #eff2f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
 }
 
-.MusicPlayerPanel__open__dropDown:active svg{
-    transform: scale(0.95);
+.MusicPlayerPanel__open__dropDown svg:active {
+    transform: scale(0.90);
 }
 
 .MusicPlayerPanel__open__avatar {
-    padding: 20px 0px;
+    padding-top: 50px;
+    padding-bottom: 20px;
     text-align: center;
+    justify-content: center;
 }
 
 .MusicPlayerPanel__open__avatar img {
@@ -138,8 +153,10 @@
 }
 
 .MusicPlayerPanel__open__avatarIsPlaying {
-    padding: 20px 0px;
+    padding-top: 50px;
+    padding-bottom: 20px;
     text-align: center;
+    justify-content: center;
 }
 
 .MusicPlayerPanel__open__avatarIsPlaying img {
@@ -147,55 +164,46 @@
     width: auto;
     max-height: 90%;
     max-width: 100%;
-    margin-top: 8px;
     transform: scale(1.1);
     border-radius: 6px;
     box-shadow: rgb(165, 165, 165) 0px 10px 30px;
 }
 
 .MusicPlayerPanel__open__description {
-    margin-top: 16px;
     text-align: center;
 }
 
 .MusicPlayerPanel__open__songName {
     color: #1877F2;
-    display: block;
-    font-size: 1.17em;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
     font-weight: bold;
 }
 
 .MusicPlayerPanel__open__authorNameAlbumName {
     color: #A3A3A3;
     font-weight: normal;
-    font-size: 1.17em;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 }
 
 .MusicPlayerPanel__open__trackBar {
-    margin-left: 60px;
     padding-top: 30px;
 }
 
-.MusicPlayerPanel__open__trackBar input {
+.MusicPlayerPanel__open__trackBar__input {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.MusicPlayerPanel__open__trackBar__input input {
     -webkit-appearance: none;
     width: 90%;
     border-radius:2px;
-    margin-left: 5px;
     height: 5px;
     outline : none;
     border: none;
     background:-webkit-linear-gradient(left ,#E6E6E6 0%,#E6E6E6 50%,#E6E6E6 25%, #E6E6E6 100%);
 }
 
-.MusicPlayerPanel__open__trackBar input::-webkit-slider-thumb {
+.MusicPlayerPanel__open__trackBar__input input::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 10px;
     height: 30px;
@@ -209,11 +217,11 @@
     transition:.1s;
 }
 
-.MusicPlayerPanel__open__trackBar input::-webkit-slider-thumb:hover{
+.MusicPlayerPanel__open__trackBar__input input::-webkit-slider-thumb:hover{
     transform: scale(1.2)
 }
 
-.MusicPlayerPanel__open__trackBar input::-moz-range-thumb{
+.MusicPlayerPanel__open__trackBar__input input::-moz-range-thumb{
     -webkit-appearance: none;
     width: 10px;
     height: 30px;
@@ -227,11 +235,11 @@
     transition:.1s;
 }
 
-.MusicPlayerPanel__open__trackBar input::-moz-range-thumb:hover{
+.MusicPlayerPanel__open__trackBar__input input::-moz-range-thumb:hover{
     transform: scale(1.2)
 }
 
-.MusicPlayerPanel__open__trackBar input::-ms-thumb{
+.MusicPlayerPanel__open__trackBar__input input::-ms-thumb{
     -webkit-appearance: none;
     width: 10px;
     height: 30px;
@@ -245,13 +253,15 @@
     transition:.1s;
 }
 
-.MusicPlayerPanel__open__trackBar input::-ms-thumb:hover{
+.MusicPlayerPanel__open__trackBar__input input::-ms-thumb:hover{
     transform: scale(1.2)
 }
 
 .MusicPlayerPanel__open__trackBar__time {
     margin-top: 20px;
     display: flex;
+    text-align: center;
+    justify-content: center;
 }
 
 .MusicPlayerPanel__open__trackBar__time h5 {
@@ -259,93 +269,115 @@
     font-size: 1.1em;
 }
 
-.MusicPlayerPanel__open__trackBar__currentTime h5 {
-    margin-left: 5px;
+.MusicPlayerPanel__open__trackBar__timeLeft h5 {
+    padding-left: 285px;
 }
 
-.MusicPlayerPanel__open__trackBar__timeLeft h5 {
-    padding-left: 230px;
+.MusicPlayerPanel__open__controlPanel__wrapper {
+    margin-top: 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
 
 .MusicPlayerPanel__open__controlPanel {
-    margin-top: 50px;
-    display: flex;
+    width: 60%;
+    text-align: start;
 }
 
 .MusicPlayerPanel__open__controlPanel button {
     background-color: #fff;
     border-radius: 60px;
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
     border: none;
 }
 
 .MusicPlayerPanel__open__controlPanel button:hover {
-    filter: opacity(70%);
+    background-color: #eff2f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
     cursor: pointer;
 }
 
-.MusicPlayerPanel__open__controlPanel button:hover svg {
-    transform: scale(0.95);
+.MusicPlayerPanel__open__controlPanel button:active {
+    transform: scale(0.90);
 }
 
 .MusicPlayerPanel__open__controlPanel button:focus {
     outline: none;
 }
 
+.MusicPlayerPanel__open__controlPanel button:disabled {
+    cursor: not-allowed;
+}
+
 
 .MusicPlayerPanel__open__controlPanel button svg {
     color: #1877F2;
     margin-top: 5px;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
+}
+
+.MusicPlayerPanel__open__volume__wrapper {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 40px;
 }
 
 .MusicPlayerPanel__open__volume {
+    width: 90%;
     display: flex;
-    padding: 50px;
-    margin-left: 25px;
 }
 
-.MusicPlayerPanel__open__volume svg {
-    width: 30px;
-    height: 30px;
-}
 
 .MusicPlayerPanel__open__unmute {
-    border-radius: 60px;
-    width: 35px;
-    height: 35px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
 }
 
 .MusicPlayerPanel__open__unmute svg {
     color: #1877F2;
-    margin-top: 5px;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
+}
+
+.MusicPlayerPanel__open__unmute:hover {
+    cursor: pointer;
+}
+
+.MusicPlayerPanel__open__unmute:active {
+    transform: scale(0.90);
 }
 
 .MusicPlayerPanel__open__mute {
-    border-radius: 60px;
-    width: 35px;
-    height: 35px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
-.MusicPlayerPanel__open__mute {
+.MusicPlayerPanel__open__mute svg {
     color: #1877F2;
-    margin-top: 5px;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
+}
+
+.MusicPlayerPanel__open__mute:hover {
+    cursor: pointer;
+}
+
+.MusicPlayerPanel__open__mute:active {
+    transform: scale(0.90);
 }
 
 .MusicPlayerPanel__open__volume input {
     -webkit-appearance: none;
     width: 90%;
+    margin-top: 7.5px;
     border-radius:2px;
-    margin-left: 5px;
     height: 5px;
     outline : none;
     border: none;
@@ -405,8 +437,47 @@
     transform: scale(1.2)
 }
 
-.MusicPlayerPanel__open__shuffleAndRepeat {
-    
+.MusicPlayerPanel__open__shuffleAndRepeat__wrapper {
+    margin-top: 30px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
+
+.MusicPlayerPanel__open__shuffleAndRepeat {
+    width: 90%;
+}
+
+.MusicPlayerPanel__open__shuffleAndRepeat button {
+    background-color: #fff;
+    border-radius: 60px;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    border: none;
+}
+
+.MusicPlayerPanel__open__shuffleAndRepeat button svg{
+    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+}
+
+
+.MusicPlayerPanel__open__shuffleAndRepeat button:hover {
+    background-color: #eff2f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.MusicPlayerPanel__open__shuffleAndRepeat button:active {
+    transform: scale(0.90);
+}
+
+
+.MusicPlayerPanel__open__shuffleAndRepeat button:focus {
+    outline: none;
+}
+
 
 /*  */

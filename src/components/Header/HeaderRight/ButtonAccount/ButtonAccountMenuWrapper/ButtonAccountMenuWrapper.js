@@ -8,8 +8,12 @@ import Brightness2Icon from "@material-ui/icons/Brightness2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./ButtonAccountMenuWrapper.css";
 import { TrendingUpTwoTone } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 
 const ButtonAccountMenuWrapper = (props) => {
+
+  const history = useHistory()
+
   const [themeSwitcher, switchTheme] = useState(false);
 
   const toggleSwitcher = () => {
@@ -121,7 +125,10 @@ const ButtonAccountMenuWrapper = (props) => {
           </div>
         </div>
 
-        <div className="buttonAccount__menu__section" onClick={props.logout}>
+        <div className="buttonAccount__menu__section" onClick={() => {
+          props.logout()
+          history.push("/")
+        }}>
           <div className="buttonAccount__menu__section__icon">
             <ExitToAppIcon />
           </div>
