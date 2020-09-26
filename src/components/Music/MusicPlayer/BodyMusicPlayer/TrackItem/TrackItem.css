@@ -3,6 +3,10 @@
     margin-top: 30px;
     margin-bottom: 30px;
   }
+
+  .bodyMusicPlayer__item {
+    border-bottom: 1px solid #e9e9e9;
+  }
   
   .bodyMusicPlayer__item:hover {
     cursor: pointer;
@@ -30,6 +34,10 @@
     color: #F62A54;  
   }
 
+  .bodyMusicPlayer__item:hover button{
+    margin-left: -40px;
+  }
+
   .bodyMusicPlayer__description {
     display: flex;
   }
@@ -38,7 +46,7 @@
     color: #1877F2;
     margin-top: 10px;
     font-size: 160%;
-    width: 580px;
+    width: 605px;
   }
 
   .bodyMusicPlayer__description img {

@@ -16,7 +16,6 @@ const BodyPlayLists = (props) => {
             <img src={PhotoAdd} alt="descripion" />
             <h3>Create new playlist</h3>
           </div>
-          <hr />
         </NavLink>
       )}
       {props.fetch ? (

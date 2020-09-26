@@ -32,7 +32,6 @@ const HeaderArtistItemRouter = (props) => {
         </NavLink>
       </div>
       <h1>{props.nameArtist}</h1>
-      <hr />
     </div>
   );
 };

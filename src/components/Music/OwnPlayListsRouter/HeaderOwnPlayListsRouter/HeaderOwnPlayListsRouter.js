@@ -13,7 +13,7 @@ const HeaderOwnPlayListsRouter = (props) => {
   };
 
   return (
-    <div className={"headerArtistItemRouter"}>
+    <div className={"headerOwnPlayListsRouter"}>
       <NavLink
         to="/music-list/playlists/"
         onMouseOver={() => {
@@ -23,7 +23,7 @@ const HeaderOwnPlayListsRouter = (props) => {
           setHover(0);
         }}
       >
-        <div className={"headerArtistItemRouter__buttonBack"}>
+        <div className={"headerOwnPlayListsRouter__buttonBack"}>
         {hover ? (
             <ArrowBackIosIcon style={{ color: "#F62A54" }} />
           ) : (

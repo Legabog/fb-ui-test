@@ -31,7 +31,6 @@ const ItemArtists = (props) => {
           )}
         </div>
       </NavLink>
-      <hr />
     </div>
   );
 };

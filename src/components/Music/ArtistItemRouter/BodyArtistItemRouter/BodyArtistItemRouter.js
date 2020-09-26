@@ -19,7 +19,6 @@ const BodyArtistItemRouter = (props) => {
         }
         return null
       })}
-      <div className={"lastBlock"}></div>
     </div>
   );
 };

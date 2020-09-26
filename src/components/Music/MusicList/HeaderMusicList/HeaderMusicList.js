@@ -7,7 +7,6 @@ const HeaderMusicList = (props) => {
         <div className={"headerTitle"}>
         <h1>Library</h1>
         </div>
-        <hr />
       </div>
     );
 }

@@ -33,7 +33,6 @@ const HeaderArtists = (props) => {
         </NavLink>
       </div>
       <h1>Artists</h1>
-      <hr />
     </div>
   );
 };

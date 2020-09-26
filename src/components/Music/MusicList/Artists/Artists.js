@@ -10,7 +10,7 @@ const ArtistsList = (props) => {
   return (
     <div className={"artists"}>
       <HeaderArtists />
-      <BodyArtists musicAlbums={props.musicAlbums} />
+      <BodyArtists Fetching={props.Fetching} musicAlbums={props.musicAlbums} />
     </div>
   );
 };
@@ -18,6 +18,7 @@ const ArtistsList = (props) => {
 const mapStateToProps = (state) => {
   return {
     musicAlbums: state.musicAlbumsReducer.musicAlbums,
+    Fetching: state.musicAlbumsReducer.Fetching
   };
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import "./BodyArtists.css";
 
 import ItemArtists from "./ItemArtists/ItemArtists.js";
+import ArtistsPreloader from "./ArtistsPreloader/ArtistsPreloader";
 
 const BodyArtists = (props) => {
   let resultArray = [];
@@ -15,6 +16,7 @@ const BodyArtists = (props) => {
 
   return (
     <div className={"bodyArtists"}>
+      {props.Fetching ? <ArtistsPreloader /> : null}
       {resultArray.map((e) => (
         <ItemArtists
           key={Math.random()}

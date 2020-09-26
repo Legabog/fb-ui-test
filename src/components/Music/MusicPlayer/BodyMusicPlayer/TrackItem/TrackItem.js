@@ -63,7 +63,6 @@ const TracksItem = (props) => {
                 trackUrl={e.trackUrl}
               />
             </div>
-            <hr />
           </div>
         );
       })}

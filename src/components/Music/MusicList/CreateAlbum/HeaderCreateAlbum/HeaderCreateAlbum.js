@@ -61,6 +61,7 @@ class HeaderCreateAlbum extends React.Component {
   render() {
     return (
       <div className={"headerCreateAlbum"}>
+        <div className={"headerCreateAlbum__buttons"}>
         <NavLink
           to="/music-list/playlists"
           onMouseOver={() => {
@@ -122,6 +123,10 @@ class HeaderCreateAlbum extends React.Component {
           </div>
         </NavLink>
 
+        </div>
+
+
+       
         <h1>Create new playlist</h1>
         <div className={"headerCreateAlbum__inputs"}>
           <div className={"headerCreateAlbum__addPhoto"}>
@@ -157,7 +162,6 @@ class HeaderCreateAlbum extends React.Component {
             </div>
           </div>
         </div>
-        <div className={"lastBlock"}></div>
       </div>
     );
   }

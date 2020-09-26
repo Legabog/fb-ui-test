@@ -2,28 +2,23 @@
   word-break: break-all;
 }
 
-.bodyPlayLists hr {
-    width: 710px;
-    margin-top: 0px;
-    margin-left: 270px;
-    height: 0;
-    border: none;
-    border-top: 1px solid rgb(240, 236, 236);
-  }
-
 .bodyPlayLists a {
   text-decoration: none;
 }  
   
 .bodyPlayLists__createPlayList {
+    margin-top: 20px;
     margin-left: 30px;
-    margin-bottom: 20px;
     display: flex;
+    border-top: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 .bodyPlayLists__createPlayList img {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
   border-radius: 8px;
 }
@@ -58,7 +53,8 @@
 
 .bodyPlayLists__createPlayList h3 {
     font-size: 250%;
-    margin-top: 65px;
+    height: fit-content;
+    margin-top: 50px;
     margin-left: 30px;
     color: #1877F2;
 }

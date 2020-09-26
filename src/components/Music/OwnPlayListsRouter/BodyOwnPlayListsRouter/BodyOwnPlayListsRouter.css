@@ -1,6 +1,7 @@
 .bodyOwnPlayListsRouter {
     display:flex;
     word-break: break-all;
+    margin-bottom: 50px;
 }
 
 .bodyOwnPlayListsRouter a {
@@ -8,33 +9,35 @@
 }
 
 .bodyOwnPlayListsRouter__playListImage {
-    margin-left: 55px;
+    width: 250px;
+    height: 250px;
+    margin-left: 30px;
     margin-bottom: 30px;
 }
 
 .bodyOwnPlayListsRouter__playListImage img {
-    width: 300px;
-    height: 300px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    width: 250px;
+    height: 250px;
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1)
 }
 
 .bodyOwnPlayListsRouter__playListTitle {
-    display: block;
-    width: 620px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-left: 30px;
 }
 
 .bodyOwnPlayListsRouter__playListTitle h1 {
     color: #1877F2;
-    width: 580px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 160%;
 }
 
 .bodyOwnPlayListsRouter__playListTitle h2 {
-    width: 580px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: rgb(163, 163, 163);
     margin-bottom: 20px;
 }
@@ -42,17 +45,8 @@
 .bodyOwnPlayListsRouter__playListTitle br {
     margin: 0;
 }
-
-.bodyOwnPlayListsRouter__playListTracks {
-    margin-top: 30px;
-}
-
 .bodyOwnPlayListsRouter__playListTracks h2 {
     color: #1877F2;
-}
-
-.bodyOwnPlayListsRouter__playListTracks p {
-    margin-top: 0px;
 }
 
 .bodyOwnPlayListsRouter__playListTracks hr {
@@ -62,8 +56,9 @@
     border-top: 1px solid rgb(240, 236, 236);
 }
 
-.lastBlock {
-    height: 30px;
+.bodyOwnPlayListsRouter__delete {
+    width: fit-content;
+    margin-top: 30px; 
 }
 
 .bodyOwnPlayListsRouter__delete svg {
@@ -71,8 +66,4 @@
     height: 35px;
 }
 
-.bodyOwnPlayListsRouter__delete svg{
-    margin-top: 270px;
-    margin-left: -335px;
-}
 

@@ -71,8 +71,6 @@ export const ActionSwitcher = (props) => {
             </div>
             <CloseIcon onClick={handleClose} style={{color: "rgb(163, 163, 163)"}}/> 
           </div>
-
-          <hr />
         </div>
         <MenuItem
           onClick={() => {

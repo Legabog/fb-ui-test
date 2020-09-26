@@ -32,7 +32,6 @@ const BodyMusicListItem = (props) => {
           </div>
         </NavLink>
       </div>
-      <hr />
     </React.Fragment>
   );
 };

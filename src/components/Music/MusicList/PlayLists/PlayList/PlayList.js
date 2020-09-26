@@ -60,8 +60,6 @@ const PlayList = (props) => {
                   <ArrowForwardIosIcon style={{ color: "#1877F2" }} />
                 )}
               </div>
-
-              <hr />
             </div>
           </NavLink>
         </>
@@ -87,8 +85,6 @@ const PlayList = (props) => {
                 <ArrowForwardIosIcon style={{ color: "#1877F2" }} />
               )}
             </div>
-
-            <hr />
           </div>
         </NavLink>
       )}
