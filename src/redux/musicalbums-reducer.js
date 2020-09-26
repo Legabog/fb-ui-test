@@ -7,10 +7,9 @@ const PUSH_ALBUM_TO_RECENTLY_PLAYED = "PUSH_ALBUM_TO_RECENTLY_PLAYED";
 const PUSH_TITLE_TO_DISABLED_ARRAY = "PUSH_TITLE_TO_DISABLED_ARRAY";
 const PUSH_AUTHOR_TO_DISABLED_ARRAY = "PUSH_AUTHOR_TO_DISABLED_ARRAY";
 
-
 let initialState = {
   musicAlbums: [],
-  Fetching: true,
+  Fetching: false,
   musicAlbumsSwitcher: 1,
   recentlyPlayed: [],
   disabledTitles: [],
@@ -68,7 +67,7 @@ export const setMusicAlbumsData = (payload) => {
 export const pushAlbumToRecentlyPlayed = (img, title, author) => {
   return {
     type: PUSH_ALBUM_TO_RECENTLY_PLAYED,
-    data: { img, title, author},
+    data: { img, title, author },
   };
 };
 
@@ -103,8 +102,8 @@ export const toggleSwitcher = (switcher) => {
 export const pushToRecentlyPlayed = (img, title, author) => {
   return async (dispatch) => {
     dispatch(pushAlbumToRecentlyPlayed(img, title, author));
-    dispatch(pushTitleToDisabledArray(title))
-    dispatch(pushAuthorToDisabledArray(author))
+    dispatch(pushTitleToDisabledArray(title));
+    dispatch(pushAuthorToDisabledArray(author));
   };
 };
 

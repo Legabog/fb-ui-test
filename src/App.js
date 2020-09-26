@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -34,28 +34,75 @@ import {
   setActiveTrackAndPlayerPlayListNull,
 } from "./redux/musicplayer-reducer";
 
-import Login from "./components/Login/Login";
+// ---------Main Components
+
+// --------Logged in user
+
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Feed from "./components/Feed/Feed";
 import Widgets from "./components/Widgets/Widgets";
-import Music from "./components/Music/Music";
-
+import MusicPlayerPanel from "./components/MusicPlayerPanel/MusicPlayerPanel";
 import ErrorRoute from "./components/common/ErrorRoute/ErrorRoute";
 import Preloader from "./components/common/Preloader/Preloader";
+
+//
+// ---------Not logged in user
+
+import Login from "./components/Login/Login";
 import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
-import ConfirmEmailRoute from "./components/common/ConfirmEmailRoute/ConfirmEmailRoute";
-import LoginRoute from "./components/Login/LoginRoute/LoginRoute";
-import ConfirmedEmailRoute from "./components/common/ConfirmedEmailRoute/ConfirmedEmailRoute";
-import MusicList from "./components/Music/MusicList/MusicList";
-import ArtistsList from "./components/Music/MusicList/Artists/Artists";
-import ArtistItemRouter from "./components/Music/ArtistItemRouter/ArtistItemRouter";
-import MusicPlayer from "./components/Music/MusicPlayer/MusicPlayer";
-import AlbumsList from "./components/Music/MusicList/Albums/Albums";
-import PlayLists from "./components/Music/MusicList/PlayLists/PlayLists";
-import CreateAlbum from "./components/Music/MusicList/CreateAlbum/CreateAlbum";
-import OwnPlayListsRouter from "./components/Music/OwnPlayListsRouter/OwnPlayListsRouter";
-import MusicPlayerPanel from "./components/MusicPlayerPanel/MusicPlayerPanel";
+
+//
+
+// -----Lazy components
+
+const Music = React.lazy(() => import("./components/Music/Music"));
+
+const MusicList = React.lazy(() =>
+  import("./components/Music/MusicList/MusicList")
+);
+
+const ArtistsList = React.lazy(() =>
+  import("./components/Music/MusicList/Artists/Artists")
+);
+
+const ArtistItemRouter = React.lazy(() =>
+  import("./components/Music/ArtistItemRouter/ArtistItemRouter")
+);
+
+const AlbumsList = React.lazy(() =>
+  import("./components/Music/MusicList/Albums/Albums")
+);
+
+const PlayLists = React.lazy(() =>
+  import("./components/Music/MusicList/PlayLists/PlayLists")
+);
+
+const CreateAlbum = React.lazy(() =>
+  import("./components/Music/MusicList/CreateAlbum/CreateAlbum")
+);
+
+const OwnPlayListsRouter = React.lazy(() =>
+  import("./components/Music/OwnPlayListsRouter/OwnPlayListsRouter")
+);
+
+const LoginRoute = React.lazy(() =>
+  import("./components/Login/LoginRoute/LoginRoute")
+);
+
+const ConfirmEmailRoute = React.lazy(() =>
+  import("./components/common/ConfirmEmailRoute/ConfirmEmailRoute")
+);
+
+const ConfirmedEmailRoute = React.lazy(() =>
+  import("./components/common/ConfirmedEmailRoute/ConfirmedEmailRoute")
+);
+
+const MusicPlayer = React.lazy(() =>
+  import("./components/Music/MusicPlayer/MusicPlayer")
+);
+
+//
 
 class App extends React.Component {
   state = {
@@ -88,6 +135,7 @@ class App extends React.Component {
       return (
         <div className="app">
           <Switch>
+            {this.props.Fetching ? <Preloader /> : null}
             <Route
               path="/"
               exact
@@ -108,10 +156,12 @@ class App extends React.Component {
               exact
               render={() => (
                 <>
-                  <Header logout={this.props.logout} />
-                  <div className="app__body">
-                    <Music />
-                  </div>
+                  <Suspense fallback={<Preloader />}>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <Music />
+                    </div>
+                  </Suspense>
                 </>
               )}
             />
@@ -121,10 +171,12 @@ class App extends React.Component {
               path="/music-list"
               component={() => (
                 <>
-                  <Header logout={this.props.logout} />
-                  <div className="app__body">
-                    <MusicList />
-                  </div>
+                  <Suspense fallback={<Preloader />}>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <MusicList />
+                    </div>
+                  </Suspense>
                 </>
               )}
             />
@@ -134,10 +186,12 @@ class App extends React.Component {
               path="/music-list/artists"
               component={() => (
                 <>
-                  <Header logout={this.props.logout} />
-                  <div className="app__body">
-                    <ArtistsList />
-                  </div>
+                  <Suspense fallback={<Preloader />}>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <ArtistsList />
+                    </div>
+                  </Suspense>
                 </>
               )}
             />
@@ -149,10 +203,12 @@ class App extends React.Component {
                 path={`/music-list/artists/${e.author}`}
                 component={() => (
                   <>
-                    <Header logout={this.props.logout} />
-                    <div className="app__body">
-                      <ArtistItemRouter nameArtist={e.author} />
-                    </div>
+                    <Suspense fallback={<Preloader />}>
+                      <Header logout={this.props.logout} />
+                      <div className="app__body">
+                        <ArtistItemRouter nameArtist={e.author} />
+                      </div>
+                    </Suspense>
                   </>
                 )}
               />
@@ -165,26 +221,28 @@ class App extends React.Component {
                 path={`/music-player/${e.author}/${e.title}`}
                 component={() => (
                   <>
-                    <Header logout={this.props.logout} />
-                    <div className="app__body">
-                      <MusicPlayer
-                        nameArtist={e.author}
-                        albumTitle={e.title}
-                        img={e.albumcoverUrl}
-                        switchStateOfPlayLists={
-                          this.props.switchStateOfPlayLists
-                        }
-                        addTrackToPlayList={this.props.addTrackToPlayList}
-                        playPlayer={this.props.playPlayer}
-                        setMusicForPlayer={this.props.setMusicForPlayer}
-                        setIndexOfTrack={this.props.setIndexOfTrack}
-                        musicPlayerPlayList={this.props.musicPlayerPlayList}
-                        indexOfPlayingTrack={this.props.indexOfPlayingTrack}
-                        isPlaying={this.props.isPlaying}
-                        activeTrack={this.props.activeTrack}
-                        disablerButtonPlay={this.props.disablerButtonPlay}
-                      />
-                    </div>
+                    <Suspense fallback={<Preloader />}>
+                      <Header logout={this.props.logout} />
+                      <div className="app__body">
+                        <MusicPlayer
+                          nameArtist={e.author}
+                          albumTitle={e.title}
+                          img={e.albumcoverUrl}
+                          switchStateOfPlayLists={
+                            this.props.switchStateOfPlayLists
+                          }
+                          addTrackToPlayList={this.props.addTrackToPlayList}
+                          playPlayer={this.props.playPlayer}
+                          setMusicForPlayer={this.props.setMusicForPlayer}
+                          setIndexOfTrack={this.props.setIndexOfTrack}
+                          musicPlayerPlayList={this.props.musicPlayerPlayList}
+                          indexOfPlayingTrack={this.props.indexOfPlayingTrack}
+                          isPlaying={this.props.isPlaying}
+                          activeTrack={this.props.activeTrack}
+                          disablerButtonPlay={this.props.disablerButtonPlay}
+                        />
+                      </div>
+                    </Suspense>
                   </>
                 )}
               />
@@ -195,10 +253,12 @@ class App extends React.Component {
               path="/music-list/albums"
               component={() => (
                 <>
-                  <Header logout={this.props.logout} />
-                  <div className="app__body">
-                    <AlbumsList />
-                  </div>
+                  <Suspense fallback={<Preloader />}>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <AlbumsList />
+                    </div>
+                  </Suspense>
                 </>
               )}
             />
@@ -208,10 +268,12 @@ class App extends React.Component {
               path="/music-list/playlists"
               component={() => (
                 <>
-                  <Header logout={this.props.logout} />
-                  <div className="app__body">
-                    <PlayLists />
-                  </div>
+                  <Suspense fallback={<Preloader />}>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <PlayLists />
+                    </div>
+                  </Suspense>
                 </>
               )}
             />
@@ -221,14 +283,16 @@ class App extends React.Component {
               path="/music-list/playlists/create"
               component={() => (
                 <>
-                  <Header logout={this.props.logout} />
-                  <div className="app__body">
-                    <CreateAlbum
-                      fetch={this.props.fetch}
-                      addToPlayList={this.props.createNewPlayList}
-                      update={this.props.getMyOwnPlayLists}
-                    />
-                  </div>
+                  <Suspense fallback={<Preloader />}>
+                    <Header logout={this.props.logout} />
+                    <div className="app__body">
+                      <CreateAlbum
+                        fetch={this.props.fetch}
+                        addToPlayList={this.props.createNewPlayList}
+                        update={this.props.getMyOwnPlayLists}
+                      />
+                    </div>
+                  </Suspense>
                 </>
               )}
             />
@@ -240,29 +304,31 @@ class App extends React.Component {
                 path={`/music-playlists/${e.title}/`}
                 component={() => (
                   <>
-                    <Header logout={this.props.logout} />
-                    <div className="app__body">
-                      <OwnPlayListsRouter
-                        id={e._id}
-                        img={e.playlistcoverUrl}
-                        title={e.title}
-                        description={e.description}
-                        tracks={e.tracks}
-                        deleteOwnPlayList={this.props.deleteOwnPlayList}
-                        deleteTrackFromPlayList={
-                          this.props.deleteTrackFromPlayList
-                        }
-                        deleteTrackFetch={this.props.deleteTrackFetch}
-                        playPlayer={this.props.playPlayer}
-                        setMusicForPlayer={this.props.setMusicForPlayer}
-                        setIndexOfTrack={this.props.setIndexOfTrack}
-                        musicPlayerPlayList={this.props.musicPlayerPlayList}
-                        indexOfPlayingTrack={this.props.indexOfPlayingTrack}
-                        isPlaying={this.props.isPlaying}
-                        activeTrack={this.props.activeTrack}
-                        disablerButtonPlay={this.props.disablerButtonPlay}
-                      />
-                    </div>
+                    <Suspense fallback={<Preloader />}>
+                      <Header logout={this.props.logout} />
+                      <div className="app__body">
+                        <OwnPlayListsRouter
+                          id={e._id}
+                          img={e.playlistcoverUrl}
+                          title={e.title}
+                          description={e.description}
+                          tracks={e.tracks}
+                          deleteOwnPlayList={this.props.deleteOwnPlayList}
+                          deleteTrackFromPlayList={
+                            this.props.deleteTrackFromPlayList
+                          }
+                          deleteTrackFetch={this.props.deleteTrackFetch}
+                          playPlayer={this.props.playPlayer}
+                          setMusicForPlayer={this.props.setMusicForPlayer}
+                          setIndexOfTrack={this.props.setIndexOfTrack}
+                          musicPlayerPlayList={this.props.musicPlayerPlayList}
+                          indexOfPlayingTrack={this.props.indexOfPlayingTrack}
+                          isPlaying={this.props.isPlaying}
+                          activeTrack={this.props.activeTrack}
+                          disablerButtonPlay={this.props.disablerButtonPlay}
+                        />
+                      </div>
+                    </Suspense>
                   </>
                 )}
               />
@@ -308,23 +374,24 @@ class App extends React.Component {
                 </>
               )}
             />
+            
             <Route render={() => <ErrorRoute />} />
           </Switch>
           <MusicPlayerPanel
-              isPlaying={this.props.isPlaying}
-              playPlayer={this.props.playPlayer}
-              pausePlayer={this.props.pausePlayer}
-              musicPlayerPlayList={this.props.musicPlayerPlayList}
-              indexOfPlayingTrack={this.props.indexOfPlayingTrack}
-              toggleIsPlaying={this.props.toggleIsPlaying}
-              activeTrack={this.props.activeTrack}
-              nextTrack={this.props.nextTrack}
-              previousTrack={this.props.previousTrack}
-              disablerButtonNext={this.props.disablerButtonNext}
-              setActiveTrackAndPlayerPlayListNull={
-                this.props.setActiveTrackAndPlayerPlayListNull
-              }
-            />
+            isPlaying={this.props.isPlaying}
+            playPlayer={this.props.playPlayer}
+            pausePlayer={this.props.pausePlayer}
+            musicPlayerPlayList={this.props.musicPlayerPlayList}
+            indexOfPlayingTrack={this.props.indexOfPlayingTrack}
+            toggleIsPlaying={this.props.toggleIsPlaying}
+            activeTrack={this.props.activeTrack}
+            nextTrack={this.props.nextTrack}
+            previousTrack={this.props.previousTrack}
+            disablerButtonNext={this.props.disablerButtonNext}
+            setActiveTrackAndPlayerPlayListNull={
+              this.props.setActiveTrackAndPlayerPlayListNull
+            }
+          />
         </div>
       );
     } else {
@@ -371,13 +438,15 @@ class App extends React.Component {
             path="/confirm_email"
             exact
             render={() => (
-              <div className="app">
-                <ConfirmEmailRoute
-                  displayRegistrationBlockFalse={
-                    this.displayRegistrationBlockFalse
-                  }
-                />
-              </div>
+              <Suspense fallback={<Preloader />}>
+                <div className="app">
+                  <ConfirmEmailRoute
+                    displayRegistrationBlockFalse={
+                      this.displayRegistrationBlockFalse
+                    }
+                  />
+                </div>
+              </Suspense>
             )}
           />
 
@@ -385,9 +454,11 @@ class App extends React.Component {
             path="/confirmed_email"
             exact
             render={() => (
-              <div className="app">
-                <ConfirmedEmailRoute />
-              </div>
+              <Suspense fallback={<Preloader />}>
+                <div className="app">
+                  <ConfirmedEmailRoute />
+                </div>
+              </Suspense>
             )}
           />
           <Route
@@ -395,28 +466,32 @@ class App extends React.Component {
             exact
             render={() => (
               <>
-                <div className="app">
-                  <LoginRoute
-                    signIn={this.props.signIn}
-                    displayRegistrationBlockTrue={
-                      this.displayRegistrationBlockTrue
+                <Suspense fallback={<Preloader />}>
+                  <div className="app">
+                    <LoginRoute
+                      signIn={this.props.signIn}
+                      displayRegistrationBlockTrue={
+                        this.displayRegistrationBlockTrue
+                      }
+                      loginError={this.props.loginError}
+                      toggleLoginError={this.props.toggleLoginError}
+                    />
+                  </div>
+                  <RegistrationBlock
+                    displayRegistrationBlockFalse={
+                      this.displayRegistrationBlockFalse
                     }
-                    loginError={this.props.loginError}
-                    toggleLoginError={this.props.toggleLoginError}
+                    visibilityRegistrationBlock={
+                      this.state.visibilityRegistrationBlock
+                    }
+                    opacityRegistrationBlock={
+                      this.state.opacityRegistrationBlock
+                    }
+                    signUp={this.props.signUp}
+                    registrationFetching={this.props.registrationFetching}
+                    registrationError={this.props.registrationError}
                   />
-                </div>
-                <RegistrationBlock
-                  displayRegistrationBlockFalse={
-                    this.displayRegistrationBlockFalse
-                  }
-                  visibilityRegistrationBlock={
-                    this.state.visibilityRegistrationBlock
-                  }
-                  opacityRegistrationBlock={this.state.opacityRegistrationBlock}
-                  signUp={this.props.signUp}
-                  registrationFetching={this.props.registrationFetching}
-                  registrationError={this.props.registrationError}
-                />
+                </Suspense>
               </>
             )}
           />

@@ -68,7 +68,7 @@ export const signIn = (email, password, history, URL) => {
       .then((response) => {
         const data = response.data;
         const expirationDate = new Date(
-          new Date().getTime() + data.expiresIn * 1000
+          new Date().getTime() + data.expiresIn * 24000
         );
 
         localStorage.setItem("token", data.idToken);
@@ -197,7 +197,7 @@ export const autoLogout = (time) => {
   };
 };
 
-export const logout = () => {
+export const logout = (history) => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("expirationDate");
