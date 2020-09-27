@@ -1,5 +1,6 @@
 import Axios from "axios";
 import db, { firebaseConfig } from "../utils/firebase/firebase";
+import { setActiveUser, setUser } from "./user-reducer";
 
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const AUTH_LOGOUT = "AUTH_LOGOUT";
@@ -9,6 +10,7 @@ const TOGGLE_REGISTRATION_FETCHING = "TOGGLE_REGISTRATION_FETCHING";
 const TOGGLE_LOGIN_ERROR = "TOGGLE_LOGIN_ERROR";
 
 let initialState = {
+  activeAccountEmail: null,
   token: null,
   fetching: false,
   registrationError: false,
@@ -22,11 +24,13 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.token,
+        activeAccountEmail: action.activeAccountEmail,
       };
     case AUTH_LOGOUT:
       return {
         ...state,
         token: null,
+        activeAccountEmail: null,
       };
     case TOGGLE_FETCHING:
       return {
@@ -71,11 +75,14 @@ export const signIn = (email, password, history, URL) => {
           new Date().getTime() + data.expiresIn * 24000
         );
 
+        dispatch(setActiveUser(data.email));
+
         localStorage.setItem("token", data.idToken);
         localStorage.setItem("userId", data.localId);
+        localStorage.setItem("emailActiveUser", data.email);
         localStorage.setItem("expirationDate", expirationDate);
 
-        dispatch(authSuccess(data.idToken));
+        dispatch(authSuccess(data.idToken, data.email));
         dispatch(autoLogout(data.expiresIn));
         dispatch(toggleFetching(false));
         dispatch(toggleLoginError(false));
@@ -133,6 +140,7 @@ export const signUp = (
                 : sex === -1
                 ? "Other"
                 : "None",
+            Avatar: "",
           })
           .then(() => {
             // verify message
@@ -161,18 +169,23 @@ export const signUp = (
   };
 };
 
-export const authSuccess = (token) => {
+export const authSuccess = (token, activeAccountEmail) => {
   return {
     type: AUTH_SUCCESS,
     token,
+    activeAccountEmail,
   };
 };
 
 export const autoLogin = () => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
+    const emailActiveUser = localStorage.getItem("emailActiveUser");
 
-    if (!token) {
+    dispatch(authSuccess(token, emailActiveUser));
+    dispatch(setActiveUser(emailActiveUser));
+
+    if (!token && !emailActiveUser) {
       dispatch(logout());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
@@ -180,7 +193,7 @@ export const autoLogin = () => {
       if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        dispatch(authSuccess(token));
+        dispatch(authSuccess(token, emailActiveUser));
         dispatch(
           autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000)
         );
@@ -192,15 +205,25 @@ export const autoLogin = () => {
 export const autoLogout = (time) => {
   return (dispatch) => {
     setTimeout(() => {
+      dispatch(setUser(null));
       dispatch(logout());
     }, time * 1000);
   };
 };
 
-export const logout = (history) => {
+export const logoutButton = () => {
+  return (dispatch) => {
+    dispatch(setUser(null));
+    dispatch(logout());
+  };
+};
+
+export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("expirationDate");
+  localStorage.removeItem("emailActiveUser");
+
   return {
     type: AUTH_LOGOUT,
   };

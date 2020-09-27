@@ -4,12 +4,16 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
 
-import { setUser } from "./redux/user-reducer";
+import {
+  setUser,
+  changeAvatar,
+  changeAvatarHandler,
+} from "./redux/user-reducer";
 import {
   signIn,
   signUp,
   autoLogin,
-  logout,
+  logoutButton,
   toggleLoginError,
 } from "./redux/auth-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
@@ -51,6 +55,7 @@ import Preloader from "./components/common/Preloader/Preloader";
 
 import Login from "./components/Login/Login";
 import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
+import Profile from "./components/Profile/Profile";
 
 //
 
@@ -141,9 +146,9 @@ class App extends React.Component {
               exact
               render={() => (
                 <>
-                  <Header logout={this.props.logout} />
+                  <Header {...this.props} />
                   <div className="app__body">
-                    <Sidebar />
+                    <Sidebar {...this.props} />
                     <Feed />
                     <Widgets />
                   </div>
@@ -157,7 +162,7 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Suspense fallback={<Preloader />}>
-                    <Header logout={this.props.logout} />
+                    <Header {...this.props} />
                     <div className="app__body">
                       <Music />
                     </div>
@@ -172,7 +177,7 @@ class App extends React.Component {
               component={() => (
                 <>
                   <Suspense fallback={<Preloader />}>
-                    <Header logout={this.props.logout} />
+                    <Header {...this.props} />
                     <div className="app__body">
                       <MusicList />
                     </div>
@@ -187,7 +192,7 @@ class App extends React.Component {
               component={() => (
                 <>
                   <Suspense fallback={<Preloader />}>
-                    <Header logout={this.props.logout} />
+                    <Header {...this.props} />
                     <div className="app__body">
                       <ArtistsList />
                     </div>
@@ -204,7 +209,7 @@ class App extends React.Component {
                 component={() => (
                   <>
                     <Suspense fallback={<Preloader />}>
-                      <Header logout={this.props.logout} />
+                      <Header {...this.props} />
                       <div className="app__body">
                         <ArtistItemRouter nameArtist={e.author} />
                       </div>
@@ -222,7 +227,7 @@ class App extends React.Component {
                 component={() => (
                   <>
                     <Suspense fallback={<Preloader />}>
-                      <Header logout={this.props.logout} />
+                      <Header {...this.props} />
                       <div className="app__body">
                         <MusicPlayer
                           nameArtist={e.author}
@@ -254,7 +259,7 @@ class App extends React.Component {
               component={() => (
                 <>
                   <Suspense fallback={<Preloader />}>
-                    <Header logout={this.props.logout} />
+                    <Header {...this.props} />
                     <div className="app__body">
                       <AlbumsList />
                     </div>
@@ -269,7 +274,7 @@ class App extends React.Component {
               component={() => (
                 <>
                   <Suspense fallback={<Preloader />}>
-                    <Header logout={this.props.logout} />
+                    <Header {...this.props} />
                     <div className="app__body">
                       <PlayLists />
                     </div>
@@ -284,7 +289,7 @@ class App extends React.Component {
               component={() => (
                 <>
                   <Suspense fallback={<Preloader />}>
-                    <Header logout={this.props.logout} />
+                    <Header {...this.props} />
                     <div className="app__body">
                       <CreateAlbum
                         fetch={this.props.fetch}
@@ -305,7 +310,7 @@ class App extends React.Component {
                 component={() => (
                   <>
                     <Suspense fallback={<Preloader />}>
-                      <Header logout={this.props.logout} />
+                      <Header {...this.props} />
                       <div className="app__body">
                         <OwnPlayListsRouter
                           id={e._id}
@@ -341,9 +346,22 @@ class App extends React.Component {
               exact
               render={() => (
                 <>
-                  <Header logout={this.props.logout} />
+                  <Header {...this.props} />
                   <div className="app">
                     <Preloader />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props}/>
                   </div>
                 </>
               )}
@@ -354,7 +372,7 @@ class App extends React.Component {
               exact
               render={() => (
                 <>
-                  <Header logout={this.props.logout} />
+                  <Header {...this.props} />
                   <div className="app">
                     <Preloader />
                   </div>
@@ -367,14 +385,14 @@ class App extends React.Component {
               exact
               render={() => (
                 <>
-                  <Header logout={this.props.logout} />
+                  <Header {...this.props} />
                   <div className="app">
                     <Preloader />
                   </div>
                 </>
               )}
             />
-            
+
             <Route render={() => <ErrorRoute />} />
           </Switch>
           <MusicPlayerPanel
@@ -511,6 +529,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
+    activeAccountEmail: state.authReducer.activeAccountEmail,
     token: state.authReducer.token,
     fetching: state.authReducer.fetching,
     registrationFetching: state.authReducer.registrationFetching,
@@ -535,10 +554,12 @@ export default compose(
   withRouter,
   connect(mapStateToProps, {
     setUser,
+    changeAvatar,
+    changeAvatarHandler,
     signIn,
     signUp,
     autoLogin,
-    logout,
+    logoutButton,
     toggleLoginError,
     getMusicAlbumsData,
     addToPlayList,
