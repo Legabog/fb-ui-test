@@ -30,7 +30,24 @@ const Sidebar = (props) => {
 
   return (
     <div className="sidebar">
-      <SidebarRow Icon={AccountCircleIcon} title={"Oleg Dosov"} />
+      <SidebarRow
+        Icon={
+           props.user === null || props.user.Avatar === "" 
+            ? AccountCircleIcon
+            : null
+        }
+
+        src={ props.user === null || props.user.Avatar === "" 
+          ? null
+          : props.user.Avatar}
+
+        title={
+          props.user === null 
+            ? null
+            : `${props.user.Name} ${props.user.Sername}`
+        }
+        navLink={"/profile"}
+      />
       <SidebarRow
         Icon={LocalHospitalIcon}
         title="COVID-19 Information Center"

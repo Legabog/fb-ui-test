@@ -22,7 +22,6 @@ const Feed = (props) => {
       <MessageSender user={props.user}/>
 
       {posts.map((e) => {
-        console.log(e);
         return (
           <Post
             key={e.id}
