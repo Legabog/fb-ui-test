@@ -8,11 +8,11 @@ import Brightness2Icon from "@material-ui/icons/Brightness2";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./ButtonAccountMenuWrapper.css";
 import { TrendingUpTwoTone } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import { Avatar } from "@material-ui/core";
 
 const ButtonAccountMenuWrapper = (props) => {
-
-  const history = useHistory()
+  const history = useHistory();
 
   const [themeSwitcher, switchTheme] = useState(false);
 
@@ -30,26 +30,46 @@ const ButtonAccountMenuWrapper = (props) => {
       }
     >
       <div className="button__account__menu__header">
-        <div className="buttonAccount__section__border">
-          <div className="buttonAccount__section__icon">
-            <AccountCircleIcon />
-          </div>
-          <div className="buttonAccount__section__accountDescription">
-            <div className="buttonAccount__section__accountName">
-              <span>Oleg Dosov</span>
+        <NavLink to={"/profile"}>
+          <div className="buttonAccount__section__border">
+            <div className="buttonAccount__section__icon">
+              {props.user === null || props.user.Avatar === "" ? (
+                <AccountCircleIcon />
+              ) : (
+                <Avatar
+                  style={{ width: "60px", height: "60px" }}
+                  src={props.user.Avatar}
+                />
+              )}
             </div>
+            <div className="buttonAccount__section__accountDescription">
+              <div className="buttonAccount__section__accountName">
+                <span>
+                  {props.user === null
+                    ? null
+                    : `${props.user.Name} ${props.user.Sername}`}
+                </span>
+              </div>
 
-            <div className="buttonAccount__section__description">
-              <span>See your profile</span>
+              <div className="buttonAccount__section__description">
+                <span>See your profile</span>
+              </div>
             </div>
           </div>
-        </div>
+        </NavLink>
 
         <hr />
 
         <div className="buttonAccount__menu__section">
           <div className="buttonAccount__menu__section__icon">
-            <AnnouncementIcon />
+            <AnnouncementIcon
+              onClick={() => {
+                props.changeAvatarHandler(
+                  "https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2FAvatar.jpg?alt=media&token=ec758273-4c40-4133-8c03-0bd23a88f428",
+                  props.activeAccountEmail
+                );
+              }}
+            />
           </div>
           <div className="buttonAccount__section__info">
             <div className="buttonAccount__section__info-main">
@@ -117,7 +137,7 @@ const ButtonAccountMenuWrapper = (props) => {
                 type="checkbox"
                 checked={themeSwitcher}
                 onChange={() => {
-                    console.log("Switch!!!")
+                  console.log("Switch!!!");
                 }}
               />
               <span className="buttonAccount__slider__round"></span>
@@ -125,10 +145,13 @@ const ButtonAccountMenuWrapper = (props) => {
           </div>
         </div>
 
-        <div className="buttonAccount__menu__section" onClick={() => {
-          props.logout()
-          history.push("/")
-        }}>
+        <div
+          className="buttonAccount__menu__section"
+          onClick={() => {
+            props.logoutButton();
+            history.push("/");
+          }}
+        >
           <div className="buttonAccount__menu__section__icon">
             <ExitToAppIcon />
           </div>

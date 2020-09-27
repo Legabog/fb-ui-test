@@ -1,6 +1,7 @@
 import React from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import "./ButtonAccountWrapper.css";
+import { Avatar } from "@material-ui/core";
 
 const ButtonAccountWrapper = (props) => {
   return (
@@ -24,7 +25,10 @@ const ButtonAccountWrapper = (props) => {
           props.toggleAccountHelp(false);
         }}
       >
-        <AccountCircleIcon />
+        {props.user === null || props.user.Avatar === ""
+          ? <AccountCircleIcon />
+          : <Avatar src={props.user.Avatar} />
+        }
       </div>
     </div>
   );

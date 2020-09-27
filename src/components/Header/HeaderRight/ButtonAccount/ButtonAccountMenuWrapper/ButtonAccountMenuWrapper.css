@@ -56,6 +56,10 @@
     font-weight: 600;
 }
 
+.button__account__menu__header a {
+    text-decoration: none;
+}
+
 .button__account__section__border {
     margin-left: -8px;
     margin-right: -8px;
