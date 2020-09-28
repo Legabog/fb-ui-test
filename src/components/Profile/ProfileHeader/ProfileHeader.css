@@ -12,65 +12,15 @@
     justify-content: center;
 }
 
-.profile__header__wrapper {
-    width: 940px;
-    height: 350px;
-    border-radius: 8px;
-    background: rgb(36,0,0);
-    background: linear-gradient(0deg, rgba(36,0,0,1) 0%, rgba(240,242,245,1) 100%);
-}
-
-.profile__header__avatar {
-    position: absolute;
-    margin-top: 210px;
-}
-
-.profile__header__photo {
+.profile__header__hr {
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 36px;
-    background-color: #E4E6EB;
-    position: relative;
-    margin-top: -50px;
-    margin-left: 130px
-}
-
-.profile__header__buttonAddCover {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    width: 175px;
-    height: 36px;
-    border-radius: 6px;
-    margin-left: 720px;
-    margin-top: 280px;
-    position: absolute;
-    display: flex;
-    background-color: #E4E6EB;
-}
-
-.profile__header__description {
-    margin-top: 20px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
-.profile__header__description__wrapper {
-    display: block;
-}
-
-.profile__header__bio {
-    margin-bottom: 20px;
 }
 
 .profile__header__hr hr {
+    width: 910px;
     background: #dadde1;
     border-width: 0;
     color: #dadde1;

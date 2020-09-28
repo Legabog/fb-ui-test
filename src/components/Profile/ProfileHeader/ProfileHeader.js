@@ -1,61 +1,54 @@
-import { Avatar } from "@material-ui/core";
-import React from "react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import React, { useState } from "react";
 import "./ProfileHeader.css";
 
+import ProfileHeaderNavigation from "./ProfileHeaderNavigation/ProfileHeaderNavigation";
+import ProfileHeaderAvatarBackground from "./ProfileHeaderAvatarBackground/ProfileHeaderAvatarBackground";
+import ProfileHeaderAvatar from "./ProfileHeaderAvatar/ProfileHeaderAvatar";
+import ProfileHeaderButtonAddBackground from "./ProfileHeaderButtonAddBackground/ProfileHeaderButtonAddBackground";
+import ProfileHeaderAvatarWindow from "./ProfileHeaderAvatarWindow/ProfileHeaderAvatarWindow";
+import ProfileHeaderDescription from "./ProfileHeaderDescription/ProfileHeaderDescription";
+
 const ProfileHeader = (props) => {
+  const [windowAvatarVisibility, setWindowAvatarVisibility] = useState(
+    "hidden"
+  );
+
+  const [windowAvatarOpacity, setWindowAvatarOpacity] = useState(0);
+
+  const toggleWindowAvatar = () => {
+    windowAvatarVisibility === "hidden"
+      ? setWindowAvatarVisibility("visible")
+      : setWindowAvatarVisibility("hidden");
+
+    windowAvatarOpacity === 0
+      ? setWindowAvatarOpacity(1)
+      : setWindowAvatarOpacity(0);
+  };
+
   return (
     <div className={"profile__header"}>
       <div className={"profile__header__pos"}>
-        <div className={"profile__header__wrapper"}></div>
-        <div className={"profile__header__avatar"}>
-          {props.user === null || props.user.Avatar === "" ? (
-            <AccountCircleIcon
-              style={{
-                width: "170px",
-                height: "170px",
-                border: "5px solid #fff",
-              }}
-            />
-          ) : (
-            <Avatar
-              src={props.user.Avatar}
-              style={{
-                width: "170px",
-                height: "170px",
-                border: "5px solid #fff",
-              }}
-            />
-          )}
-
-          <div className={"profile__header__photo"}>
-            <PhotoCameraIcon />
-          </div>
-        </div>
-        <div className={"profile__header__buttonAddCover"}>
-          <PhotoCameraIcon />
-          <span>Add Cover Photo</span>
-        </div>
+        <ProfileHeaderAvatarBackground {...props} />
+        <ProfileHeaderAvatar
+          {...props}
+          toggleWindowAvatar={toggleWindowAvatar}
+        />
+        <ProfileHeaderButtonAddBackground />
       </div>
 
-      <div className={"profile__header__description"}>
-        <div className={"profile__header__description__wrapper"}>
-          <div className={"profile__header__nameAndSername"}>
-            <h1>
-              {props.user === null
-                ? null
-                : `${props.user.Name} ${props.user.Sername}`}
-            </h1>
-          </div>
-          <div className={"profile__header__bio"}>Add Bio</div>
-        </div>
-      </div>
+      <ProfileHeaderAvatarWindow
+        windowAvatarVisibility={windowAvatarVisibility}
+        windowAvatarOpacity={windowAvatarOpacity}
+      />
+
+      <ProfileHeaderDescription {...props} />
 
       <div className={"profile__header__hr"}>
         <hr />
         <div className={"profile__header__lastBlock"}></div>
       </div>
+
+      <ProfileHeaderNavigation />
     </div>
   );
 };

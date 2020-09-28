@@ -1,0 +1,19 @@
+.profile__header__avatarBackground {
+    width: 940px;
+    height: 350px;
+    border-radius: 8px;
+    background: rgb(36,0,0);
+    background: linear-gradient(0deg, rgba(36,0,0,1) 0%, rgba(240,242,245,1) 100%);
+}
+
+.profile__header__avatarBackground__active {
+    width: 940px;
+    height: 350px;
+    border-radius: 8px;
+}
+
+.profile__header__avatarBackground__active img {
+    width: 940px;
+    height: 350px;
+    border-radius: 8px;
+}
