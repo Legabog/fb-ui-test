@@ -141,6 +141,8 @@ export const signUp = (
                 ? "Other"
                 : "None",
             Avatar: "",
+            AvatarBackground: "",
+            Bio: ""
           })
           .then(() => {
             // verify message

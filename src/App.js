@@ -8,6 +8,8 @@ import {
   setUser,
   changeAvatar,
   changeAvatarHandler,
+  changeAvatarBackgroundHandler,
+  changeBioHandler
 } from "./redux/user-reducer";
 import {
   signIn,
@@ -354,6 +356,7 @@ class App extends React.Component {
               )}
             />
 
+            {/*--------------- Profile Routes -------------------- */}
             <Route
               path="/profile"
               exact
@@ -361,11 +364,82 @@ class App extends React.Component {
                 <>
                   <Header {...this.props} />
                   <div className="app">
-                    <Profile {...this.props}/>
+                    <Profile {...this.props} />
                   </div>
                 </>
               )}
             />
+
+            <Route
+              path="/profile/about"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <h1>About</h1>
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/friends"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <h1>Friends</h1>
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/photos"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <h1>Photos</h1>
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/archive"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <h1>Archive</h1>
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/videos"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <h1>Videos</h1>
+                  </div>
+                </>
+              )}
+            />
+            {/*  */}
 
             <Route
               path="/groups"
@@ -556,6 +630,8 @@ export default compose(
     setUser,
     changeAvatar,
     changeAvatarHandler,
+    changeAvatarBackgroundHandler,
+    changeBioHandler,
     signIn,
     signUp,
     autoLogin,
