@@ -33,21 +33,25 @@ const ButtonAccountMenuWrapper = (props) => {
         <NavLink to={"/profile"}>
           <div className="buttonAccount__section__border">
             <div className="buttonAccount__section__icon">
-              {props.user === null || props.user.Avatar === "" ? (
+              {props.user && props.user.Avatars.activeAvatarUrl === "" ? (
                 <AccountCircleIcon />
               ) : (
                 <Avatar
                   style={{ width: "60px", height: "60px" }}
-                  src={props.user.Avatar}
+                  src={
+                    props.user && props.user.Avatars.activeAvatarUrl
+                      ? props.user.Avatars.activeAvatarUrl
+                      : null
+                  }
                 />
               )}
             </div>
             <div className="buttonAccount__section__accountDescription">
               <div className="buttonAccount__section__accountName">
                 <span>
-                  {props.user === null
-                    ? null
-                    : `${props.user.Name} ${props.user.Sername}`}
+                  {props.user
+                    ? `${props.user.Name} ${props.user.Sername}`
+                    : null}
                 </span>
               </div>
 

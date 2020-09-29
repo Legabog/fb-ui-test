@@ -25,9 +25,9 @@ const ButtonAccountWrapper = (props) => {
           props.toggleAccountHelp(false);
         }}
       >
-        {props.user === null || props.user.Avatar === ""
+        {props.user && props.user.Avatars.activeAvatarUrl === ""
           ? <AccountCircleIcon />
-          : <Avatar src={props.user.Avatar} />
+          : <Avatar src={ props.user && props.user.Avatars.activeAvatarUrl ? props.user.Avatars.activeAvatarUrl : null  } />
         }
       </div>
     </div>
