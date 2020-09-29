@@ -140,9 +140,13 @@ export const signUp = (
                 : sex === -1
                 ? "Other"
                 : "None",
-            Avatar: "",
+            Avatars: {
+              activeAvatarUrl: "",
+              recentUploads: [],
+              pofileAvatars: []
+            },
             AvatarBackground: "",
-            Bio: ""
+            Bio: "",
           })
           .then(() => {
             // verify message

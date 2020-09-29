@@ -8,8 +8,9 @@ import {
   setUser,
   changeAvatar,
   changeAvatarHandler,
+  sendAvatar,
   changeAvatarBackgroundHandler,
-  changeBioHandler
+  changeBioHandler,
 } from "./redux/user-reducer";
 import {
   signIn,
@@ -18,6 +19,7 @@ import {
   logoutButton,
   toggleLoginError,
 } from "./redux/auth-reducer";
+import { toggleProfileUpdateAvatar } from "./redux/profile-update-avatar-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -603,6 +605,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
+    fetchBio: state.userReducer.fetchBio,
     activeAccountEmail: state.authReducer.activeAccountEmail,
     token: state.authReducer.token,
     fetching: state.authReducer.fetching,
@@ -621,6 +624,9 @@ const mapStateToProps = (state) => {
     activeTrack: state.musicPlayerReducer.activeTrack,
     disablerButtonNext: state.musicPlayerReducer.disablerButtonNext,
     disablerButtonPlay: state.musicPlayerReducer.disablerButtonPlay,
+    profileUpdateVisibility:
+      state.profileUpdateAvatarReducer.profileUpdateVisibility,
+    profileUpdateOpacity: state.profileUpdateAvatarReducer.profileUpdateOpacity,
   };
 };
 
@@ -629,9 +635,11 @@ export default compose(
   connect(mapStateToProps, {
     setUser,
     changeAvatar,
+    sendAvatar,
     changeAvatarHandler,
     changeAvatarBackgroundHandler,
     changeBioHandler,
+    toggleProfileUpdateAvatar,
     signIn,
     signUp,
     autoLogin,
