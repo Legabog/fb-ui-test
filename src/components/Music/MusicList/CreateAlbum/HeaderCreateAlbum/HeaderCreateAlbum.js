@@ -1,13 +1,12 @@
 import React from "react";
-import "./HeaderCreateAlbum.css"
+import "./HeaderCreateAlbum.css";
 import { NavLink } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import AddPhoto from "../../../../../utils/assets/apple theme/photo_add.png";
 import DefaultPhoto from "../../../../../utils/assets/apple theme/music.jpg";
-import { storage } from "../../../../../utils/firebase/firebase"
+import { storage } from "../../../../../utils/firebase/firebase";
 
 class HeaderCreateAlbum extends React.Component {
-  
   state = {
     imgAvatar: AddPhoto,
     img: DefaultPhoto,
@@ -62,71 +61,68 @@ class HeaderCreateAlbum extends React.Component {
     return (
       <div className={"headerCreateAlbum"}>
         <div className={"headerCreateAlbum__buttons"}>
-        <NavLink
-          to="/music-list/playlists"
-          onMouseOver={() => {
-            this.setHover(1);
-          }}
-          onMouseOut={() => {
-            this.setHover(0);
-          }}
-        >
-          <div className={"headerCreateAlbum__buttonBack"}>
-          {this.state.hover ? (
-            <ArrowBackIosIcon style={{ color: "#F62A54" }} />
-          ) : (
-            <ArrowBackIosIcon style={{ color: "#1877F2" }} />
-          )}
-            <h3>Cancel</h3>
-          </div>
-        </NavLink>
-
-        <NavLink to="/music-list/playlists" onClick={this.navLinkHandler}>
-          <div
-            className={"headerCreateAlbum__buttonDone"}
-            onClick={() => {
-              if (!!this.state.name.trim()) {
-                if (this.state.img === DefaultPhoto) {
-                  this.props.addToPlayList({
-                    title: this.state.name + "",
-                    description: this.state.description + "",
-                    playlistcoverUrl: `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/playlist-covers%2Fmusic.jpg?alt=media&token=d3a88cc5-c7fe-4599-ba6c-ef8ba503a03c`,
-
-                    tracks: [],
-                  });
-                } else {
-                  //----------Firebase
-                  var storageRef = storage.ref();
-                  var imagesRef = storageRef.child(
-                    `playlist-covers/${this.state.nameImg.name}`
-                  );
-                  imagesRef
-                    .putString(this.state.img + "", "data_url")
-                    .then(function (snapshot) {
-                      console.log("Uploaded a data_url string!");
-                    })
-                    .then(() => {
-                      //--------------Post reducer to MongoDB
-                      this.props.addToPlayList({
-                        title: this.state.name + "",
-                        description: this.state.description + "",
-                        playlistcoverUrl: `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/playlist-covers%2F${this.state.nameImg.name}?alt=media&token=d3a88cc5-c7fe-4599-ba6c-ef8ba503a03c`,
-                        tracks: [],
-                      });
-                    });
-                  //----------------------
-                }
-              }
+          <NavLink
+            to="/music-list/playlists"
+            onMouseOver={() => {
+              this.setHover(1);
+            }}
+            onMouseOut={() => {
+              this.setHover(0);
             }}
           >
-            <h3>Done</h3>
-          </div>
-        </NavLink>
+            <div className={"headerCreateAlbum__buttonBack"}>
+              {this.state.hover ? (
+                <ArrowBackIosIcon style={{ color: "#F62A54" }} />
+              ) : (
+                <ArrowBackIosIcon style={{ color: "#1877F2" }} />
+              )}
+              <h3>Cancel</h3>
+            </div>
+          </NavLink>
 
+          <NavLink to="/music-list/playlists" onClick={this.navLinkHandler}>
+            <div
+              className={"headerCreateAlbum__buttonDone"}
+              onClick={() => {
+                if (!!this.state.name.trim()) {
+                  if (this.state.img === DefaultPhoto) {
+                    this.props.addToPlayList({
+                      title: this.state.name + "",
+                      description: this.state.description + "",
+                      playlistcoverUrl: `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/playlist-covers%2Fmusic.jpg?alt=media&token=d3a88cc5-c7fe-4599-ba6c-ef8ba503a03c`,
+
+                      tracks: [],
+                    });
+                  } else {
+                    //----------Firebase
+                    var storageRef = storage.ref();
+                    var imagesRef = storageRef.child(
+                      `playlist-covers/${this.state.nameImg.name}`
+                    );
+                    imagesRef
+                      .putString(this.state.img + "", "data_url")
+                      .then(function (snapshot) {
+                        console.log("Uploaded a data_url string!");
+                      })
+                      .then(() => {
+                        //--------------Post reducer to MongoDB
+                        this.props.addToPlayList({
+                          title: this.state.name + "",
+                          description: this.state.description + "",
+                          playlistcoverUrl: `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/playlist-covers%2F${this.state.nameImg.name}?alt=media&token=d3a88cc5-c7fe-4599-ba6c-ef8ba503a03c`,
+                          tracks: [],
+                        });
+                      });
+                    //----------------------
+                  }
+                }
+              }}
+            >
+              <h3>Done</h3>
+            </div>
+          </NavLink>
         </div>
 
-
-       
         <h1>Create new playlist</h1>
         <div className={"headerCreateAlbum__inputs"}>
           <div className={"headerCreateAlbum__addPhoto"}>
