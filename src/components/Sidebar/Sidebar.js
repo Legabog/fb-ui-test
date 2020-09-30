@@ -19,7 +19,7 @@ import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { ExpandMoreOutlined } from "@material-ui/icons";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
-const Sidebar = (props) => {
+const Sidebar = React.memo((props) => {
   const [additionalSections, setAdditionalSections] = useState(false);
 
   const toggleAdditionalSections = () => {
@@ -32,22 +32,24 @@ const Sidebar = (props) => {
     <div className="sidebar">
       <SidebarRow
         Icon={
-           props.user === null || props.user.Avatar === "" 
+          props.user === null || props.user.Avatars.activeAvatarUrl === ""
             ? AccountCircleIcon
             : null
         }
-
-        src={ props.user === null || props.user.Avatar === "" 
-          ? null
-          : props.user.Avatar}
-
+        src={
+          props.user === null || props.user.Avatars.activeAvatarUrl === ""
+            ? null
+            : props.user.Avatars.activeAvatarUrl
+        }
         title={
-          props.user === null 
+          props.user === null
             ? null
             : `${props.user.Name} ${props.user.Sername}`
         }
         navLink={"/profile"}
+        fetchAvatar={props.fetchAvatar}
       />
+
       <SidebarRow
         Icon={LocalHospitalIcon}
         title="COVID-19 Information Center"
@@ -82,6 +84,6 @@ const Sidebar = (props) => {
       )}
     </div>
   );
-};
+});
 
 export default Sidebar;
