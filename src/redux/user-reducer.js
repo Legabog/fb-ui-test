@@ -1,14 +1,20 @@
 import db from "../utils/firebase/firebase";
-import { storage } from "../utils/firebase/firebase";
+import { storage, addToArray } from "../utils/firebase/firebase";
 
 const SET_USER = "SET_USER";
 const CHANGE_AVATAR = "CHANGE_AVATAR";
+const ADD_AVATAR_TO_PROFILE_AVATARS = "SET_ADD_AVATAR_TO_PROFILE_AVATARS";
+const ADD_AVATAR_TO_RECENT_UPLOADS = "ADD_AVATAR_TO_RECENT_UPLOADS";
 const CHANGE_AVATAR_BACKGROUND = "CHANGE_AVATAR_BACKGROUND";
 const CHANGE_BIO = "CHANGE_BIO";
 const TOGGLE_FETCH_BIO = "TOGGLE_FETCH_BIO";
+const TOGGLE_FETCH_AVATAR = "TOGGLE_FETCH_AVATAR";
+const TOGGLE_FETCH_PROFILE_AVATARS = "TOGGLE_FETCH_PROFILE_AVATARS";
 
 let initialState = {
   fetchBio: false,
+  fetchAvatar: false,
+  fetchProfileAvatars: false,
   user: null,
 };
 
@@ -22,8 +28,35 @@ const userReducer = (state = initialState, action) => {
 
     case CHANGE_AVATAR:
       return {
-        ...state.user,
-        Avatars: { ...state.user.Avatars, activeAvatarUrl: action.avatar },
+        ...state,
+        user: {
+          ...state.user,
+          Avatars: { ...state.user.Avatars, activeAvatarUrl: action.avatar },
+        },
+      };
+
+    case ADD_AVATAR_TO_PROFILE_AVATARS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          Avatars: {
+            ...state.user.Avatars,
+            pofileAvatars: [...state.user.Avatars.pofileAvatars, action.avatar],
+          },
+        },
+      };
+
+    case ADD_AVATAR_TO_RECENT_UPLOADS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          Avatars: {
+            ...state.user.Avatars,
+            recentUploads: [...state.user.Avatars.recentUploads, action.avatar],
+          },
+        },
       };
 
     case CHANGE_AVATAR_BACKGROUND:
@@ -41,6 +74,18 @@ const userReducer = (state = initialState, action) => {
         ...state,
         fetchBio: action.boolean,
       };
+
+    case TOGGLE_FETCH_AVATAR:
+      return {
+        ...state,
+        fetchAvatar: action.boolean,
+      };
+
+    case TOGGLE_FETCH_PROFILE_AVATARS:
+      return {
+        ...state,
+        fetchProfileAvatars: action.boolean,
+      };
     default:
       return state;
   }
@@ -56,6 +101,20 @@ export const setUser = (user) => {
 export const changeAvatar = (avatar) => {
   return {
     type: CHANGE_AVATAR,
+    avatar,
+  };
+};
+
+export const addAvatarToProfileAvatars = (avatar) => {
+  return {
+    type: ADD_AVATAR_TO_PROFILE_AVATARS,
+    avatar,
+  };
+};
+
+export const addAvatarToRecentUploads = (avatar) => {
+  return {
+    type: ADD_AVATAR_TO_RECENT_UPLOADS,
     avatar,
   };
 };
@@ -81,56 +140,85 @@ export const toggleFetchBio = (boolean) => {
   };
 };
 
+export const toggleFetchAvatar = (boolean) => {
+  return {
+    type: TOGGLE_FETCH_AVATAR,
+    boolean,
+  };
+};
+
+export const toggleFetchProfileAvatars = (boolean) => {
+  return {
+    type: TOGGLE_FETCH_PROFILE_AVATARS,
+    boolean,
+  };
+};
+
 export const sendAvatar = (img, activeAvatarUrl, email) => {
   return async (dispatch) => {
-    debugger;
-
-    // base64 Encoder
+    dispatch(toggleFetchAvatar(true));
+    dispatch(toggleFetchProfileAvatars(true));
+    // ----------Base64Encoder
     const reader = new FileReader();
     reader.readAsDataURL(img);
-    reader.onload = () => dispatch(changeAvatar(reader.result));
+    reader.onload = () => {
+      dispatch(changeAvatar(reader.result));
+      dispatch(addAvatarToProfileAvatars(reader.result));
+      dispatch(addAvatarToRecentUploads(reader.result));
+
+      // ----------Firebase storage
+
+      var storageRef = storage.ref();
+      var imagesRef = storageRef.child(`avatars/${img.name}`);
+      imagesRef
+        .putString(reader.result + "", "data_url")
+        .then(function (snapshot) {
+          // Success
+
+          console.log("Uploaded a data_url string!");
+
+          db.collection("users_database")
+            .get()
+            .then((usersDatabase) => {
+              usersDatabase.forEach((userDatabase) => {
+                if (userDatabase.data().Email === email) {
+                  const resultUrl = `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2F${img.name}?alt=media`;
+
+                  db.collection("users_database")
+                    .doc(userDatabase.id)
+                    .update({
+                      "Avatars.activeAvatarUrl": resultUrl,
+                      "Avatars.pofileAvatars": addToArray(resultUrl),
+                      "Avatars.recentUploads": addToArray(resultUrl),
+                    })
+                    .then(() => {
+                      dispatch(toggleFetchAvatar(false));
+                      dispatch(toggleFetchProfileAvatars(false));
+                      console.log("Upd");
+                      dispatch();
+                    })
+                    .catch(() => {
+                      dispatch(toggleFetchAvatar(false));
+                      dispatch(toggleFetchProfileAvatars(false));
+                      console.log("Error");
+                    });
+                }
+              });
+            });
+        })
+        .catch((e) => {
+          console.log(e + "error on uploading in storage");
+        });
+    };
     reader.onerror = (error) => {
       console.log("Error", error);
     };
-    dispatch(changeAvatar(window.URL.createObjectURL(img)));
-    //
-
-    //----------Firebase storage
-
-    var storageRef = storage.ref();
-    var imagesRef = storageRef.child(`avatars/${activeAvatarUrl.name}`);
-    imagesRef
-      .putString(activeAvatarUrl + "", "data_url")
-      .then(function (snapshot) {
-        console.log("Uploaded a data_url string!");
-      });
-
-    //
-
-    //  //-------------- Firestore db
-    //     .then(() => {
-    //       db.collection("users_database")
-    //         .get()
-    //         .then((usersDatabase) => {
-    //           usersDatabase.forEach((userDatabase) => {
-    //             if (userDatabase.data().Email === email) {
-    //               db.collection("users_database")
-    //                 .doc(userDatabase.id)
-    //                 .update({
-    //                   "Avatars.activeAvatarUrl": img,
-    //                 })
-    //                 .then(() => console.log("Upd"))
-    //                 .catch(() => console.log("Error"));
-    //             }
-    //           });
-    //         });
-    //     });
-    //
   };
 };
 
 export const changeAvatarHandler = (avatar, email) => {
   return async (dispatch) => {
+    dispatch(toggleFetchAvatar(true));
     await dispatch(changeAvatar(avatar));
 
     db.collection("users_database")
@@ -143,8 +231,14 @@ export const changeAvatarHandler = (avatar, email) => {
               .update({
                 "Avatars.activeAvatarUrl": avatar,
               })
-              .then(() => console.log("Upd"))
-              .catch(() => console.log("Error"));
+              .then(() => {
+                console.log("Upd");
+                dispatch(toggleFetchAvatar(false));
+              })
+              .catch(() => {
+                console.log("Error");
+                dispatch(toggleFetchAvatar(false));
+              });
           }
         });
       });

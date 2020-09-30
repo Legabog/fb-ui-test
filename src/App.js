@@ -6,6 +6,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 
 import {
   setUser,
+  setActiveUser,
   changeAvatar,
   changeAvatarHandler,
   sendAvatar,
@@ -134,6 +135,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+
     this.props.autoLogin();
     this.props.getMusicAlbumsData();
     this.props.getMyOwnPlayLists();
@@ -606,6 +608,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
     fetchBio: state.userReducer.fetchBio,
+    fetchAvatar: state.userReducer.fetchAvatar,
+    fetchProfileAvatars: state.userReducer.fetchProfileAvatars,
     activeAccountEmail: state.authReducer.activeAccountEmail,
     token: state.authReducer.token,
     fetching: state.authReducer.fetching,
@@ -634,6 +638,7 @@ export default compose(
   withRouter,
   connect(mapStateToProps, {
     setUser,
+    setActiveUser,
     changeAvatar,
     sendAvatar,
     changeAvatarHandler,

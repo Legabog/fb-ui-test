@@ -11,10 +11,18 @@ export const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
+
 const db = firebaseApp.firestore()
+const addToArray = (value) => {
+  return firebase.firestore.FieldValue.arrayUnion(value)
+}
+const removeFromArray = (value) => {
+  return firebase.firestore.FieldValue.arrayRemove(value)
+} 
+
 const storage = firebaseApp.storage()
 const auth = firebase.auth()
 const provider = new firebase.auth.GoogleAuthProvider()
 
-export { auth, provider, storage, firebaseApp };
+export { auth, provider, storage, firebaseApp, addToArray, removeFromArray };
 export default db;
