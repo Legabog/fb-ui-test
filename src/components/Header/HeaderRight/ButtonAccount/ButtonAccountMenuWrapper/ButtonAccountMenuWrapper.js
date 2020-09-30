@@ -10,8 +10,9 @@ import "./ButtonAccountMenuWrapper.css";
 import { TrendingUpTwoTone } from "@material-ui/icons";
 import { NavLink, useHistory } from "react-router-dom";
 import { Avatar } from "@material-ui/core";
+import ChangeAvatarSimplePreloader from "../../../../common/ChangeAvatarSimplePreloader/ChangeAvatarSimplePreloader";
 
-const ButtonAccountMenuWrapper = (props) => {
+const ButtonAccountMenuWrapper = React.memo((props) => {
   const history = useHistory();
 
   const [themeSwitcher, switchTheme] = useState(false);
@@ -32,26 +33,28 @@ const ButtonAccountMenuWrapper = (props) => {
       <div className="button__account__menu__header">
         <NavLink to={"/profile"}>
           <div className="buttonAccount__section__border">
-            <div className="buttonAccount__section__icon">
-              {props.user && props.user.Avatars.activeAvatarUrl === "" ? (
+            {props.fetchAvatar ? (
+              <ChangeAvatarSimplePreloader width={"60px"} height={"60px"} />
+            ) : props.user === null ||
+              props.user.Avatars.activeAvatarUrl === "" ? (
+              <div className="buttonAccount__section__icon">
                 <AccountCircleIcon />
-              ) : (
+              </div>
+            ) : (
+              <div className="buttonAccount__section__icon">
                 <Avatar
                   style={{ width: "60px", height: "60px" }}
-                  src={
-                    props.user && props.user.Avatars.activeAvatarUrl
-                      ? props.user.Avatars.activeAvatarUrl
-                      : null
-                  }
+                  src={props.user.Avatars.activeAvatarUrl}
                 />
-              )}
-            </div>
+              </div>
+            )}
+
             <div className="buttonAccount__section__accountDescription">
               <div className="buttonAccount__section__accountName">
                 <span>
-                  {props.user
-                    ? `${props.user.Name} ${props.user.Sername}`
-                    : null}
+                  {props.user === null
+                    ? null
+                    : `${props.user.Name} ${props.user.Sername}`}
                 </span>
               </div>
 
@@ -69,7 +72,7 @@ const ButtonAccountMenuWrapper = (props) => {
             <AnnouncementIcon
               onClick={() => {
                 props.changeAvatarHandler(
-                  "https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2FAvatar.jpg?alt=media&token=ec758273-4c40-4133-8c03-0bd23a88f428",
+                  "https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2FDima_Shurov.jpg?alt=media&token=01191b14-4ec5-4dbd-a96a-9889dcbd5b64",
                   props.activeAccountEmail
                 );
               }}
@@ -171,6 +174,6 @@ const ButtonAccountMenuWrapper = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default ButtonAccountMenuWrapper;
