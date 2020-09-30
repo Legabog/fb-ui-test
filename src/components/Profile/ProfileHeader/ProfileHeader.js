@@ -37,6 +37,8 @@ const ProfileHeader = (props) => {
       </div>
 
       <ProfileHeaderAvatarWindow
+        {...props}
+        toggleWindowAvatar={toggleWindowAvatar}
         windowAvatarVisibility={windowAvatarVisibility}
         windowAvatarOpacity={windowAvatarOpacity}
       />

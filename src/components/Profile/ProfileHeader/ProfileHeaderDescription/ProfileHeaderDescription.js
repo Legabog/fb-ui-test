@@ -3,6 +3,7 @@ import "./ProfileHeaderDescription.css";
 import ProfileHeaderNameAndSername from "./ProfileHeaderDescriptionNameAndSername/ProfileHeaderDescriptionNameAndSername";
 import ProfileHeaderBioActive from "./ProfileHeaderBioActive/ProfileHeaderBioActive";
 import ProfileHeaderBio from "./ProfileHeaderBio/ProfileHeaderBio";
+import ProfileHeaderDescriptionPreloader from "./ProfileHeaderDescriptionPreloader/ProfileHeaderDescriptionPreloader";
 
 const ProfileHeaderDescription = (props) => {
   const [clickState, setClickState] = useState(false);
@@ -15,6 +16,8 @@ const ProfileHeaderDescription = (props) => {
     <div className={"profile__header__description"}>
       <div className={"profile__header__description__wrapper"}>
         <ProfileHeaderNameAndSername {...props} />
+
+        {props.fetchBio ? <ProfileHeaderDescriptionPreloader /> : null}
 
         {props.user === null || clickState ? (
           <ProfileHeaderBioActive

@@ -52,3 +52,7 @@
 .profile__header__photo:active {
     transform: scale(0.90);
 }
+
+.profile__header__avatar input {
+    display: none;
+}

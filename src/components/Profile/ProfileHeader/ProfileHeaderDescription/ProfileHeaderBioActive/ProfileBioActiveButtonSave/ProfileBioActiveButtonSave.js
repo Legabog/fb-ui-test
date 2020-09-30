@@ -5,7 +5,10 @@ const ProfileBioActiveButtonSave = (props) => {
   return (
     <div
       className={"profile__header__bio__activeButtonSave"}
-    //   onClick={props.changeBioHandler(props.textAreaSymbols)}
+      onClick={(e) => {
+        e.preventDefault();
+        props.changeBioHandler(props.textAreaSymbols, props.activeAccountEmail, props.toggleClickState);
+      }}
     >
       <span>Save</span>
     </div>

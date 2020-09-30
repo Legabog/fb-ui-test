@@ -6,24 +6,33 @@ import "./ProfileHeaderAvatarWindow.css";
 const ProfileHeaderAvatarWindow = (props) => {
   return (
     <div className={"profile__header__avatar__window__wrapper"}>
+      <div
+        className={"profile__header__avatar__window"}
+        style={{
+          visibility: props.windowAvatarVisibility,
+          opacity: props.windowAvatarOpacity,
+        }}
+      >
+        <div className={"profile__header__avatar__windowSection"}>
+          <AccountBoxIcon />
+          <span>View Profile Picture</span>
+        </div>
+
         <div
-          className={"profile__header__avatar__window"}
-          style={{
-            visibility: props.windowAvatarVisibility,
-            opacity: props.windowAvatarOpacity,
+          className={"profile__header__avatar__windowSection"}
+          onClick={() => {
+            props.toggleProfileUpdateAvatar(
+              props.profileUpdateVisibility,
+              props.profileUpdateOpacity
+            );
+            props.toggleWindowAvatar();
           }}
         >
-          <div className={"profile__header__avatar__windowSection"}>
-            <AccountBoxIcon />
-            <span>View Profile Picture</span>
-          </div>
-
-          <div className={"profile__header__avatar__windowSection"}>
-            <PhotoLibraryIcon />
-            <span>View Profile Picture</span>
-          </div>
+          <PhotoLibraryIcon />
+          <span>Update Profile Picture</span>
         </div>
       </div>
+    </div>
   );
 };
 

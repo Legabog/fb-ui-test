@@ -8,7 +8,14 @@ const ProfileHeaderAvatarBackground = (props) => {
         <div className={"profile__header__avatarBackground"}></div>
       ) : (
         <div className={"profile__header__avatarBackground__active"}>
-          <img src={props.user.AvatarBackground} alt="description" />
+          <img
+            src={
+              props.user === null || props.user.Avatars.activeAvatarUrl
+                ? props.user.Avatars.activeAvatarUrl
+                : null
+            }
+            alt="description"
+          />
         </div>
       )}
     </>

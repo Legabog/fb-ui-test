@@ -5,8 +5,10 @@ import { useState } from "react";
 import ProfileBioActiveButtonSave from "./ProfileBioActiveButtonSave/ProfileBioActiveButtonSave";
 
 const ProfileHeaderBioActive = (props) => {
-  const [textAreaSymbols, setTextAreaSymbols] = useState("");
-  const [validationForSymbols, setValidationForSymbols] = useState(101);
+  const [textAreaSymbols, setTextAreaSymbols] = useState(
+    props.user === null ? "" : props.user.Bio
+  );
+  const [validationForSymbols] = useState(101);
 
   const textAreaChangeHandler = (e) => {
     setTextAreaSymbols(e.target.value);
@@ -43,7 +45,12 @@ const ProfileHeaderBioActive = (props) => {
             <div className={"profile__header__bio__activeButtonSave-disabled"}>
               <span>Save</span>
             </div>
-          ) : <ProfileBioActiveButtonSave {...props} textAreaSymbols={textAreaSymbols}/> }
+          ) : (
+            <ProfileBioActiveButtonSave
+              {...props}
+              textAreaSymbols={textAreaSymbols}
+            />
+          )}
         </div>
       </div>
     </div>
