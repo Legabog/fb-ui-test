@@ -8,8 +8,11 @@ import {
   setUser,
   setActiveUser,
   changeAvatar,
+  changeAvatarPreHandler,
   changeAvatarHandler,
+  avatarLoaderBase64Handler,
   sendAvatar,
+  avatarBackgroundLoaderBase64Handler,
   changeAvatarBackgroundHandler,
   changeBioHandler,
 } from "./redux/user-reducer";
@@ -20,7 +23,7 @@ import {
   logoutButton,
   toggleLoginError,
 } from "./redux/auth-reducer";
-import { toggleProfileUpdateAvatar } from "./redux/profile-update-avatar-reducer";
+import { toggleProfileUpdateAvatar, closeHandlerProfileUpdate } from "./redux/profile-update-avatar-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -631,6 +634,10 @@ const mapStateToProps = (state) => {
     profileUpdateVisibility:
       state.profileUpdateAvatarReducer.profileUpdateVisibility,
     profileUpdateOpacity: state.profileUpdateAvatarReducer.profileUpdateOpacity,
+    profileUpdateStateComponent: state.profileUpdateAvatarReducer.profileUpdateStateComponent,
+    profileUpdateConditionForAvatar: state.profileUpdateAvatarReducer.profileUpdateConditionForAvatar,
+    profileUpdateTempAvatar: state.profileUpdateAvatarReducer.profileUpdateTempAvatar,
+    profileUpdateTempAvatarName: state.profileUpdateAvatarReducer.profileUpdateTempAvatarName
   };
 };
 
@@ -640,11 +647,15 @@ export default compose(
     setUser,
     setActiveUser,
     changeAvatar,
+    avatarLoaderBase64Handler,
     sendAvatar,
+    changeAvatarPreHandler,
     changeAvatarHandler,
+    avatarBackgroundLoaderBase64Handler,
     changeAvatarBackgroundHandler,
     changeBioHandler,
     toggleProfileUpdateAvatar,
+    closeHandlerProfileUpdate,
     signIn,
     signUp,
     autoLogin,

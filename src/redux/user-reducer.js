@@ -1,5 +1,12 @@
 import db from "../utils/firebase/firebase";
 import { storage, addToArray } from "../utils/firebase/firebase";
+import {
+  closeHandlerProfileUpdate,
+  setTempAvatar,
+  setTempAvatarName,
+  toggleProfileUpdateConditionForAvatar,
+  toggleProfileUpdateStateComponent,
+} from "./profile-update-avatar-reducer";
 
 const SET_USER = "SET_USER";
 const CHANGE_AVATAR = "CHANGE_AVATAR";
@@ -154,72 +161,94 @@ export const toggleFetchProfileAvatars = (boolean) => {
   };
 };
 
-export const sendAvatar = (img, activeAvatarUrl, email) => {
+export const avatarLoaderBase64Handler = (img) => {
   return async (dispatch) => {
-    dispatch(toggleFetchAvatar(true));
-    dispatch(toggleFetchProfileAvatars(true));
-    // ----------Base64Encoder
+    dispatch(toggleProfileUpdateStateComponent(1));
+    dispatch(toggleProfileUpdateConditionForAvatar(0));
+    dispatch(setTempAvatarName(img.name));
+
     const reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload = () => {
-      dispatch(changeAvatar(reader.result));
-      dispatch(addAvatarToProfileAvatars(reader.result));
-      dispatch(addAvatarToRecentUploads(reader.result));
-
-      // ----------Firebase storage
-
-      var storageRef = storage.ref();
-      var imagesRef = storageRef.child(`avatars/${img.name}`);
-      imagesRef
-        .putString(reader.result + "", "data_url")
-        .then(function (snapshot) {
-          // Success
-
-          console.log("Uploaded a data_url string!");
-
-          db.collection("users_database")
-            .get()
-            .then((usersDatabase) => {
-              usersDatabase.forEach((userDatabase) => {
-                if (userDatabase.data().Email === email) {
-                  const resultUrl = `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2F${img.name}?alt=media`;
-
-                  db.collection("users_database")
-                    .doc(userDatabase.id)
-                    .update({
-                      "Avatars.activeAvatarUrl": resultUrl,
-                      "Avatars.pofileAvatars": addToArray(resultUrl),
-                      "Avatars.recentUploads": addToArray(resultUrl),
-                    })
-                    .then(() => {
-                      dispatch(toggleFetchAvatar(false));
-                      dispatch(toggleFetchProfileAvatars(false));
-                      console.log("Upd");
-                      dispatch();
-                    })
-                    .catch(() => {
-                      dispatch(toggleFetchAvatar(false));
-                      dispatch(toggleFetchProfileAvatars(false));
-                      console.log("Error");
-                    });
-                }
-              });
-            });
-        })
-        .catch((e) => {
-          console.log(e + "error on uploading in storage");
-        });
+      dispatch(setTempAvatar(reader.result));
     };
     reader.onerror = (error) => {
-      console.log("Error", error);
+      console.log("Oops base64 handler has an error", error);
     };
+  };
+};
+
+export const sendAvatar = (avatar, avatarName, email) => {
+  return async (dispatch) => {
+    dispatch(toggleFetchAvatar(true));
+    dispatch(toggleFetchProfileAvatars(true));
+    dispatch(changeAvatar(avatar));
+    dispatch(addAvatarToProfileAvatars(avatar));
+    dispatch(addAvatarToRecentUploads(avatar));
+
+    // ----------Firebase storage
+
+    var storageRef = storage.ref();
+    var imagesRef = storageRef.child(`avatars/${avatarName}`);
+    imagesRef
+      .putString(avatar + "", "data_url")
+      .then(function (snapshot) {
+        // Success
+        console.log(
+          `Success. Storage with name /avatars/ was updated. Avatar was uploaded. Path:/avatars/${avatarName}`
+        );
+
+        db.collection("users_database")
+          .get()
+          .then((usersDatabase) => {
+            usersDatabase.forEach((userDatabase) => {
+              if (userDatabase.data().Email === email) {
+                const resultUrl = `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2F${avatarName}?alt=media`;
+
+                db.collection("users_database")
+                  .doc(userDatabase.id)
+                  .update({
+                    "Avatars.activeAvatarUrl": resultUrl,
+                    "Avatars.pofileAvatars": addToArray(resultUrl),
+                    "Avatars.recentUploads": addToArray(resultUrl),
+                  })
+                  .then(() => {
+                    dispatch(toggleFetchAvatar(false));
+                    dispatch(toggleFetchProfileAvatars(false));
+                    console.log("Success. Cloud FireStore was updated");
+                  })
+                  .then(() => {
+                    dispatch(closeHandlerProfileUpdate());
+                  })
+                  .catch((e) => {
+                    dispatch(toggleFetchAvatar(false));
+                    dispatch(toggleFetchProfileAvatars(false));
+                    dispatch(closeHandlerProfileUpdate());
+                    console.log(e + "error on  uploading in Cloud FireStore");
+                  });
+              }
+            });
+          });
+      })
+      .catch((e) => {
+        console.log(e + "error on uploading in storage");
+      });
+  };
+};
+
+export const changeAvatarPreHandler = (avatarUrl) => {
+  return (dispatch) => {
+    dispatch(toggleProfileUpdateStateComponent(1));
+    dispatch(toggleProfileUpdateConditionForAvatar(1));
+    dispatch(setTempAvatar(avatarUrl));
   };
 };
 
 export const changeAvatarHandler = (avatar, email) => {
   return async (dispatch) => {
+
     dispatch(toggleFetchAvatar(true));
-    await dispatch(changeAvatar(avatar));
+    dispatch(changeAvatar(avatar));
 
     db.collection("users_database")
       .get()
@@ -232,16 +261,34 @@ export const changeAvatarHandler = (avatar, email) => {
                 "Avatars.activeAvatarUrl": avatar,
               })
               .then(() => {
-                console.log("Upd");
+                console.log("Success. Cloud FireStore was updated");
                 dispatch(toggleFetchAvatar(false));
               })
-              .catch(() => {
-                console.log("Error");
+              .then(() => {
+                dispatch(closeHandlerProfileUpdate());
+              })
+              .catch((e) => {
+                console.log(e + "error on  uploading in Cloud FireStore");
                 dispatch(toggleFetchAvatar(false));
+                dispatch(closeHandlerProfileUpdate());
               });
           }
         });
       });
+  };
+};
+
+export const avatarBackgroundLoaderBase64Handler = (img) => {
+  return async (dispatch) => {
+
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = () => {
+      dispatch(changeAvatarBackground(reader.result));
+    };
+    reader.onerror = (error) => {
+      console.log("Oops base64 handler has an error", error);
+    };
   };
 };
 
