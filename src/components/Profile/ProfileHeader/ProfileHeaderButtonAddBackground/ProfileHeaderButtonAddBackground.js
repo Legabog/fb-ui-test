@@ -4,7 +4,10 @@ import "./ProfileHeaderButtonAddBackground.css";
 
 const ProfileHeaderButtonAddBackground = (props) => {
   return (
-    <div className={"profile__header__buttonAddCover"}>
+    <div
+      className={"profile__header__buttonAddCover"}
+      onClick={props.toggleWindowAvatarBackground}
+    >
       <PhotoCameraIcon />
       <span>Add Cover Photo</span>
     </div>

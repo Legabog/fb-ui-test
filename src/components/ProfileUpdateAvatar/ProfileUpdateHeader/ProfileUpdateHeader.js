@@ -13,34 +13,35 @@ const ProfileUpdateHeader = (props) => {
         </div>
         <div className={"prifleUpdateAvatar__header__closeIcon"}>
           <IconButton
-            onClick={(e) => {
-              e.preventDefault();
-              props.toggleProfileUpdateAvatar(
-                props.profileUpdateVisibility,
-                props.profileUpdateOpacity
-              );
+            onClick={() => {
+              props.profileUpdateStateComponent === 0
+                ? props.closeHandlerProfileUpdate()
+                : props.toggleDiscardWindow(true);
             }}
           >
             <CloseOutlinedIcon />
           </IconButton>
         </div>
       </div>
-      <div className={"prifleUpdateAvatar__header__controllPanel"}>
-        <label htmlFor="avatar-uploader">
-          <div className={"prifleUpdateAvatar__header__uploadPhoto"}>
-            <AddIcon />
-            <span>Upload Photo</span>
-          </div>
-        </label>
 
-        {/* <div className={"prifleUpdateAvatar__header__addFrame"}>
+      {props.profileUpdateStateComponent === 0 ? (
+        <div className={"prifleUpdateAvatar__header__controllPanel"}>
+          <label htmlFor="avatar-uploader">
+            <div className={"prifleUpdateAvatar__header__uploadPhoto"}>
+              <AddIcon />
+              <span>Upload Photo</span>
+            </div>
+          </label>
+
+          {/* <div className={"prifleUpdateAvatar__header__addFrame"}>
           <VignetteIcon />
           <span>Add Frame</span>
         </div>
         <div className={"prifleUpdateAvatar__header__editButton"}>
           <EditIcon />
         </div> */}
-      </div>
+        </div>
+      ) : null}
     </>
   );
 };

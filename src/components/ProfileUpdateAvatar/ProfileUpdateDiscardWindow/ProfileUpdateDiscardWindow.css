@@ -1,17 +1,18 @@
-.prifleUpdateAvatar__wrapper {
+.profileUpdateDiscardWindow__wrapper {
+    z-index: 200;
     position: absolute;
-    top: 20%;
+    top: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     width: 100%;
-    transition: opacity 0.1s, visibility 0s linear 0.1s;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
 }
 
-.prifleUpdateAvatar {
-    z-index: 51;
-    max-width: 700px;
+.profileUpdateDiscardWindow {
+    z-index: 200;
+    max-width: 550px;
     height: 100%;
     border-radius: 8px;
     padding-top: 5px;

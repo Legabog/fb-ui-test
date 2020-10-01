@@ -7,6 +7,7 @@ import ProfileHeaderAvatar from "./ProfileHeaderAvatar/ProfileHeaderAvatar";
 import ProfileHeaderButtonAddBackground from "./ProfileHeaderButtonAddBackground/ProfileHeaderButtonAddBackground";
 import ProfileHeaderAvatarWindow from "./ProfileHeaderAvatarWindow/ProfileHeaderAvatarWindow";
 import ProfileHeaderDescription from "./ProfileHeaderDescription/ProfileHeaderDescription";
+import ProfileHeaderAvatarBackgroundWindow from "./ProfileHeaderAvatarBackgroundWindow/ProfileHeaderAvatarBackgroundWindow";
 
 const ProfileHeader = (props) => {
   const [windowAvatarVisibility, setWindowAvatarVisibility] = useState(
@@ -14,6 +15,16 @@ const ProfileHeader = (props) => {
   );
 
   const [windowAvatarOpacity, setWindowAvatarOpacity] = useState(0);
+
+  const [
+    windowAvatarBackgroundVisibility,
+    setWindowAvatarBackgroundVisibility,
+  ] = useState("hidden");
+
+  const [
+    windowAvatarBackgroundOpacity,
+    setWindowAvatarBackgroundOpacity,
+  ] = useState(0);
 
   const toggleWindowAvatar = () => {
     windowAvatarVisibility === "hidden"
@@ -25,6 +36,16 @@ const ProfileHeader = (props) => {
       : setWindowAvatarOpacity(0);
   };
 
+  const toggleWindowAvatarBackground = () => {
+    windowAvatarBackgroundVisibility === "hidden"
+      ? setWindowAvatarBackgroundVisibility("visible")
+      : setWindowAvatarBackgroundVisibility("hidden");
+
+    windowAvatarBackgroundOpacity === 0
+      ? setWindowAvatarBackgroundOpacity(1)
+      : setWindowAvatarBackgroundOpacity(0);
+  };
+
   return (
     <div className={"profile__header"}>
       <div className={"profile__header__pos"}>
@@ -33,7 +54,15 @@ const ProfileHeader = (props) => {
           {...props}
           toggleWindowAvatar={toggleWindowAvatar}
         />
-        <ProfileHeaderButtonAddBackground />
+        <ProfileHeaderButtonAddBackground
+          toggleWindowAvatarBackground={toggleWindowAvatarBackground}
+        />
+        <ProfileHeaderAvatarBackgroundWindow
+          {...props}
+          toggleWindowAvatarBackground={toggleWindowAvatarBackground}
+          windowAvatarBackgroundVisibility={windowAvatarBackgroundVisibility}
+          windowAvatarBackgroundOpacity={windowAvatarBackgroundOpacity}
+        />
       </div>
 
       <ProfileHeaderAvatarWindow

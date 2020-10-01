@@ -17,7 +17,17 @@ const ProfileUpdateBodySection = (props) => {
       ) : props.avatarsArray.length <= maxLineOfImages ? (
         <div className={"prifleUpdateAvatar__body__Section__imgLine"}>
           {props.avatarsArray.map((e, index) => {
-            return <img src={e} key={index} alt="description" />;
+            return (
+              <img
+                src={e}
+                key={index}
+                alt="description"
+                onClick={(v) => {
+                  v.preventDefault();
+                  props.changeAvatarPreHandler(e);
+                }}
+              />
+            );
           })}
         </div>
       ) : (
@@ -36,7 +46,7 @@ const ProfileUpdateBodySection = (props) => {
                     key={index}
                     onClick={(v) => {
                       v.preventDefault();
-                      props.changeAvatarHandler(e, props.activeAccountEmail);
+                      props.changeAvatarPreHandler(e);
                     }}
                   />
                 );
@@ -61,8 +71,7 @@ const ProfileUpdateBodySection = (props) => {
                     key={index}
                     onClick={(v) => {
                       v.preventDefault();
-                      props.changeAvatarHandler(e);
-                      props.changeAvatarHandler(e, props.activeAccountEmail);
+                      props.changeAvatarPreHandler(e);
                     }}
                   />
                 );
