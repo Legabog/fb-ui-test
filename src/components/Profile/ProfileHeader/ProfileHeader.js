@@ -8,23 +8,17 @@ import ProfileHeaderButtonAddBackground from "./ProfileHeaderButtonAddBackground
 import ProfileHeaderAvatarWindow from "./ProfileHeaderAvatarWindow/ProfileHeaderAvatarWindow";
 import ProfileHeaderDescription from "./ProfileHeaderDescription/ProfileHeaderDescription";
 import ProfileHeaderAvatarBackgroundWindow from "./ProfileHeaderAvatarBackgroundWindow/ProfileHeaderAvatarBackgroundWindow";
+import ProfileHeaderConfirmChangeAvatarBackground from "./ProfileHeaderConfirmChangeAvatarBackground/ProfileHeaderConfirmChangeAvatarBackground";
+import ProfileHeaderConfirmRemoveBackground from "./ProfileHeaderAvatarBackgroundWindow/ProfileHeaderConfirmRemoveBackground/ProfileHeaderConfirmRemoveBackground";
 
 const ProfileHeader = (props) => {
+  // Window Avatar
+
   const [windowAvatarVisibility, setWindowAvatarVisibility] = useState(
     "hidden"
   );
 
   const [windowAvatarOpacity, setWindowAvatarOpacity] = useState(0);
-
-  const [
-    windowAvatarBackgroundVisibility,
-    setWindowAvatarBackgroundVisibility,
-  ] = useState("hidden");
-
-  const [
-    windowAvatarBackgroundOpacity,
-    setWindowAvatarBackgroundOpacity,
-  ] = useState(0);
 
   const toggleWindowAvatar = () => {
     windowAvatarVisibility === "hidden"
@@ -36,6 +30,20 @@ const ProfileHeader = (props) => {
       : setWindowAvatarOpacity(0);
   };
 
+  //
+
+  // Window Background
+
+  const [
+    windowAvatarBackgroundVisibility,
+    setWindowAvatarBackgroundVisibility,
+  ] = useState("hidden");
+
+  const [
+    windowAvatarBackgroundOpacity,
+    setWindowAvatarBackgroundOpacity,
+  ] = useState(0);
+
   const toggleWindowAvatarBackground = () => {
     windowAvatarBackgroundVisibility === "hidden"
       ? setWindowAvatarBackgroundVisibility("visible")
@@ -46,10 +54,31 @@ const ProfileHeader = (props) => {
       : setWindowAvatarBackgroundOpacity(0);
   };
 
+  //
+
+  // Confirm Remove Background
+
+  const [confirmRemoveVisibility, setConfirmRemoveVisibility] = useState(
+    "hidden"
+  );
+  const [confirmRemoveOpacity, setConfirmRemoveOpacity] = useState("hidden");
+
+  const toggleConfirmRemove = (boolean) => {
+    boolean
+      ? setConfirmRemoveVisibility("visible")
+      : setConfirmRemoveVisibility("hidden");
+
+    boolean ? setConfirmRemoveOpacity(1) : setConfirmRemoveOpacity(0);
+  };
+
+  //
+
   return (
     <div className={"profile__header"}>
       <div className={"profile__header__pos"}>
-        <ProfileHeaderAvatarBackground {...props} />
+        <ProfileHeaderAvatarBackground
+          {...props}
+        />
         <ProfileHeaderAvatar
           {...props}
           toggleWindowAvatar={toggleWindowAvatar}
@@ -59,9 +88,20 @@ const ProfileHeader = (props) => {
         />
         <ProfileHeaderAvatarBackgroundWindow
           {...props}
+          toggleConfirmRemove={toggleConfirmRemove}
           toggleWindowAvatarBackground={toggleWindowAvatarBackground}
           windowAvatarBackgroundVisibility={windowAvatarBackgroundVisibility}
           windowAvatarBackgroundOpacity={windowAvatarBackgroundOpacity}
+        />
+        <ProfileHeaderConfirmChangeAvatarBackground
+          {...props}
+        />
+
+        <ProfileHeaderConfirmRemoveBackground
+          {...props}
+          toggleConfirmRemove={toggleConfirmRemove}
+          confirmRemoveVisibility={confirmRemoveVisibility}
+          confirmRemoveOpacity={confirmRemoveOpacity}
         />
       </div>
 
