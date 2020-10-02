@@ -4,16 +4,17 @@ import "./ProfileHeaderAvatarBackground.css";
 const ProfileHeaderAvatarBackground = (props) => {
   return (
     <>
-      {props.user === null || props.user.AvatarBackground === "" ? (
-        <div className={"profile__header__avatarBackground"} ></div>
+      {props.user === null || ( props.profileUpdateTempAvatarBackground === null && props.user.AvatarBackground === "" ) ? (
+        <div className={"profile__header__avatarBackground"}></div>
       ) : (
         <div className={"profile__header__avatarBackground__active__wrapper"}>
           <div className={"profile__header__avatarBackground__active"}>
             <img
+              id={"avatarBackground"}
               src={
-                props.user === null || props.user.AvatarBackground
-                  ? props.user.AvatarBackground
-                  : null
+                props.user === null || props.profileUpdateTempAvatarBackground !== null 
+                  ? props.profileUpdateTempAvatarBackground
+                  : props.user.AvatarBackground ? props.user.AvatarBackground : null
               }
               alt="description"
             />
@@ -28,6 +29,7 @@ const ProfileHeaderAvatarBackground = (props) => {
         onChange={(e) => {
           if (e.target.files[0] !== null) {
             props.avatarBackgroundLoaderBase64Handler(e.target.files[0]);
+            props.toggleWindowConfirmBackground(true)
           }
         }}
       />
