@@ -3,6 +3,8 @@ import { storage, addToArray } from "../utils/firebase/firebase";
 import {
   closeHandlerProfileUpdate,
   setTempAvatar,
+  setTempAvatarBackground,
+  setTempAvatarBackgroundName,
   setTempAvatarName,
   toggleProfileUpdateConditionForAvatar,
   toggleProfileUpdateStateComponent,
@@ -17,11 +19,13 @@ const CHANGE_BIO = "CHANGE_BIO";
 const TOGGLE_FETCH_BIO = "TOGGLE_FETCH_BIO";
 const TOGGLE_FETCH_AVATAR = "TOGGLE_FETCH_AVATAR";
 const TOGGLE_FETCH_PROFILE_AVATARS = "TOGGLE_FETCH_PROFILE_AVATARS";
+const TOGGLE_FETCH_AVATAR_BACKGROUND = "TOGGLE_FETCH_AVATAR_BACKGROUND";
 
 let initialState = {
   fetchBio: false,
   fetchAvatar: false,
   fetchProfileAvatars: false,
+  fetchAvatarBackground: false,
   user: null,
 };
 
@@ -93,6 +97,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         fetchProfileAvatars: action.boolean,
       };
+
+    case TOGGLE_FETCH_AVATAR_BACKGROUND:
+      return {
+        ...state,
+        fetchAvatarBackground: action.boolean,
+      };
     default:
       return state;
   }
@@ -157,6 +167,13 @@ export const toggleFetchAvatar = (boolean) => {
 export const toggleFetchProfileAvatars = (boolean) => {
   return {
     type: TOGGLE_FETCH_PROFILE_AVATARS,
+    boolean,
+  };
+};
+
+export const toggleFetchAvatarBackground = (boolean) => {
+  return {
+    type: TOGGLE_FETCH_AVATAR_BACKGROUND,
     boolean,
   };
 };
@@ -246,7 +263,6 @@ export const changeAvatarPreHandler = (avatarUrl) => {
 
 export const changeAvatarHandler = (avatar, email) => {
   return async (dispatch) => {
-
     dispatch(toggleFetchAvatar(true));
     dispatch(changeAvatar(avatar));
 
@@ -280,11 +296,11 @@ export const changeAvatarHandler = (avatar, email) => {
 
 export const avatarBackgroundLoaderBase64Handler = (img) => {
   return async (dispatch) => {
-
     const reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload = () => {
-      dispatch(changeAvatarBackground(reader.result));
+      dispatch(setTempAvatarBackground(reader.result));
+      dispatch(setTempAvatarBackgroundName(img.name));
     };
     reader.onerror = (error) => {
       console.log("Oops base64 handler has an error", error);
@@ -292,9 +308,100 @@ export const avatarBackgroundLoaderBase64Handler = (img) => {
   };
 };
 
-export const changeAvatarBackgroundHandler = (background, email) => {
+export const avatarBackgroundLoaderUrlHandler = (img) => {
+  return (dispatch) => {
+    dispatch(setTempAvatarBackground(img));
+    dispatch(
+      setTempAvatarBackgroundName(
+        img
+          .slice(
+            "https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2F"
+              .length
+          )
+          .slice(0, -"?alt=media".length)
+      )
+    );
+  };
+};
+
+export const clearTempAvatarBackgroundHandler = () => {
+  return (dispatch) => {
+    dispatch(setTempAvatarBackground(null));
+    dispatch(setTempAvatarBackgroundName(null));
+    document.getElementById("avatarBackground-uploader").value = "";
+  };
+};
+
+export const changeAvatarBackgroundHandler = (
+  background,
+  backgroundName,
+  email,
+  secondaryFn
+) => {
   return async (dispatch) => {
-    await dispatch(changeAvatarBackground(background));
+    dispatch(toggleFetchAvatarBackground(true));
+    dispatch(changeAvatarBackground(background));
+
+    // ----------Firebase storage
+
+    var storageRef = storage.ref();
+    var imagesRef = storageRef.child(`avatar-backgrounds/${backgroundName}`);
+    imagesRef
+      .putString(background + "", "data_url")
+      .then(function (snapshot) {
+        // Success
+        console.log(
+          `Success. Storage with name /avatar-backgrounds/ was updated. Background was uploaded. Path:/avatar-backgrounds/${backgroundName}`
+        );
+
+        db.collection("users_database")
+          .get()
+          .then((usersDatabase) => {
+            usersDatabase.forEach((userDatabase) => {
+              if (userDatabase.data().Email === email) {
+                const resultUrl = `https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatar-backgrounds%2F${backgroundName}?alt=media`;
+
+                db.collection("users_database")
+                  .doc(userDatabase.id)
+                  .update({
+                    AvatarBackground: resultUrl,
+                  })
+                  .then(() => {
+                    dispatch(toggleFetchAvatarBackground(false));
+                    dispatch(setTempAvatarBackground(null));
+                    dispatch(setTempAvatarBackgroundName(null));
+                    document.getElementById("avatarBackground-uploader").value =
+                      "";
+                    console.log("Success. Cloud FireStore was updated");
+                  })
+                  .then(() => {
+                    secondaryFn(false);
+                  })
+                  .catch((e) => {
+                    dispatch(toggleFetchAvatarBackground(false));
+                    dispatch(setTempAvatarBackground(null));
+                    dispatch(setTempAvatarBackgroundName(null));
+                    document.getElementById("avatarBackground-uploader").value =
+                      "";
+                    console.log(e + "error on  uploading in Cloud FireStore");
+                  });
+              }
+            });
+          });
+      })
+      .catch((e) => {
+        dispatch(toggleFetchAvatarBackground(false));
+        dispatch(setTempAvatarBackground(null));
+        dispatch(setTempAvatarBackgroundName(null));
+        document.getElementById("avatarBackground-uploader").value = "";
+        console.log(e + "error on uploading in storage");
+      });
+  };
+};
+
+export const removeAvatarBackgroundHandler = (email) => {
+  return (dispatch) => {
+    dispatch(changeAvatarBackground(""));
 
     db.collection("users_database")
       .get()
@@ -304,10 +411,22 @@ export const changeAvatarBackgroundHandler = (background, email) => {
             db.collection("users_database")
               .doc(userDatabase.id)
               .update({
-                AvatarBackground: background,
+                AvatarBackground: "",
               })
-              .then(() => console.log("Upd"))
-              .catch(() => console.log("Error"));
+              .then(() => {
+                dispatch(toggleFetchAvatarBackground(false));
+                dispatch(setTempAvatarBackground(null));
+                dispatch(setTempAvatarBackgroundName(null));
+                document.getElementById("avatarBackground-uploader").value = "";
+                console.log("Success. Cloud FireStore was updated");
+              })
+              .catch((e) => {
+                dispatch(toggleFetchAvatarBackground(false));
+                dispatch(setTempAvatarBackground(null));
+                dispatch(setTempAvatarBackgroundName(null));
+                document.getElementById("avatarBackground-uploader").value = "";
+                console.log(e + "error on  uploading in Cloud FireStore");
+              });
           }
         });
       });

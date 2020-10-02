@@ -9,13 +9,19 @@ const TOGGLE_PROFILE_UPDATE_CONDITION_FOR_AVATAR =
   "TOGGLE_PROFILE_UPDATE_CONDITION_FOR_AVATAR";
 const SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND =
   "SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND";
+  const SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND_NAME =
+  "SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND_NAME";
 
 let initialState = {
   profileUpdateStateComponent: 0,
   profileUpdateConditionForAvatar: 0,
+  // 
   profileUpdateTempAvatar: null,
   profileUpdateTempAvatarName: null,
+  // 
   profileUpdateTempAvatarBackground: null,
+  profileUpdateTempAvatarBackgroundName: null,
+  // 
   profileUpdateVisibility: "hidden",
   profileUpdateOpacity: 0,
 };
@@ -39,7 +45,12 @@ const profileUpdateAvatarReducer = (state = initialState, action) => {
         ...state,
         profileUpdateTempAvatarBackground: action.avatarBackground,
       };
-
+      case SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND_NAME:
+        return {
+          ...state,
+          profileUpdateTempAvatarBackgroundName: action.backgroundName,
+        };
+      
     case TOGGLE_PROFILE_UPDATE_VISIBILITY:
       return {
         ...state,
@@ -86,6 +97,13 @@ export const setTempAvatarBackground = (avatarBackground) => {
   return {
     type: SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND,
     avatarBackground,
+  };
+};
+
+export const setTempAvatarBackgroundName = (backgroundName) => {
+  return {
+    type: SET_PROFILE_UPDATE_TEMP_AVATAR_BACKGROUND_NAME,
+    backgroundName,
   };
 };
 

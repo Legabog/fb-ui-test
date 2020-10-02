@@ -6,6 +6,7 @@ import musicAlbumsReducer from "./musicalbums-reducer"
 import musicPlayListReducer from "./musicalplaylists-reducer"
 import musicPlayerReducer from "./musicplayer-reducer"
 import profileUpdateAvatarReducer from "./profile-update-avatar-reducer"
+import profileSelectAvatarBackgroundReducer from "./profile-select-avatar-background-reducer"
 
 import thunk from "redux-thunk";
 
@@ -16,7 +17,8 @@ let root_reducer = combineReducers({
   musicAlbumsReducer,
   musicPlayListReducer,
   musicPlayerReducer,
-  profileUpdateAvatarReducer
+  profileUpdateAvatarReducer,
+  profileSelectAvatarBackgroundReducer
 });
 
 let store = createStore(root_reducer, applyMiddleware(thunk));

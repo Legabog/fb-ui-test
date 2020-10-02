@@ -13,7 +13,10 @@ import {
   avatarLoaderBase64Handler,
   sendAvatar,
   avatarBackgroundLoaderBase64Handler,
+  avatarBackgroundLoaderUrlHandler,
+  clearTempAvatarBackgroundHandler,
   changeAvatarBackgroundHandler,
+  removeAvatarBackgroundHandler,
   changeBioHandler,
 } from "./redux/user-reducer";
 import {
@@ -24,6 +27,7 @@ import {
   toggleLoginError,
 } from "./redux/auth-reducer";
 import { toggleProfileUpdateAvatar, closeHandlerProfileUpdate } from "./redux/profile-update-avatar-reducer";
+import { toggleProfileSelectAvatarBackground, toggleWindowConfirmBackground } from "./redux/profile-select-avatar-background-reducer"
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -609,35 +613,49 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    // user-reducer
     user: state.userReducer.user,
     fetchBio: state.userReducer.fetchBio,
     fetchAvatar: state.userReducer.fetchAvatar,
     fetchProfileAvatars: state.userReducer.fetchProfileAvatars,
+    fetchAvatarBackground: state.userReducer.fetchAvatarBackground,
+    // auth-reducer
     activeAccountEmail: state.authReducer.activeAccountEmail,
     token: state.authReducer.token,
     fetching: state.authReducer.fetching,
     registrationFetching: state.authReducer.registrationFetching,
     registrationError: state.authReducer.registrationError,
     loginError: state.authReducer.loginError,
+    // music albums reducer
     musicAlbums: state.musicAlbumsReducer.musicAlbums,
     Fetching: state.musicAlbumsReducer.Fetching,
     recentlyPlayed: state.musicAlbumsReducer.recentlyPlayed,
     musicAlbumsSwitcher: state.musicAlbumsReducer.musicAlbumsSwitcher,
+    // muisc playlists reducer
     ownPlayLists: state.musicPlayListReducer.ownPlayLists,
     deleteTrackFetch: state.musicPlayListReducer.deleteTrackFetch,
+    // muisc player reducer
     isPlaying: state.musicPlayerReducer.isPlaying,
     musicPlayerPlayList: state.musicPlayerReducer.musicPlayerPlayList,
     indexOfPlayingTrack: state.musicPlayerReducer.indexOfPlayingTrack,
     activeTrack: state.musicPlayerReducer.activeTrack,
     disablerButtonNext: state.musicPlayerReducer.disablerButtonNext,
     disablerButtonPlay: state.musicPlayerReducer.disablerButtonPlay,
+    // profile update avatar reducer
     profileUpdateVisibility:
       state.profileUpdateAvatarReducer.profileUpdateVisibility,
     profileUpdateOpacity: state.profileUpdateAvatarReducer.profileUpdateOpacity,
     profileUpdateStateComponent: state.profileUpdateAvatarReducer.profileUpdateStateComponent,
     profileUpdateConditionForAvatar: state.profileUpdateAvatarReducer.profileUpdateConditionForAvatar,
     profileUpdateTempAvatar: state.profileUpdateAvatarReducer.profileUpdateTempAvatar,
-    profileUpdateTempAvatarName: state.profileUpdateAvatarReducer.profileUpdateTempAvatarName
+    profileUpdateTempAvatarName: state.profileUpdateAvatarReducer.profileUpdateTempAvatarName,
+    profileUpdateTempAvatarBackground: state.profileUpdateAvatarReducer.profileUpdateTempAvatarBackground,
+    profileUpdateTempAvatarBackgroundName: state.profileUpdateAvatarReducer.profileUpdateTempAvatarBackgroundName,
+    // profile select avatar background
+    windowConfirmBackgroundVisibility: state.profileSelectAvatarBackgroundReducer.windowConfirmBackgroundVisibility,
+    windowConfirmBackgroundOpacity: state.profileSelectAvatarBackgroundReducer.windowConfirmBackgroundOpacity,
+    profileSelectVisibility: state.profileSelectAvatarBackgroundReducer.profileSelectVisibility,
+    profileSelectOpacity: state.profileSelectAvatarBackgroundReducer.profileSelectOpacity,
   };
 };
 
@@ -652,10 +670,15 @@ export default compose(
     changeAvatarPreHandler,
     changeAvatarHandler,
     avatarBackgroundLoaderBase64Handler,
+    avatarBackgroundLoaderUrlHandler,
+    clearTempAvatarBackgroundHandler,
     changeAvatarBackgroundHandler,
+    removeAvatarBackgroundHandler,
     changeBioHandler,
     toggleProfileUpdateAvatar,
     closeHandlerProfileUpdate,
+    toggleProfileSelectAvatarBackground,
+    toggleWindowConfirmBackground,
     signIn,
     signUp,
     autoLogin,
