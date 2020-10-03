@@ -1,5 +1,5 @@
 import React from "react";
-import "./TrackItem.css"
+import "./TrackItem.css";
 
 import { ActionSwitcher } from "./ActionSwitcher/ActionSwitcher.js";
 
