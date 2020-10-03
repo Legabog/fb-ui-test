@@ -30,9 +30,7 @@
 .confirmChangeAvatarBackground__controlPanel {
     display: flex;
     width: 20%;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
 }
 
 .confirmChangeAvatarBackground__controlPanel__cancelButton {

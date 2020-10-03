@@ -48,12 +48,18 @@ const ProfileHeaderConfirmChangeAvatarBackground = (props) => {
               <div
                 className={`confirmChangeAvatarBackground__controlPanel__saveButton`}
                 onClick={() => {
-                  props.changeAvatarBackgroundHandler(
-                    props.profileUpdateTempAvatarBackground,
-                    props.profileUpdateTempAvatarBackgroundName,
-                    props.activeAccountEmail,
-                    props.toggleWindowConfirmBackground
-                  );
+                  props.switcherAvatarBackgroundURLorBase64 === 0
+                    ? props.changeAvatarBackgroundHandler(
+                        props.profileUpdateTempAvatarBackground,
+                        props.profileUpdateTempAvatarBackgroundName,
+                        props.activeAccountEmail,
+                        props.toggleWindowConfirmBackground
+                      )
+                    : props.changeAvatarBackgroundURLHandler(
+                        props.profileUpdateTempAvatarBackground,
+                        props.activeAccountEmail,
+                        props.toggleWindowConfirmBackground
+                      );
                 }}
               >
                 <span>Save Changes</span>

@@ -4,7 +4,7 @@ import "./ProfileHeaderAvatarBackground.css";
 const ProfileHeaderAvatarBackground = (props) => {
   return (
     <>
-      {props.user === null || ( props.profileUpdateTempAvatarBackground === null && props.user.AvatarBackground === "" ) ? (
+      {props.user === null || ( props.profileUpdateTempAvatarBackground === null && props.user.AvatarBackground.activeAvatarBackgroundUrl === "" ) ? (
         <div className={"profile__header__avatarBackground"}></div>
       ) : (
         <div className={"profile__header__avatarBackground__active__wrapper"}>
@@ -14,7 +14,7 @@ const ProfileHeaderAvatarBackground = (props) => {
               src={
                 props.user === null || props.profileUpdateTempAvatarBackground !== null 
                   ? props.profileUpdateTempAvatarBackground
-                  : props.user.AvatarBackground ? props.user.AvatarBackground : null
+                  : props.user.AvatarBackground.activeAvatarBackgroundUrl ? props.user.AvatarBackground.activeAvatarBackgroundUrl : null
               }
               alt="description"
             />
