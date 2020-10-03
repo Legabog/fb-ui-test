@@ -4,12 +4,19 @@
   border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
+.prifleSelectAvatarBackground__header__backIcon {
+  position: absolute;
+  margin-left: 10px;
+  padding-top: 5px;
+}
+
 .prifleSelectAvatarBackground__header__title {
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  width: 100%;
+  padding: 0 60px;
 }
 
 .prifleSelectAvatarBackground__header__title span {
@@ -17,82 +24,11 @@
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.2;
-  padding-left: 70px;
 }
 
 .prifleSelectAvatarBackground__header__closeIcon {
   padding-top: 5px;
-  padding-right: 10px;
+  position: absolute;
+  margin-left: 490px;
 }
 
-.prifleSelectAvatarBackground__header__controllPanel {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
-
-.prifleSelectAvatarBackground__header__uploadPhoto {
-  width: 670px;
-  height: 36px;
-  border-radius: 6px;
-  color: #1876F2;
-  background-color: #E7E3FF;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-}
-
-.prifleSelectAvatarBackground__header__uploadPhoto:hover {
-  cursor: pointer;
-  filter: brightness(95%)
-}
-
-.prifleSelectAvatarBackground__header__uploadPhoto:active {
-  transform: scale(0.95);
-}
-
-.prifleSelectAvatarBackground__header__addFrame {
-  width: 300px;
-  height: 36px;
-  margin-right: 10px;
-  border-radius: 6px;
-  color: #050505;
-  background-color: #E4E6EB;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-}
-
-.prifleSelectAvatarBackground__header__addFrame:hover {
-  cursor: pointer;
-  filter: brightness(95%);
-}
-
-.prifleSelectAvatarBackground__header__addFrame:active {
-  transform: scale(0.95);
-}
-
-.prifleSelectAvatarBackground__header__editButton {
-  min-width: 50px;
-  height: 36px;
-  border-radius: 6px;
-  color: #050505;
-  background-color: #E4E6EB;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-}
-
-.prifleSelectAvatarBackground__header__editButton:hover {
-  cursor: pointer;
-  filter: brightness(95%);
-}
-
-.prifleSelectAvatarBackground__header__editButton:active {
-  transform: scale(0.95);
-}
