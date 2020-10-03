@@ -30,28 +30,29 @@ const ProfileUpdateConfirmUpload = (props) => {
               <span>Cancel</span>
             </div>
           )}
-
-          <div
-            className={
-              props.fetchAvatar
-                ? "profileUpdateConfirmUpload__saveButton__disabled"
-                : "profileUpdateConfirmUpload__saveButton"
-            }
-            onClick={() => {
-              props.profileUpdateConditionForAvatar === 0
-                ? props.sendAvatar(
-                    props.profileUpdateTempAvatar,
-                    props.profileUpdateTempAvatarName,
-                    props.activeAccountEmail
-                  )
-                : props.changeAvatarHandler(
-                    props.profileUpdateTempAvatar,
-                    props.activeAccountEmail
-                  );
-            }}
-          >
-            <span>Save</span>
-          </div>
+          {props.fetchAvatar ? (
+            <div className={"profileUpdateConfirmUpload__saveButton__disabled"}>
+              <span>Save</span>
+            </div>
+          ) : (
+            <div
+              className={"profileUpdateConfirmUpload__saveButton"}
+              onClick={() => {
+                props.profileUpdateConditionForAvatar === 0
+                  ? props.sendAvatar(
+                      props.profileUpdateTempAvatar,
+                      props.profileUpdateTempAvatarName,
+                      props.activeAccountEmail
+                    )
+                  : props.changeAvatarHandler(
+                      props.profileUpdateTempAvatar,
+                      props.activeAccountEmail
+                    );
+              }}
+            >
+              <span>Save</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

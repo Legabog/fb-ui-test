@@ -12,7 +12,7 @@ const ProfileUpdateBodySection = (props) => {
   return (
     <div className={"prifleUpdateAvatar__body__Section"}>
       <span>{props.titleSection}</span>
-      {props.user === null || props.avatarsArray === [] ? (
+      {props.user === null || props.avatarsArray.length === 0 ? (
         <div className={"prifleUpdateAvatar__body__Section__imgLine"}></div>
       ) : props.avatarsArray.length <= maxLineOfImages ? (
         <div className={"prifleUpdateAvatar__body__Section__imgLine"}>
