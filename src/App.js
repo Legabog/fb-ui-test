@@ -14,8 +14,10 @@ import {
   sendAvatar,
   avatarBackgroundLoaderBase64Handler,
   avatarBackgroundLoaderUrlHandler,
+  toggleSwitcherAvatarBackgroundURLorBase64,
   clearTempAvatarBackgroundHandler,
   changeAvatarBackgroundHandler,
+  changeAvatarBackgroundURLHandler,
   removeAvatarBackgroundHandler,
   changeBioHandler,
 } from "./redux/user-reducer";
@@ -26,8 +28,14 @@ import {
   logoutButton,
   toggleLoginError,
 } from "./redux/auth-reducer";
-import { toggleProfileUpdateAvatar, closeHandlerProfileUpdate } from "./redux/profile-update-avatar-reducer";
-import { toggleProfileSelectAvatarBackground, toggleWindowConfirmBackground } from "./redux/profile-select-avatar-background-reducer"
+import {
+  toggleProfileUpdateAvatar,
+  closeHandlerProfileUpdate,
+} from "./redux/profile-update-avatar-reducer";
+import {
+  toggleProfileSelectAvatarBackground,
+  toggleWindowConfirmBackground,
+} from "./redux/profile-select-avatar-background-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -142,7 +150,6 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-
     this.props.autoLogin();
     this.props.getMusicAlbumsData();
     this.props.getMyOwnPlayLists();
@@ -619,6 +626,8 @@ const mapStateToProps = (state) => {
     fetchAvatar: state.userReducer.fetchAvatar,
     fetchProfileAvatars: state.userReducer.fetchProfileAvatars,
     fetchAvatarBackground: state.userReducer.fetchAvatarBackground,
+    switcherAvatarBackgroundURLorBase64:
+      state.userReducer.switcherAvatarBackgroundURLorBase64,
     // auth-reducer
     activeAccountEmail: state.authReducer.activeAccountEmail,
     token: state.authReducer.token,
@@ -645,17 +654,30 @@ const mapStateToProps = (state) => {
     profileUpdateVisibility:
       state.profileUpdateAvatarReducer.profileUpdateVisibility,
     profileUpdateOpacity: state.profileUpdateAvatarReducer.profileUpdateOpacity,
-    profileUpdateStateComponent: state.profileUpdateAvatarReducer.profileUpdateStateComponent,
-    profileUpdateConditionForAvatar: state.profileUpdateAvatarReducer.profileUpdateConditionForAvatar,
-    profileUpdateTempAvatar: state.profileUpdateAvatarReducer.profileUpdateTempAvatar,
-    profileUpdateTempAvatarName: state.profileUpdateAvatarReducer.profileUpdateTempAvatarName,
-    profileUpdateTempAvatarBackground: state.profileUpdateAvatarReducer.profileUpdateTempAvatarBackground,
-    profileUpdateTempAvatarBackgroundName: state.profileUpdateAvatarReducer.profileUpdateTempAvatarBackgroundName,
+    profileUpdateStateComponent:
+      state.profileUpdateAvatarReducer.profileUpdateStateComponent,
+    profileUpdateConditionForAvatar:
+      state.profileUpdateAvatarReducer.profileUpdateConditionForAvatar,
+    profileUpdateTempAvatar:
+      state.profileUpdateAvatarReducer.profileUpdateTempAvatar,
+    profileUpdateTempAvatarName:
+      state.profileUpdateAvatarReducer.profileUpdateTempAvatarName,
+    profileUpdateTempAvatarBackground:
+      state.profileUpdateAvatarReducer.profileUpdateTempAvatarBackground,
+    profileUpdateTempAvatarBackgroundName:
+      state.profileUpdateAvatarReducer.profileUpdateTempAvatarBackgroundName,
     // profile select avatar background
-    windowConfirmBackgroundVisibility: state.profileSelectAvatarBackgroundReducer.windowConfirmBackgroundVisibility,
-    windowConfirmBackgroundOpacity: state.profileSelectAvatarBackgroundReducer.windowConfirmBackgroundOpacity,
-    profileSelectVisibility: state.profileSelectAvatarBackgroundReducer.profileSelectVisibility,
-    profileSelectOpacity: state.profileSelectAvatarBackgroundReducer.profileSelectOpacity,
+    windowConfirmBackgroundVisibility:
+      state.profileSelectAvatarBackgroundReducer
+        .windowConfirmBackgroundVisibility,
+    windowConfirmBackgroundOpacity:
+      state.profileSelectAvatarBackgroundReducer.windowConfirmBackgroundOpacity,
+    profileSelectVisibility:
+      state.profileSelectAvatarBackgroundReducer.profileSelectVisibility,
+    profileSelectOpacity:
+      state.profileSelectAvatarBackgroundReducer.profileSelectOpacity,
+    profileSelectState:
+      state.profileSelectAvatarBackgroundReducer.profileSelectState,
   };
 };
 
@@ -671,8 +693,10 @@ export default compose(
     changeAvatarHandler,
     avatarBackgroundLoaderBase64Handler,
     avatarBackgroundLoaderUrlHandler,
+    toggleSwitcherAvatarBackgroundURLorBase64,
     clearTempAvatarBackgroundHandler,
     changeAvatarBackgroundHandler,
+    changeAvatarBackgroundURLHandler,
     removeAvatarBackgroundHandler,
     changeBioHandler,
     toggleProfileUpdateAvatar,

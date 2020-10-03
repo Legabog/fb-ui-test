@@ -142,10 +142,13 @@ export const signUp = (
                 : "None",
             Avatars: {
               activeAvatarUrl: "",
-              recentUploads: [],
-              pofileAvatars: []
+              pofileAvatars: [],
             },
-            AvatarBackground: "",
+            AvatarBackground: {
+              activeAvatarBackgroundUrl: "",
+              pofileAvatarBackgrounds: [],
+            },
+            RecentUploads: [],
             Bio: "",
           })
           .then(() => {

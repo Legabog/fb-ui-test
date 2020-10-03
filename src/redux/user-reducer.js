@@ -13,19 +13,29 @@ import {
 const SET_USER = "SET_USER";
 const CHANGE_AVATAR = "CHANGE_AVATAR";
 const ADD_AVATAR_TO_PROFILE_AVATARS = "SET_ADD_AVATAR_TO_PROFILE_AVATARS";
+const ADD_AVATAR_BACKGROUND_TO_PROFILE_AVATAR_BACKGROUNDS =
+  "ADD_AVATAR_BACKGROUND_TO_PROFILE_AVATAR_BACKGROUNDS";
 const ADD_AVATAR_TO_RECENT_UPLOADS = "ADD_AVATAR_TO_RECENT_UPLOADS";
+const ADD_AVATAR_BACKGROUND_TO_RECENT_UPLOADS =
+  "ADD_AVATAR_BACKGROUND_TO_RECENT_UPLOADS";
 const CHANGE_AVATAR_BACKGROUND = "CHANGE_AVATAR_BACKGROUND";
 const CHANGE_BIO = "CHANGE_BIO";
 const TOGGLE_FETCH_BIO = "TOGGLE_FETCH_BIO";
 const TOGGLE_FETCH_AVATAR = "TOGGLE_FETCH_AVATAR";
 const TOGGLE_FETCH_PROFILE_AVATARS = "TOGGLE_FETCH_PROFILE_AVATARS";
+const TOGGLE_FETCH_PROFILE_AVATAR_BACKGROUNDS =
+  "TOGGLE_FETCH_PROFILE_AVATAR_BACKGROUNDS";
 const TOGGLE_FETCH_AVATAR_BACKGROUND = "TOGGLE_FETCH_AVATAR_BACKGROUND";
+const TOGGLE_SWITCHER_CONDITION_OF_CHANGE_AVATAR_BACKGROUND =
+  "TOGGLE_SWITCHER_CONDITION_OF_CHANGE_AVATAR_BACKGROUND";
 
 let initialState = {
+  switcherAvatarBackgroundURLorBase64: 0,
   fetchBio: false,
   fetchAvatar: false,
   fetchProfileAvatars: false,
   fetchAvatarBackground: false,
+  fetchAvatarBackgrounds: false,
   user: null,
 };
 
@@ -47,34 +57,93 @@ const userReducer = (state = initialState, action) => {
       };
 
     case ADD_AVATAR_TO_PROFILE_AVATARS:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          Avatars: {
-            ...state.user.Avatars,
-            pofileAvatars: [...state.user.Avatars.pofileAvatars, action.avatar],
+      if (state.user.Avatars.pofileAvatars.includes(action.avatar)) {
+        return {
+          ...state,
+        };
+      } else {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            Avatars: {
+              ...state.user.Avatars,
+              pofileAvatars: [
+                ...state.user.Avatars.pofileAvatars,
+                action.avatar,
+              ],
+            },
           },
-        },
-      };
+        };
+      }
 
     case ADD_AVATAR_TO_RECENT_UPLOADS:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          Avatars: {
-            ...state.user.Avatars,
-            recentUploads: [...state.user.Avatars.recentUploads, action.avatar],
+      if (state.user.RecentUploads.includes(action.avatar)) {
+        return {
+          ...state,
+        };
+      } else {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            RecentUploads: [...state.user.RecentUploads, action.avatar],
           },
-        },
-      };
+        };
+      }
+
+    case ADD_AVATAR_BACKGROUND_TO_RECENT_UPLOADS:
+      if (state.user.RecentUploads.includes(action.background)) {
+        return {
+          ...state,
+        };
+      } else {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            RecentUploads: [...state.user.RecentUploads, action.background],
+          },
+        };
+      }
 
     case CHANGE_AVATAR_BACKGROUND:
       return {
         ...state,
-        user: { ...state.user, AvatarBackground: action.background },
+        user: {
+          ...state.user,
+          AvatarBackground: {
+            ...state.user.AvatarBackground,
+            activeAvatarBackgroundUrl: action.background,
+          },
+        },
       };
+
+    case ADD_AVATAR_BACKGROUND_TO_PROFILE_AVATAR_BACKGROUNDS:
+      if (
+        state.user.AvatarBackground.pofileAvatarBackgrounds.includes(
+          action.background
+        )
+      ) {
+        return {
+          ...state,
+        };
+      } else {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            AvatarBackground: {
+              ...state.user.AvatarBackground,
+              pofileAvatarBackgrounds: [
+                ...state.user.AvatarBackground.pofileAvatarBackgrounds,
+                action.background,
+              ],
+            },
+          },
+        };
+      }
+
     case CHANGE_BIO:
       return {
         ...state,
@@ -102,6 +171,18 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         fetchAvatarBackground: action.boolean,
+      };
+
+    case TOGGLE_FETCH_PROFILE_AVATAR_BACKGROUNDS:
+      return {
+        ...state,
+        fetchAvatarBackgrounds: action.boolean,
+      };
+
+    case TOGGLE_SWITCHER_CONDITION_OF_CHANGE_AVATAR_BACKGROUND:
+      return {
+        ...state,
+        switcherAvatarBackgroundURLorBase64: action.state,
       };
     default:
       return state;
@@ -136,9 +217,23 @@ export const addAvatarToRecentUploads = (avatar) => {
   };
 };
 
+export const addAvatarBackgroundToRecentUploads = (background) => {
+  return {
+    type: ADD_AVATAR_BACKGROUND_TO_RECENT_UPLOADS,
+    background,
+  };
+};
+
 export const changeAvatarBackground = (background) => {
   return {
     type: CHANGE_AVATAR_BACKGROUND,
+    background,
+  };
+};
+
+export const addAvatarBackgroundToPofileAvatarBackgrounds = (background) => {
+  return {
+    type: ADD_AVATAR_BACKGROUND_TO_PROFILE_AVATAR_BACKGROUNDS,
     background,
   };
 };
@@ -178,6 +273,24 @@ export const toggleFetchAvatarBackground = (boolean) => {
   };
 };
 
+export const toggleFetchAvatarBackgrounds = (boolean) => {
+  return {
+    type: TOGGLE_FETCH_PROFILE_AVATAR_BACKGROUNDS,
+    boolean,
+  };
+};
+
+export const toggleSwitcherAvatarBackgroundURLorBase64 = (state) => {
+  return {
+    type: TOGGLE_SWITCHER_CONDITION_OF_CHANGE_AVATAR_BACKGROUND,
+    state,
+  };
+};
+
+//-------AVATAR REDCUERS THUNK ASYNC
+
+// Avatar input Base64 Handler
+
 export const avatarLoaderBase64Handler = (img) => {
   return async (dispatch) => {
     dispatch(toggleProfileUpdateStateComponent(1));
@@ -195,13 +308,13 @@ export const avatarLoaderBase64Handler = (img) => {
   };
 };
 
+// Avatar connect with Firebase Storage and Firestore
+
 export const sendAvatar = (avatar, avatarName, email) => {
   return async (dispatch) => {
     dispatch(toggleFetchAvatar(true));
     dispatch(toggleFetchProfileAvatars(true));
     dispatch(changeAvatar(avatar));
-    dispatch(addAvatarToProfileAvatars(avatar));
-    dispatch(addAvatarToRecentUploads(avatar));
 
     // ----------Firebase storage
 
@@ -227,9 +340,11 @@ export const sendAvatar = (avatar, avatarName, email) => {
                   .update({
                     "Avatars.activeAvatarUrl": resultUrl,
                     "Avatars.pofileAvatars": addToArray(resultUrl),
-                    "Avatars.recentUploads": addToArray(resultUrl),
+                    RecentUploads: addToArray(resultUrl),
                   })
                   .then(() => {
+                    dispatch(addAvatarToProfileAvatars(resultUrl));
+                    dispatch(addAvatarToRecentUploads(resultUrl));
                     dispatch(toggleFetchAvatar(false));
                     dispatch(toggleFetchProfileAvatars(false));
                     console.log("Success. Cloud FireStore was updated");
@@ -253,6 +368,8 @@ export const sendAvatar = (avatar, avatarName, email) => {
   };
 };
 
+// Set temp avatar
+
 export const changeAvatarPreHandler = (avatarUrl) => {
   return (dispatch) => {
     dispatch(toggleProfileUpdateStateComponent(1));
@@ -261,9 +378,12 @@ export const changeAvatarPreHandler = (avatarUrl) => {
   };
 };
 
+// Connect ONLY with Firestore
+
 export const changeAvatarHandler = (avatar, email) => {
   return async (dispatch) => {
     dispatch(toggleFetchAvatar(true));
+    dispatch(toggleFetchProfileAvatars(true));
     dispatch(changeAvatar(avatar));
 
     db.collection("users_database")
@@ -275,10 +395,14 @@ export const changeAvatarHandler = (avatar, email) => {
               .doc(userDatabase.id)
               .update({
                 "Avatars.activeAvatarUrl": avatar,
+                "Avatars.pofileAvatars": addToArray(avatar),
               })
               .then(() => {
                 console.log("Success. Cloud FireStore was updated");
+                dispatch(addAvatarToProfileAvatars(avatar));
+                dispatch(addAvatarToRecentUploads(avatar));
                 dispatch(toggleFetchAvatar(false));
+                dispatch(toggleFetchProfileAvatars(false));
               })
               .then(() => {
                 dispatch(closeHandlerProfileUpdate());
@@ -286,6 +410,7 @@ export const changeAvatarHandler = (avatar, email) => {
               .catch((e) => {
                 console.log(e + "error on  uploading in Cloud FireStore");
                 dispatch(toggleFetchAvatar(false));
+                dispatch(toggleFetchProfileAvatars(false));
                 dispatch(closeHandlerProfileUpdate());
               });
           }
@@ -294,6 +419,10 @@ export const changeAvatarHandler = (avatar, email) => {
   };
 };
 
+//-------AVATAR BACKGROUND REDCUERS THUNK ASYNC
+
+// Avatar Background input Base64 Handler
+
 export const avatarBackgroundLoaderBase64Handler = (img) => {
   return async (dispatch) => {
     const reader = new FileReader();
@@ -301,12 +430,15 @@ export const avatarBackgroundLoaderBase64Handler = (img) => {
     reader.onload = () => {
       dispatch(setTempAvatarBackground(reader.result));
       dispatch(setTempAvatarBackgroundName(img.name));
+      dispatch(toggleSwitcherAvatarBackgroundURLorBase64(0));
     };
     reader.onerror = (error) => {
       console.log("Oops base64 handler has an error", error);
     };
   };
 };
+
+// Avatar Background temp load
 
 export const avatarBackgroundLoaderUrlHandler = (img) => {
   return (dispatch) => {
@@ -321,8 +453,11 @@ export const avatarBackgroundLoaderUrlHandler = (img) => {
           .slice(0, -"?alt=media".length)
       )
     );
+    dispatch(toggleSwitcherAvatarBackgroundURLorBase64(1));
   };
 };
+
+// Avatar Background clear temp
 
 export const clearTempAvatarBackgroundHandler = () => {
   return (dispatch) => {
@@ -332,6 +467,8 @@ export const clearTempAvatarBackgroundHandler = () => {
   };
 };
 
+// Avatar Background full upload to Firebase storage and Firestore
+
 export const changeAvatarBackgroundHandler = (
   background,
   backgroundName,
@@ -340,6 +477,7 @@ export const changeAvatarBackgroundHandler = (
 ) => {
   return async (dispatch) => {
     dispatch(toggleFetchAvatarBackground(true));
+    dispatch(toggleFetchAvatarBackgrounds(true));
     dispatch(changeAvatarBackground(background));
 
     // ----------Firebase storage
@@ -364,10 +502,19 @@ export const changeAvatarBackgroundHandler = (
                 db.collection("users_database")
                   .doc(userDatabase.id)
                   .update({
-                    AvatarBackground: resultUrl,
+                    "AvatarBackground.activeAvatarBackgroundUrl": resultUrl,
+                    "AvatarBackground.pofileAvatarBackgrounds": addToArray(
+                      resultUrl
+                    ),
+                    RecentUploads: addToArray(resultUrl),
                   })
                   .then(() => {
                     dispatch(toggleFetchAvatarBackground(false));
+                    dispatch(toggleFetchAvatarBackgrounds(false));
+                    dispatch(
+                      addAvatarBackgroundToPofileAvatarBackgrounds(resultUrl)
+                    );
+                    dispatch(addAvatarBackgroundToRecentUploads(resultUrl));
                     dispatch(setTempAvatarBackground(null));
                     dispatch(setTempAvatarBackgroundName(null));
                     document.getElementById("avatarBackground-uploader").value =
@@ -379,6 +526,7 @@ export const changeAvatarBackgroundHandler = (
                   })
                   .catch((e) => {
                     dispatch(toggleFetchAvatarBackground(false));
+                    dispatch(toggleFetchAvatarBackgrounds(false));
                     dispatch(setTempAvatarBackground(null));
                     dispatch(setTempAvatarBackgroundName(null));
                     document.getElementById("avatarBackground-uploader").value =
@@ -391,6 +539,7 @@ export const changeAvatarBackgroundHandler = (
       })
       .catch((e) => {
         dispatch(toggleFetchAvatarBackground(false));
+        dispatch(toggleFetchAvatarBackgrounds(false));
         dispatch(setTempAvatarBackground(null));
         dispatch(setTempAvatarBackgroundName(null));
         document.getElementById("avatarBackground-uploader").value = "";
@@ -399,8 +548,63 @@ export const changeAvatarBackgroundHandler = (
   };
 };
 
+// Avatar Background select part update only URL in Firestore
+
+export const changeAvatarBackgroundURLHandler = (
+  background,
+  email,
+  secondaryFn
+) => {
+  return (dispatch) => {
+    dispatch(toggleFetchAvatarBackground(true));
+    dispatch(toggleFetchAvatarBackgrounds(true));
+    dispatch(changeAvatarBackground(background));
+
+    db.collection("users_database")
+      .get()
+      .then((usersDatabase) => {
+        usersDatabase.forEach((userDatabase) => {
+          if (userDatabase.data().Email === email) {
+            db.collection("users_database")
+              .doc(userDatabase.id)
+              .update({
+                "AvatarBackground.activeAvatarBackgroundUrl": background,
+                "AvatarBackground.pofileAvatarBackgrounds": addToArray(
+                  background
+                ),
+              })
+              .then(() => {
+                dispatch(toggleFetchAvatarBackground(false));
+                dispatch(toggleFetchAvatarBackgrounds(false));
+                dispatch(
+                  addAvatarBackgroundToPofileAvatarBackgrounds(background)
+                );
+                dispatch(addAvatarBackgroundToRecentUploads(background));
+                dispatch(setTempAvatarBackground(null));
+                dispatch(setTempAvatarBackgroundName(null));
+                console.log("Success. Cloud FireStore was updated");
+              })
+              .then(() => {
+                secondaryFn(false);
+              })
+              .catch((e) => {
+                dispatch(toggleFetchAvatarBackground(false));
+                dispatch(toggleFetchAvatarBackgrounds(false));
+                dispatch(setTempAvatarBackground(null));
+                dispatch(setTempAvatarBackgroundName(null));
+                console.log(e + "error on  uploading in Cloud FireStore");
+              });
+          }
+        });
+      });
+  };
+};
+
+// Avatar Background remove from Firestore
+
 export const removeAvatarBackgroundHandler = (email) => {
   return (dispatch) => {
+    dispatch(toggleFetchAvatarBackground(true));
     dispatch(changeAvatarBackground(""));
 
     db.collection("users_database")
@@ -411,7 +615,7 @@ export const removeAvatarBackgroundHandler = (email) => {
             db.collection("users_database")
               .doc(userDatabase.id)
               .update({
-                AvatarBackground: "",
+                "AvatarBackground.activeAvatarBackgroundUrl": "",
               })
               .then(() => {
                 dispatch(toggleFetchAvatarBackground(false));
@@ -432,6 +636,8 @@ export const removeAvatarBackgroundHandler = (email) => {
       });
   };
 };
+
+//-------BIO REDCUERS THUNK ASYNC
 
 export const changeBioHandler = (bio, email, func) => {
   return async (dispatch) => {
@@ -462,6 +668,8 @@ export const changeBioHandler = (bio, email, func) => {
       });
   };
 };
+
+// Set active user to system
 
 export const setActiveUser = (email) => {
   return (dispatch) => {
