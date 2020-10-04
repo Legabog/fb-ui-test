@@ -32,7 +32,12 @@ const ButtonAccountMenuWrapper = React.memo((props) => {
     >
       <div className="button__account__menu__header">
         <NavLink to={"/profile"}>
-          <div className="buttonAccount__section__border">
+          <div
+            className="buttonAccount__section__border"
+            onClick={() => {
+              props.toggleActiveButton();
+            }}
+          >
             {props.fetchAvatar ? (
               <ChangeAvatarSimplePreloader width={"60px"} height={"60px"} />
             ) : props.user === null ||
@@ -69,14 +74,7 @@ const ButtonAccountMenuWrapper = React.memo((props) => {
 
         <div className="buttonAccount__menu__section">
           <div className="buttonAccount__menu__section__icon">
-            <AnnouncementIcon
-              onClick={() => {
-                props.changeAvatarHandler(
-                  "https://firebasestorage.googleapis.com/v0/b/social-network-legabog.appspot.com/o/avatars%2FDima_Shurov.jpg?alt=media&token=01191b14-4ec5-4dbd-a96a-9889dcbd5b64",
-                  props.activeAccountEmail
-                );
-              }}
-            />
+            <AnnouncementIcon />
           </div>
           <div className="buttonAccount__section__info">
             <div className="buttonAccount__section__info-main">
@@ -84,7 +82,7 @@ const ButtonAccountMenuWrapper = React.memo((props) => {
             </div>
 
             <div className="buttonAccount__section__info-secondary">
-              <span>Help us improve the new Facebook.</span>
+              <span>Help us improve this Social Network.</span>
             </div>
           </div>
         </div>

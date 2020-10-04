@@ -19,7 +19,7 @@ const Feed = (props) => {
   return (
     <div className="feed">
       <StoryReel />
-      <MessageSender user={props.user}/>
+      <MessageSender {...props}/>
 
       {posts.map((e) => {
         return (

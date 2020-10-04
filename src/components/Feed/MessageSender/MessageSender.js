@@ -37,14 +37,24 @@ const MessageSender = (props) => {
   return (
     <div className="messageSender">
       <div className="messageSender__top">
-        <Avatar src={"https://avatars0.githubusercontent.com/u/44378669?s=460&u=079ef1f1a38cec38b2b6ba37b9f71cfccc88ce1f&v=4"} />
+        <Avatar
+          src={
+            props.user === null || props.user.Avatars.activeAvatarUrl === ""
+              ? null
+              : props.user.Avatars.activeAvatarUrl
+          }
+        />
         <form>
           <input
             value={input}
             onChange={inputHandler}
             className="messageSender__input"
             type="text"
-            placeholder={`Type some message, legabog`}
+            placeholder={`Type some message, ${
+              props.user === null || props.user.Name === ""
+                ? null
+                : props.user.Name
+            }`}
           />
           <input
             value={imageUrl}
