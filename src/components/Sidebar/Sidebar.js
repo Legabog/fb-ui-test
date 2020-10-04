@@ -50,15 +50,17 @@ const Sidebar = React.memo((props) => {
         fetchAvatar={props.fetchAvatar}
       />
 
+      <SidebarRow Icon={GitHubIcon} title="Welcome" navLink={"/welcome"} />
+      <SidebarRow Icon={LibraryMusicIcon} title="Music" navLink={"/music"} />
       <SidebarRow
         Icon={LocalHospitalIcon}
         title="COVID-19 Information Center"
       />
       <SidebarRow Icon={EmojiPeopleIcon} title="Friends" />
       <SidebarRow Icon={ChatIcon} title="Messenger" />
-      <SidebarRow Icon={GitHubIcon} title="Welcome" />
+
       <SidebarRow Icon={PeopleIcon} title="Groups" />
-      <SidebarRow Icon={LibraryMusicIcon} title="Music" navLink={"/music"} />
+
       <SidebarRow Icon={VideoLibraryIcon} title="Videos" />
       <SidebarRow Icon={EventIcon} title="Events" />
       <SidebarRow Icon={BookmarkIcon} title="Saved" />
