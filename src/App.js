@@ -36,6 +36,7 @@ import {
   toggleProfileSelectAvatarBackground,
   toggleWindowConfirmBackground,
 } from "./redux/profile-select-avatar-background-reducer";
+import { togglePrivacyGuide, togglePrivacyGuideState } from "./redux/welcome-component-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -69,13 +70,14 @@ import Widgets from "./components/Widgets/Widgets";
 import MusicPlayerPanel from "./components/MusicPlayerPanel/MusicPlayerPanel";
 import ErrorRoute from "./components/common/ErrorRoute/ErrorRoute";
 import Preloader from "./components/common/Preloader/Preloader";
+import Profile from "./components/Profile/Profile";
+import Welcome from "./components/Welcome/Welcome";
 
 //
 // ---------Not logged in user
 
 import Login from "./components/Login/Login";
 import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
-import Profile from "./components/Profile/Profile";
 
 //
 
@@ -169,7 +171,7 @@ class App extends React.Component {
                   <Header {...this.props} />
                   <div className="app__body">
                     <Sidebar {...this.props} />
-                    <Feed />
+                    <Feed {...this.props} />
                     <Widgets />
                   </div>
                 </>
@@ -361,6 +363,23 @@ class App extends React.Component {
 
             {/* ---------------Music player Routes Finish------------- */}
 
+            {/* ----------------Welcome Component--------------------- */}
+            <Route
+              path="/welcome"
+              exact
+              render={() => (
+                <div className={"app"}>
+                  <Header {...this.props} />
+                  <div className="app__body">
+                    <Sidebar {...this.props} />
+                    <Welcome {...this.props} />
+                    <Widgets />
+                  </div>
+                </div>
+              )}
+            />
+
+            {/*  */}
             <Route
               path="/friends"
               exact
@@ -678,6 +697,11 @@ const mapStateToProps = (state) => {
       state.profileSelectAvatarBackgroundReducer.profileSelectOpacity,
     profileSelectState:
       state.profileSelectAvatarBackgroundReducer.profileSelectState,
+    // welcome component
+    privacyGuideState: state.welcomeComponentReducer.privacyGuideState,
+    privacyGuideVisibility:
+      state.welcomeComponentReducer.privacyGuideVisibility,
+    privacyGuideOpacity: state.welcomeComponentReducer.privacyGuideOpacity,
   };
 };
 
@@ -703,6 +727,8 @@ export default compose(
     closeHandlerProfileUpdate,
     toggleProfileSelectAvatarBackground,
     toggleWindowConfirmBackground,
+    togglePrivacyGuide,
+    togglePrivacyGuideState,
     signIn,
     signUp,
     autoLogin,
