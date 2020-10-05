@@ -36,7 +36,10 @@ import {
   toggleProfileSelectAvatarBackground,
   toggleWindowConfirmBackground,
 } from "./redux/profile-select-avatar-background-reducer";
-import { togglePrivacyGuide, togglePrivacyGuideState } from "./redux/welcome-component-reducer";
+import {
+  togglePrivacyGuide,
+  togglePrivacyGuideState,
+} from "./redux/welcome-component-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -78,6 +81,7 @@ import Welcome from "./components/Welcome/Welcome";
 
 import Login from "./components/Login/Login";
 import RegistrationBlock from "./components/Login/RegistrationBlock/RegistrationBlock";
+import About from "./components/About/About";
 
 //
 
@@ -407,6 +411,7 @@ class App extends React.Component {
               )}
             />
 
+            {/* ---------------Profile About Routes--------------- */}
             <Route
               path="/profile/about"
               exact
@@ -415,11 +420,110 @@ class App extends React.Component {
                   <Header {...this.props} />
                   <div className="app">
                     <Profile {...this.props} />
-                    <h1>About</h1>
+                    <About {...this.props} />
                   </div>
                 </>
               )}
             />
+
+            <Route
+              path="/profile/about_overview"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/about_work_and_education"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/about_places"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/about_contact_and_basic_info"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/about_family_and_relationships"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/about_details"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/profile/about_life_events"
+              exact
+              render={() => (
+                <>
+                  <Header {...this.props} />
+                  <div className="app">
+                    <Profile {...this.props} />
+                    <About {...this.props} />
+                  </div>
+                </>
+              )}
+            />
+            {/*  */}
 
             <Route
               path="/profile/friends"

@@ -150,6 +150,53 @@ export const signUp = (
             },
             RecentUploads: [],
             Bio: "",
+
+            //--------Full information /about profile part
+            FullInfo: {
+              WorkAndEducation: {
+                WorkPlace: [],
+                College: [],
+                HighSchool: [],
+              },
+              PlacesLived: {
+                CurrentCity: "",
+                HomeTown: "",
+                Cities: [],
+              },
+              ContactInfo: {
+                MobilePhone: [{ number: telephone.trim() }],
+                Address: "",
+                ContactEmail: email.trim(),
+                Websites: [],
+                SocialLinks: [],
+              },
+              BasicInfo: {
+                Language: "",
+                ReligionViews: "",
+                PoliticalViews: "",
+                InterestedMale: "",
+                Birthday_data: `${bday}.${mday}.${yday}`,
+                Gender:
+                  sex === 1
+                    ? "Female"
+                    : sex === 2
+                    ? "Male"
+                    : sex === -1
+                    ? "Other"
+                    : "None",
+              },
+              FamilyAndRelationships: {
+                Relationship: "",
+                FamilyMembers: [],
+              },
+              DetailsAboutYou: {
+                AboutYou: "",
+                NamePronunciation: [],
+                OtherNames: [],
+                FavoriteQuotes: "",
+              },
+              LifeEvents: [],
+            },
           })
           .then(() => {
             // verify message
