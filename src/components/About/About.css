@@ -1,16 +1,20 @@
 .about__wrapper {
     display: flex;
+    height: 100%;
     text-align: center;
     justify-content: center;
     align-items: center;
-    padding: 0 16px;
+    padding-top: 0px;
+    padding-bottom: 60px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .about {
     display: flex;
     text-align: center;
     justify-content: left;
-    width: 900px;
+    min-width: 900px;
     min-height: 380px;
     margin-top: 16px;
     margin-bottom: 20px;

@@ -4,7 +4,9 @@ import "./OverviewComponentAddButton.css";
 
 const OverviewComponentAddButton = (props) => {
   return (
-    <div className={"OverviewComponent__addButton"}>
+    <div className={"OverviewComponent__addButton"} onClick={() => {
+      props.toggleActiveComponent(true)
+    }}>
       <ControlPointIcon />
       <div className={"OverviewComponent__addButton__description"}>
         <span>{props.title}</span>

@@ -8,13 +8,30 @@
     display: block;
 }
 
+.PlacedLivedComponent hr {
+    margin-right: 16px;
+    background-color: #CED0D4;
+    margin-left: 16px;
+    margin-bottom: 24px;
+    margin-top: 8px;
+    background: #dadde1;
+    border-width: 0;
+    color: #dadde1;
+    height: 1px;
+}
+
 .PlacedLivedComponent__section {
     display: block;
     text-align: left;
     justify-content: left;
 }
 
-.PlacedLivedComponent__section span {
+.PlacedLivedComponent__sectionTitle {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.PlacedLivedComponent__sectionTitle span {
     text-align: left;
     word-break: break-word;    
     font-weight: 600;

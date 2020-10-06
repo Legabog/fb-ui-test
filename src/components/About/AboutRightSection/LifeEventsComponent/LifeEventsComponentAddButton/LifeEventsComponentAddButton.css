@@ -1,4 +1,4 @@
-.WorkAndEducationComponent__addButton {
+.LifeEventsComponent__addButton {
     display: flex;
     text-align: center;
     justify-content: left;
@@ -9,20 +9,20 @@
     margin-bottom: 20px;
 }
 
-.WorkAndEducationComponent__addButton:hover {
+.LifeEventsComponent__addButton:hover {
     cursor: pointer;
 }
 
-.WorkAndEducationComponent__addButton svg {
+.LifeEventsComponent__addButton svg {
     padding: 6px;
     color: #1877F2;
 }
 
-.WorkAndEducationComponent__addButton__description {
+.LifeEventsComponent__addButton__description {
     display: flex;
 }
 
-.WorkAndEducationComponent__addButton__description span {
+.LifeEventsComponent__addButton__description span {
     word-break: break-word;
     font-size: .9375rem;
     font-weight: 500;
