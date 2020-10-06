@@ -372,14 +372,14 @@ class App extends React.Component {
               path="/welcome"
               exact
               render={() => (
-                <div className={"app"}>
+                <>
                   <Header {...this.props} />
                   <div className="app__body">
                     <Sidebar {...this.props} />
                     <Welcome {...this.props} />
                     <Widgets />
                   </div>
-                </div>
+                </>
               )}
             />
 
@@ -390,9 +390,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Preloader />
-                  </div>
+
+                  <Preloader />
                 </>
               )}
             />
@@ -404,9 +403,7 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
                 </>
               )}
             />
@@ -418,10 +415,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -432,10 +427,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -446,10 +439,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -460,10 +451,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -474,10 +463,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -488,10 +475,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -502,10 +487,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -516,10 +499,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <About {...this.props} />
-                  </div>
+                  <Profile {...this.props} />
+                  <About {...this.props} />
                 </>
               )}
             />
@@ -531,10 +512,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <h1>Friends</h1>
-                  </div>
+                  <Profile {...this.props} />
+                  <h1>Friends</h1>
                 </>
               )}
             />
@@ -545,10 +524,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <h1>Photos</h1>
-                  </div>
+                  <Profile {...this.props} />
+                  <h1>Photos</h1>
                 </>
               )}
             />
@@ -559,10 +536,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <h1>Archive</h1>
-                  </div>
+                  <Profile {...this.props} />
+                  <h1>Archive</h1>
                 </>
               )}
             />
@@ -573,10 +548,8 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Profile {...this.props} />
-                    <h1>Videos</h1>
-                  </div>
+                  <Profile {...this.props} />
+                  <h1>Videos</h1>
                 </>
               )}
             />
@@ -588,9 +561,7 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Preloader />
-                  </div>
+                  <Preloader />
                 </>
               )}
             />
@@ -601,9 +572,7 @@ class App extends React.Component {
               render={() => (
                 <>
                   <Header {...this.props} />
-                  <div className="app">
-                    <Preloader />
-                  </div>
+                  <Preloader />
                 </>
               )}
             />
