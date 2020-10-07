@@ -1,5 +1,6 @@
 import db from "../utils/firebase/firebase";
 import { storage, addToArray } from "../utils/firebase/firebase";
+import { setFullUserInfoAbout } from "./about-component-reducer";
 import {
   closeHandlerProfileUpdate,
   setTempAvatar,
@@ -679,6 +680,7 @@ export const setActiveUser = (email) => {
         usersDatabase.forEach((userDatabase) => {
           if (userDatabase.data().Email === email) {
             dispatch(setUser(userDatabase.data()));
+            dispatch(setFullUserInfoAbout(userDatabase.data().FullInfo));
           }
         });
       });

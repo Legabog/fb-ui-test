@@ -1,5 +1,8 @@
 import React, { Suspense } from "react";
 import "./App.css";
+
+import { aboutComponentRoutes } from "./utils/routes/about-routes";
+
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Switch, Route, withRouter } from "react-router-dom";
@@ -40,6 +43,42 @@ import {
   togglePrivacyGuide,
   togglePrivacyGuideState,
 } from "./redux/welcome-component-reducer";
+import {
+  overviewAddAWorkplace,
+  overviewDeleteAWorkplace,
+  overviewAddAHighSchool,
+  overviewDeleteAHighSchool,
+  overviewAddACollege,
+  overviewDeleteACollege,
+  overviewAddACurrentCity,
+  overviewDeleteACurrentCity,
+  overviewAddAHometown,
+  overviewDeleteAHometown,
+  overviewAddARelationshipStatus,
+  overviewDeleteARelationshipStatus,
+  placeslivedAddACity,
+  placeslivedDeleteACity,
+  contactAndBasicInfoAddAddress,
+  contactAndBasicInfoDeleteAddress,
+  contactAndBasicInfoAddMobilePhone,
+  contactAndBasicInfoDeleteMobilePhone,
+  contactAndBasicInfoAddWebsite,
+  contactAndBasicInfoDeleteWebsite,
+  contactAndBasicInfoAddSocialLink,
+  contactAndBasicInfoDeleteSocialLink,
+  contactAndBasicInfoAddGender,
+  contactAndBasicInfoDeleteGender,
+  contactAndBasicInfoAddLanguage,
+  contactAndBasicInfoDeleteLanguage,
+  contactAndBasicInfoAddBirthday,
+  contactAndBasicInfoDeleteBirthday,
+  contactAndBasicInfoAddInterestedMale,
+  contactAndBasicInfoDeleteInterestedMale,
+  contactAndBasicInfoAddReligionViews,
+  contactAndBasicInfoDeleteReligionViews,
+  contactAndBasicInfoAddPoliticalViews,
+  contactAndBasicInfoDeletePoliticalViews,
+} from "./redux/about-component-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
   addToPlayList,
@@ -409,101 +448,24 @@ class App extends React.Component {
             />
 
             {/* ---------------Profile About Routes--------------- */}
-            <Route
-              path="/profile/about"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
 
-            <Route
-              path="/profile/about_overview"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
+            {aboutComponentRoutes.map((e, index) => {
+              return (
+                <Route
+                  key={index}
+                  path={e.pathName}
+                  exact={e.exact}
+                  render={() => (
+                    <>
+                      <Header {...this.props} />
+                      <Profile {...this.props} />
+                      <About {...this.props} />
+                    </>
+                  )}
+                />
+              );
+            })}
 
-            <Route
-              path="/profile/about_work_and_education"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
-
-            <Route
-              path="/profile/about_places"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
-
-            <Route
-              path="/profile/about_contact_and_basic_info"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
-
-            <Route
-              path="/profile/about_family_and_relationships"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
-
-            <Route
-              path="/profile/about_details"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
-
-            <Route
-              path="/profile/about_life_events"
-              exact
-              render={() => (
-                <>
-                  <Header {...this.props} />
-                  <Profile {...this.props} />
-                  <About {...this.props} />
-                </>
-              )}
-            />
             {/*  */}
 
             <Route
@@ -775,6 +737,8 @@ const mapStateToProps = (state) => {
     privacyGuideVisibility:
       state.welcomeComponentReducer.privacyGuideVisibility,
     privacyGuideOpacity: state.welcomeComponentReducer.privacyGuideOpacity,
+    // about component
+    fullUserInfoAbout: state.aboutComponentReducer.fullUserInfoAbout,
   };
 };
 
@@ -802,6 +766,40 @@ export default compose(
     toggleWindowConfirmBackground,
     togglePrivacyGuide,
     togglePrivacyGuideState,
+    overviewAddAWorkplace,
+    overviewDeleteAWorkplace,
+    overviewAddAHighSchool,
+    overviewDeleteAHighSchool,
+    overviewAddACollege,
+    overviewDeleteACollege,
+    overviewAddACurrentCity,
+    overviewDeleteACurrentCity,
+    overviewAddAHometown,
+    overviewDeleteAHometown,
+    overviewAddARelationshipStatus,
+    overviewDeleteARelationshipStatus,
+    contactAndBasicInfoAddAddress,
+    contactAndBasicInfoDeleteAddress,
+    contactAndBasicInfoAddMobilePhone,
+    contactAndBasicInfoDeleteMobilePhone,
+    contactAndBasicInfoAddWebsite,
+    contactAndBasicInfoDeleteWebsite,
+    contactAndBasicInfoAddSocialLink,
+    contactAndBasicInfoDeleteSocialLink,
+    contactAndBasicInfoAddGender,
+    contactAndBasicInfoDeleteGender,
+    contactAndBasicInfoAddLanguage,
+    contactAndBasicInfoDeleteLanguage,
+    contactAndBasicInfoAddBirthday,
+    contactAndBasicInfoDeleteBirthday,
+    contactAndBasicInfoAddInterestedMale,
+    contactAndBasicInfoDeleteInterestedMale,
+    contactAndBasicInfoAddReligionViews,
+    contactAndBasicInfoDeleteReligionViews,
+    contactAndBasicInfoAddPoliticalViews,
+    contactAndBasicInfoDeletePoliticalViews,
+    placeslivedAddACity,
+    placeslivedDeleteACity,
     signIn,
     signUp,
     autoLogin,
