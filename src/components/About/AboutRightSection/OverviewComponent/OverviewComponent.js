@@ -7,25 +7,25 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 
-import OverviewComponentAddButton from "./OverviewComponentAddButton/OverviewComponentAddButton";
-import OverviewComponentNotNullSection from "./OverviewComponentNotNullSection/OverviewComponentNotNullSection";
 import OverviewComponentSection from "./OverviewComponentSection/OverviewComponentSection";
 
 const OverviewComponent = (props) => {
   return (
     <div className={"OverviewComponent__wrapper"}>
       <div className={"OverviewComponent"}>
-
         <OverviewComponentSection
           componentArguments={
-            props.user === null
+            props.fullUserInfoAbout === null
               ? null
-              : props.user.FullInfo.WorkAndEducation.WorkPlace
+              : props.fullUserInfoAbout.WorkAndEducation.WorkPlace
           }
+          addReducer={props.overviewAddAWorkplace}
+          deleteReducer={props.overviewDeleteAWorkplace}
+          editTitle={"Add a workplace"}
+          deleteTitle={"Delete a workplace"}
           title={"Add a workplace"}
-          editTitle={"a workplace"}
           Icon={WorkIcon}
-          activeInputs={1}
+          activeInputs={4}
           ativeInputPlaceholder1={"Company"}
           ativeInputPlaceholder2={"Position"}
           ativeInputPlaceholder3={"City/Town"}
@@ -35,96 +35,96 @@ const OverviewComponent = (props) => {
 
         <hr />
 
-        {/* <div className={"OverviewComponent__section"}>
-      {props.user === null ? null : props.user.FullInfo.WorkAndEducation
-            .WorkPlace.length === 0 ? (
-          <OverviewComponentAddButton title={"Add a workplace"} />
-        ) : (
-          props.user.FullInfo.WorkAndEducation.WorkPlace.map((e, index) => {
-            return (
-              <OverviewComponentNotNullSection
-                key={index}
-                editTitle={"a workplace"}
-                title={e}
-                Icon={WorkIcon}
-              />
-            );
-          })
-        )}
-      </div> */}
+        <OverviewComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.WorkAndEducation.HighSchool
+          }
+          addReducer={props.overviewAddAHighSchool}
+          deleteReducer={props.overviewDeleteAHighSchool}
+          title={"Add a high school"}
+          editTitle={"Add a high school"}
+          deleteTitle={"Delete a high school"}
+          Icon={SchoolIcon}
+          activeInputs={2}
+          ativeInputPlaceholder1={"High School"}
+          ativeInputPlaceholder2={"Description"}
+          {...props}
+        />
 
-       
-
-        {props.user === null ? null : props.user.FullInfo.WorkAndEducation
-            .HighSchool.length === 0 ? (
-          <OverviewComponentAddButton title={"Add a high school"} />
-        ) : (
-          props.user.FullInfo.WorkAndEducation.HighSchool.map((e, index) => {
-            return (
-              <OverviewComponentNotNullSection
-                key={index}
-                editTitle={"a school"}
-                title={e}
-                Icon={SchoolIcon}
-              />
-            );
-          })
-        )}
-
-        {props.user === null ? null : props.user.FullInfo.WorkAndEducation
-            .College.length === 0 ? (
-          <OverviewComponentAddButton title={"Add a college"} />
-        ) : (
-          props.user.FullInfo.WorkAndEducation.College.map((e, index) => {
-            return (
-              <OverviewComponentNotNullSection
-                key={index}
-                editTitle={"a college"}
-                title={e}
-                Icon={SchoolIcon}
-              />
-            );
-          })
-        )}
+        <OverviewComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.WorkAndEducation.College
+          }
+          addReducer={props.overviewAddACollege}
+          deleteReducer={props.overviewDeleteACollege}
+          title={"Add a college"}
+          editTitle={"Add a college"}
+          deleteTitle={"Delete a college"}
+          Icon={SchoolIcon}
+          activeInputs={2}
+          ativeInputPlaceholder1={"College"}
+          ativeInputPlaceholder2={"Description"}
+          {...props}
+        />
 
         <hr />
 
-        {props.user === null ? null : props.user.FullInfo.PlacesLived
-            .CurrentCity === "" ? (
-          <OverviewComponentAddButton title={"Add a current city"} />
-        ) : (
-          <OverviewComponentNotNullSection
-            editTitle={"a current city"}
-            title={
-              "Current city: " + props.user.FullInfo.PlacesLived.CurrentCity
-            }
-            Icon={LocationCityIcon}
-          />
-        )}
+        <OverviewComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.PlacesLived.CurrentCity
+          }
+          addReducer={props.overviewAddACurrentCity}
+          deleteReducer={props.overviewDeleteACurrentCity}
+          title={"Add current city"}
+          editTitle={"Edit current city"}
+          deleteTitle={"Delete current city"}
+          Icon={LocationCityIcon}
+          activeInputs={1}
+          ativeInputPlaceholder1={"Current City"}
+          {...props}
+        />
 
-        {props.user === null ? null : props.user.FullInfo.PlacesLived
-            .HomeTown === "" ? (
-          <OverviewComponentAddButton title={"Add hometown"} />
-        ) : (
-          <OverviewComponentNotNullSection
-            editTitle={"a hometown"}
-            title={"Hometown: " + props.user.FullInfo.PlacesLived.HomeTown}
-            Icon={HomeRoundedIcon}
-          />
-        )}
+        <OverviewComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.PlacesLived.HomeTown
+          }
+          addReducer={props.overviewAddAHometown}
+          deleteReducer={props.overviewDeleteAHometown}
+          title={"Add hometown"}
+          editTitle={"Edit hometown"}
+          deleteTitle={"Delete hometown"}
+          Icon={HomeRoundedIcon}
+          activeInputs={1}
+          ativeInputPlaceholder1={"Hometown"}
+          {...props}
+        />
 
         <hr />
 
-        {props.user === null ? null : props.user.FullInfo.FamilyAndRelationships
-            .Relationship === "" ? (
-          <OverviewComponentAddButton title={"Add a relationship status"} />
-        ) : (
-          <OverviewComponentNotNullSection
-            editTitle={"a relationship status"}
-            title={props.user.FullInfo.FamilyAndRelationships.Relationship}
-            Icon={FavoriteRoundedIcon}
-          />
-        )}
+        <OverviewComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.FamilyAndRelationships.Relationship
+          }
+          addReducer={props.overviewAddARelationshipStatus}
+          deleteReducer={props.overviewDeleteARelationshipStatus}
+          title={"Add a relationship status"}
+          editTitle={"Edit a relationship status"}
+          deleteTitle={"Delete a relationship status"}
+          Icon={FavoriteRoundedIcon}
+          activeInputs={1}
+          ativeInputPlaceholder1={"Relationship status"}
+          {...props}
+        />
       </div>
     </div>
   );

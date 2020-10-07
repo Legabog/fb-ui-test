@@ -4,80 +4,75 @@ import "./WorkAndEducationComponent.css";
 import WorkIcon from "@material-ui/icons/Work";
 import SchoolIcon from "@material-ui/icons/School";
 
-import WorkAndEducationComponentAddButton from "./WorkAndEducationComponentAddButton/WorkAndEducationComponentAddButton";
-import WorkAndEducationComponentNotNullSection from "./WorkAndEducationComponentNotNullSection/WorkAndEducationComponentNotNullSection";
+import WorkAndEducationComponentSection from "./WorkAndEducationComponentSection/WorkAndEducationComponentSection";
 
 const WorkAndEducationComponent = (props) => {
   return (
     <div className={"WorkAndEducationComponent__wrapper"}>
       <div className={"WorkAndEducationComponent"}>
-        <div className={"WorkAndEducationComponent__section"}>
-          <div className={"WorkAndEducationComponent__sectionTitle"}>
-            <span>Work</span>
-          </div>
 
-          {props.user === null ? null : props.user.FullInfo.WorkAndEducation
-              .WorkPlace.length === 0 ? (
-            <WorkAndEducationComponentAddButton title={"Add a workplace"} />
-          ) : (
-            props.user.FullInfo.WorkAndEducation.WorkPlace.map((e, index) => {
-              return (
-                <WorkAndEducationComponentNotNullSection
-                  key={index}
-                  editTitle={"a workplace"}
-                  title={e}
-                  Icon={WorkIcon}
-                />
-              );
-            })
-          )}
-        </div>
-
-        <hr />
-
-        <div className={"WorkAndEducationComponent__section"}>
-          <div className={"WorkAndEducationComponent__sectionTitle"}>
-            <span>College</span>
-          </div>
-          {props.user === null ? null : props.user.FullInfo.WorkAndEducation
-              .College.length === 0 ? (
-            <WorkAndEducationComponentAddButton title={"Add a college"} />
-          ) : (
-            props.user.FullInfo.WorkAndEducation.College.map((e, index) => {
-              return (
-                <WorkAndEducationComponentNotNullSection
-                  key={index}
-                  editTitle={"a college"}
-                  title={e}
-                  Icon={SchoolIcon}
-                />
-              );
-            })
-          )}
-        </div>
+        <WorkAndEducationComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.WorkAndEducation.WorkPlace
+          }
+          addReducer={props.overviewAddAWorkplace}
+          deleteReducer={props.overviewDeleteAWorkplace}
+          editTitle={"Add a workplace"}
+          deleteTitle={"Delete a workplace"}
+          title={"Add a workplace"}
+          titleBold={"Worplace"}
+          Icon={WorkIcon}
+          activeInputs={4}
+          ativeInputPlaceholder1={"Company"}
+          ativeInputPlaceholder2={"Position"}
+          ativeInputPlaceholder3={"City/Town"}
+          ativeInputPlaceholder4={"Description"}
+          {...props}
+        />
 
         <hr />
 
-        <div className={"WorkAndEducationComponent__section"}>
-          <div className={"WorkAndEducationComponent__sectionTitle"}>
-            <span>High School</span>
-          </div>
-          {props.user === null ? null : props.user.FullInfo.WorkAndEducation
-              .HighSchool.length === 0 ? (
-            <WorkAndEducationComponentAddButton title={"Add a high school"} />
-          ) : (
-            props.user.FullInfo.WorkAndEducation.HighSchool.map((e, index) => {
-              return (
-                <WorkAndEducationComponentNotNullSection
-                  key={index}
-                  editTitle={"a school"}
-                  title={e}
-                  Icon={SchoolIcon}
-                />
-              );
-            })
-          )}
-        </div>
+        <WorkAndEducationComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.WorkAndEducation.HighSchool
+          }
+          addReducer={props.overviewAddAHighSchool}
+          deleteReducer={props.overviewDeleteAHighSchool}
+          title={"Add a high school"}
+          titleBold={"High School"}
+          editTitle={"Add a high school"}
+          deleteTitle={"Delete a high school"}
+          Icon={SchoolIcon}
+          activeInputs={2}
+          ativeInputPlaceholder1={"High School"}
+          ativeInputPlaceholder2={"Description"}
+          {...props}
+        />
+
+        <hr />
+
+        <WorkAndEducationComponentSection
+          componentArguments={
+            props.fullUserInfoAbout === null
+              ? null
+              : props.fullUserInfoAbout.WorkAndEducation.College
+          }
+          addReducer={props.overviewAddACollege}
+          deleteReducer={props.overviewDeleteACollege}
+          title={"Add a college"}
+          titleBold={"College"}
+          editTitle={"Add a college"}
+          deleteTitle={"Delete a college"}
+          Icon={SchoolIcon}
+          activeInputs={2}
+          ativeInputPlaceholder1={"College"}
+          ativeInputPlaceholder2={"Description"}
+          {...props}
+        />
 
         <hr />
       </div>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import "./WorkAndEducationComponentSection.css";
 
-import OverviewComponentAddButton from "../OverviewComponentAddButton/OverviewComponentAddButton";
-import OverviewComponentNotNullSection from "../OverviewComponentNotNullSection/OverviewComponentNotNullSection";
-import OverviewComponentSectionActiveInputs from "../OverviewComponentSectionActiveInputs/OverviewComponentSectionActiveInputs";
-import "./OverviewComponentSection.css";
+import WorkAndEducationComponentAddButton from "../WorkAndEducationComponentAddButton/WorkAndEducationComponentAddButton";
+import WorkAndEducationComponentNotNullSection from "../WorkAndEducationComponentNotNullSection/WorkAndEducationComponentNotNullSection";
+import WorkAndEducationComponentSectionActiveInputs from "../WorkAndEducationComponentSectionActiveInputs/WorkAndEducationComponentSectionActiveInputs";
 
-const OverviewComponentSection = (props) => {
+const WorkAndEducationComponentSection = (props) => {
   const [activeComponent, setActiveComponent] = useState(false);
 
   const toggleActiveComponent = (boolean) => {
@@ -15,12 +15,15 @@ const OverviewComponentSection = (props) => {
   switch (activeComponent) {
     case false:
       return (
-        <div className={"OverviewComponent__section"}>
+        <div className={"WorkAndEducationComponent__section"}>
+          <div className={"WorkAndEducationComponent__sectionTitle"}>
+            <span>{props.titleBold}</span>
+          </div>
           {props.user === null ? null : Array.isArray(
               props.componentArguments
             ) ? (
             props.componentArguments.length === 0 ? (
-              <OverviewComponentAddButton
+              <WorkAndEducationComponentAddButton
                 {...props}
                 toggleActiveComponent={toggleActiveComponent}
               />
@@ -33,7 +36,7 @@ const OverviewComponentSection = (props) => {
                 }
 
                 return (
-                  <OverviewComponentNotNullSection
+                  <WorkAndEducationComponentNotNullSection
                     {...props}
                     index={index}
                     key={index}
@@ -44,12 +47,12 @@ const OverviewComponentSection = (props) => {
               })
             )
           ) : props.componentArguments === "" ? (
-            <OverviewComponentAddButton
+            <WorkAndEducationComponentAddButton
               toggleActiveComponent={toggleActiveComponent}
               {...props}
             />
           ) : (
-            <OverviewComponentNotNullSection
+            <WorkAndEducationComponentNotNullSection
               mainTitle={props.componentArguments}
               toggleActiveComponent={toggleActiveComponent}
               {...props}
@@ -60,10 +63,15 @@ const OverviewComponentSection = (props) => {
 
     case true:
       return (
-        <OverviewComponentSectionActiveInputs
-          {...props}
-          toggleActiveComponent={toggleActiveComponent}
-        />
+        <>
+          <div className={"WorkAndEducationComponent__sectionTitle"}>
+            <span>{props.titleBold}</span>
+          </div>
+          <WorkAndEducationComponentSectionActiveInputs
+            {...props}
+            toggleActiveComponent={toggleActiveComponent}
+          />
+        </>
       );
 
     default:
@@ -71,4 +79,4 @@ const OverviewComponentSection = (props) => {
   }
 };
 
-export default OverviewComponentSection;
+export default WorkAndEducationComponentSection;

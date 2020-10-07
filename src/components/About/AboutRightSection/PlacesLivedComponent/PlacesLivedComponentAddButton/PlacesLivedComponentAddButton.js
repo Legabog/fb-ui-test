@@ -1,21 +1,21 @@
 import React from "react";
 import ControlPointIcon from "@material-ui/icons/ControlPoint";
-import "./WorkAndEducationComponentAddButton.css";
+import "./PlacesLivedComponentAddButton.css";
 
-const WorkAndEducationComponentAddButton = (props) => {
+const PlacesLivedComponentAddButton = (props) => {
   return (
     <div
-      className={"WorkAndEducationComponent__addButton"}
+      className={"PlacesLivedComponent__addButton"}
       onClick={() => {
         props.toggleActiveComponent(true);
       }}
     >
       <ControlPointIcon />
-      <div className={"WorkAndEducationComponent__addButton__description"}>
+      <div className={"PlacesLivedComponent__addButton__description"}>
         <span>{props.title}</span>
       </div>
     </div>
   );
 };
 
-export default WorkAndEducationComponentAddButton;
+export default PlacesLivedComponentAddButton;

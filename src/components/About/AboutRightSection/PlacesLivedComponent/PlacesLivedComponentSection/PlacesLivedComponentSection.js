@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import "./PlacesLivedComponentSection.css";
 
-import OverviewComponentAddButton from "../OverviewComponentAddButton/OverviewComponentAddButton";
-import OverviewComponentNotNullSection from "../OverviewComponentNotNullSection/OverviewComponentNotNullSection";
-import OverviewComponentSectionActiveInputs from "../OverviewComponentSectionActiveInputs/OverviewComponentSectionActiveInputs";
-import "./OverviewComponentSection.css";
+import PlacesLivedComponentAddButton from "../PlacesLivedComponentAddButton/PlacesLivedComponentAddButton";
+import PlacesLivedComponentNotNullSection from "../PlacesLivedComponentNotNullSection/PlacesLivedComponentNotNullSection";
+import PlacesLivedComponentSectionActiveInputs from "../PlacesLivedComponentSectionActiveInputs/PlacesLivedComponentSectionActiveInputs";
 
-const OverviewComponentSection = (props) => {
+const PlacesLivedComponentSection = (props) => {
   const [activeComponent, setActiveComponent] = useState(false);
 
   const toggleActiveComponent = (boolean) => {
@@ -15,12 +15,15 @@ const OverviewComponentSection = (props) => {
   switch (activeComponent) {
     case false:
       return (
-        <div className={"OverviewComponent__section"}>
+        <div className={"PlacesLivedComponent__section"}>
+          <div className={"PlacesLivedComponent__sectionTitle"}>
+            <span>{props.titleBold}</span>
+          </div>
           {props.user === null ? null : Array.isArray(
               props.componentArguments
             ) ? (
             props.componentArguments.length === 0 ? (
-              <OverviewComponentAddButton
+              <PlacesLivedComponentAddButton
                 {...props}
                 toggleActiveComponent={toggleActiveComponent}
               />
@@ -33,7 +36,7 @@ const OverviewComponentSection = (props) => {
                 }
 
                 return (
-                  <OverviewComponentNotNullSection
+                  <PlacesLivedComponentNotNullSection
                     {...props}
                     index={index}
                     key={index}
@@ -44,12 +47,12 @@ const OverviewComponentSection = (props) => {
               })
             )
           ) : props.componentArguments === "" ? (
-            <OverviewComponentAddButton
+            <PlacesLivedComponentAddButton
               toggleActiveComponent={toggleActiveComponent}
               {...props}
             />
           ) : (
-            <OverviewComponentNotNullSection
+            <PlacesLivedComponentNotNullSection
               mainTitle={props.componentArguments}
               toggleActiveComponent={toggleActiveComponent}
               {...props}
@@ -60,10 +63,15 @@ const OverviewComponentSection = (props) => {
 
     case true:
       return (
-        <OverviewComponentSectionActiveInputs
-          {...props}
-          toggleActiveComponent={toggleActiveComponent}
-        />
+        <>
+          <div className={"PlacesLivedComponent__sectionTitle"}>
+            <span>{props.titleBold}</span>
+          </div>
+          <PlacesLivedComponentSectionActiveInputs
+            {...props}
+            toggleActiveComponent={toggleActiveComponent}
+          />
+        </>
       );
 
     default:
@@ -71,4 +79,4 @@ const OverviewComponentSection = (props) => {
   }
 };
 
-export default OverviewComponentSection;
+export default PlacesLivedComponentSection;

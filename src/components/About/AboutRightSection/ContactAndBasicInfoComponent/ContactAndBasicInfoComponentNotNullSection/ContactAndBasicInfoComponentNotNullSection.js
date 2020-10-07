@@ -3,7 +3,7 @@ import "./ContactAndBasicInfoComponentNotNullSection.css";
 
 import PublicIcon from "@material-ui/icons/Public";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 const ContactAndBasicInfoComponentNotNullSection = (props) => {
@@ -25,7 +25,7 @@ const ContactAndBasicInfoComponentNotNullSection = (props) => {
         <div
           className={"ContactAndBasicInfoComponentNotNullSection__description"}
         >
-          <span>{props.title}</span>
+          <span>{props.mainTitle}</span>
         </div>
         <div
           className={"ContactAndBasicInfoComponentNotNullSection__publicIcon"}
@@ -54,18 +54,26 @@ const ContactAndBasicInfoComponentNotNullSection = (props) => {
           className={
             "ContactAndBasicInfoComponentNotNullSection__editWindowSection"
           }
+          onClick={() => {
+            props.toggleActiveComponent(true);
+            toggleEditWindow(false);
+          }}
         >
-          <EditIcon />
-          <span>Edit {props.editTitle}</span>
+          <AddIcon />
+          <span>{props.editTitle}</span>
         </div>
 
         <div
           className={
             "ContactAndBasicInfoComponentNotNullSection__editWindowSection"
           }
+          onClick={() => {
+            props.deleteReducer(props.index);
+            toggleEditWindow(false);
+          }}
         >
           <DeleteOutlineOutlinedIcon />
-          <span>Delete {props.editTitle}</span>
+          <span>{props.deleteTitle}</span>
         </div>
       </div>
     </>

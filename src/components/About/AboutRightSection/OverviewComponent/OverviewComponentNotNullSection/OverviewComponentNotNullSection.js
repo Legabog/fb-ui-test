@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PublicIcon from "@material-ui/icons/Public";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import "./OverviewComponentNotNullSection.css";
 
@@ -22,7 +22,7 @@ const OverviewComponentNotNullSection = (props) => {
       <div className={"OverviewComponentNotNullSection"}>
         <props.Icon />
         <div className={"OverviewComponentNotNullSection__description"}>
-          <span>{props.title}</span>
+          <span>{props.mainTitle}</span>
         </div>
         <div className={"OverviewComponentNotNullSection__publicIcon"}>
           <PublicIcon />
@@ -45,14 +45,26 @@ const OverviewComponentNotNullSection = (props) => {
           opacity: `${editWindowOpacity}`,
         }}
       >
-        <div className={"OverviewComponentNotNullSection__editWindowSection"}>
-          <EditIcon />
-          <span>Edit {props.editTitle}</span>
+        <div
+          className={"OverviewComponentNotNullSection__editWindowSection"}
+          onClick={() => {
+            props.toggleActiveComponent(true);
+            toggleEditWindow(false);
+          }}
+        >
+          <AddIcon />
+          <span>{props.editTitle}</span>
         </div>
 
-        <div className={"OverviewComponentNotNullSection__editWindowSection"}>
+        <div
+          className={"OverviewComponentNotNullSection__editWindowSection"}
+          onClick={() => {
+            props.deleteReducer(props.index);
+            toggleEditWindow(false);
+          }}
+        >
           <DeleteOutlineOutlinedIcon />
-          <span>Delete {props.editTitle}</span>
+          <span>{props.deleteTitle}</span>
         </div>
       </div>
     </>

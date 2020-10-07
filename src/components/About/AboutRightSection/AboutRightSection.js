@@ -6,7 +6,7 @@ import DetailsAboutYouComponent from "./DetailsAboutYouComponent/DetailsAboutYou
 import FamilyAndRelationshipsComponent from "./FamilyAndRelationshipsComponent/FamilyAndRelationshipsComponent";
 import LifeEventsComponent from "./LifeEventsComponent/LifeEventsComponent";
 import OverviewComponent from "./OverviewComponent/OverviewComponent";
-import PlacedLivedComponent from "./PlacedLivedComponent/PlacedLivedComponent";
+import PlacesLivedComponent from "./PlacesLivedComponent/PlacesLivedComponent";
 import WorkAndEducationComponent from "./WorkAndEducationComponent/WorkAndEducationComponent";
 
 const AboutRightSection = (props) => {
@@ -24,7 +24,7 @@ const AboutRightSection = (props) => {
       ) : null}
 
       {location.pathname === "/profile/about_places" ? (
-        <PlacedLivedComponent {...props} />
+        <PlacesLivedComponent {...props} />
       ) : null}
 
       {location.pathname === "/profile/about_contact_and_basic_info" ? (

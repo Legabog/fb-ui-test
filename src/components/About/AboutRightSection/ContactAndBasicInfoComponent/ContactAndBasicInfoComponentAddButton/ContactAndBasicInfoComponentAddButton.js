@@ -4,7 +4,12 @@ import "./ContactAndBasicInfoComponentAddButton.css";
 
 const ContactAndBasicInfoComponentAddButton = (props) => {
   return (
-    <div className={"ContactAndBasicInfoComponent__addButton"}>
+    <div
+      className={"ContactAndBasicInfoComponent__addButton"}
+      onClick={() => {
+        props.toggleActiveComponent(true);
+      }}
+    >
       <ControlPointIcon />
       <div className={"ContactAndBasicInfoComponent__addButton__description"}>
         <span>{props.title}</span>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./OverviewComponentSectionActiveInputs.css";
+import "./ContactAndBasicInfoComponentSectionActiveInputs.css";
 
-const OverviewComponentSectionActiveInputs = (props) => {
+const ContactAndBasicInfoComponentSectionActiveInputs = (props) => {
   const [input_1, setInput_1] = useState("");
   const [input_2, setInput_2] = useState("");
   const [input_3, setInput_3] = useState("");
@@ -30,10 +30,14 @@ const OverviewComponentSectionActiveInputs = (props) => {
       return (
         <>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_1}
               onChange={toggleInput_1}
               placeholder={props.ativeInputPlaceholder1}
@@ -41,10 +45,14 @@ const OverviewComponentSectionActiveInputs = (props) => {
           </div>
 
           <div
-            className={"OverviewComponentSectionActiveInputs__controllButtons"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__controllButtons"
+            }
           >
             <div
-              className={"OverviewComponentSectionActiveInputs__cancelButton"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__cancelButton"
+              }
               onClick={() => {
                 props.toggleActiveComponent(false);
               }}
@@ -55,14 +63,16 @@ const OverviewComponentSectionActiveInputs = (props) => {
             {input_1.trim() === "" ? (
               <div
                 className={
-                  "OverviewComponentSectionActiveInputs__saveButton-disabled"
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton-disabled"
                 }
               >
                 <span>Save</span>
               </div>
             ) : (
               <div
-                className={"OverviewComponentSectionActiveInputs__saveButton"}
+                className={
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton"
+                }
                 onClick={() => {
                   props.addReducer(input_1.trim());
                   props.toggleActiveComponent(false);
@@ -79,20 +89,28 @@ const OverviewComponentSectionActiveInputs = (props) => {
       return (
         <>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_1}
               onChange={toggleInput_1}
               placeholder={props.ativeInputPlaceholder1}
             />
           </div>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_2}
               onChange={toggleInput_2}
               placeholder={props.ativeInputPlaceholder2}
@@ -100,10 +118,14 @@ const OverviewComponentSectionActiveInputs = (props) => {
           </div>
 
           <div
-            className={"OverviewComponentSectionActiveInputs__controllButtons"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__controllButtons"
+            }
           >
             <div
-              className={"OverviewComponentSectionActiveInputs__cancelButton"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__cancelButton"
+              }
               onClick={() => {
                 props.toggleActiveComponent(false);
               }}
@@ -114,14 +136,16 @@ const OverviewComponentSectionActiveInputs = (props) => {
             {input_1.trim() === "" || input_2.trim() === "" ? (
               <div
                 className={
-                  "OverviewComponentSectionActiveInputs__saveButton-disabled"
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton-disabled"
                 }
               >
                 <span>Save</span>
               </div>
             ) : (
               <div
-                className={"OverviewComponentSectionActiveInputs__saveButton"}
+                className={
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton"
+                }
                 onClick={() => {
                   props.addReducer(input_1.trim(), input_2.trim());
                   props.toggleActiveComponent(false);
@@ -138,20 +162,28 @@ const OverviewComponentSectionActiveInputs = (props) => {
       return (
         <>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_1}
               onChange={toggleInput_1}
               placeholder={props.ativeInputPlaceholder1}
             />
           </div>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_2}
               onChange={toggleInput_2}
               placeholder={props.ativeInputPlaceholder2}
@@ -159,10 +191,14 @@ const OverviewComponentSectionActiveInputs = (props) => {
           </div>
 
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_3}
               onChange={toggleInput_3}
               placeholder={props.ativeInputPlaceholder3}
@@ -170,10 +206,14 @@ const OverviewComponentSectionActiveInputs = (props) => {
           </div>
 
           <div
-            className={"OverviewComponentSectionActiveInputs__controllButtons"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__controllButtons"
+            }
           >
             <div
-              className={"OverviewComponentSectionActiveInputs__cancelButton"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__cancelButton"
+              }
               onClick={() => {
                 props.toggleActiveComponent(false);
               }}
@@ -186,14 +226,16 @@ const OverviewComponentSectionActiveInputs = (props) => {
             input_3.trim() === "" ? (
               <div
                 className={
-                  "OverviewComponentSectionActiveInputs__saveButton-disabled"
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton-disabled"
                 }
               >
                 <span>Save</span>
               </div>
             ) : (
               <div
-                className={"OverviewComponentSectionActiveInputs__saveButton"}
+                className={
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton"
+                }
                 onClick={() => {
                   props.addReducer(
                     input_1.trim(),
@@ -214,20 +256,28 @@ const OverviewComponentSectionActiveInputs = (props) => {
       return (
         <>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_1}
               onChange={toggleInput_1}
               placeholder={props.ativeInputPlaceholder1}
             />
           </div>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_2}
               onChange={toggleInput_2}
               placeholder={props.ativeInputPlaceholder2}
@@ -235,20 +285,28 @@ const OverviewComponentSectionActiveInputs = (props) => {
           </div>
 
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_3}
               onChange={toggleInput_3}
               placeholder={props.ativeInputPlaceholder3}
             />
           </div>
           <div
-            className={"OverviewComponentSectionActiveInputs__input__wrapper"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__input__wrapper"
+            }
           >
             <input
-              className={"OverviewComponentSectionActiveInputs__input"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__input"
+              }
               value={input_4}
               onChange={toggleInput_4}
               placeholder={props.ativeInputPlaceholder4}
@@ -256,10 +314,14 @@ const OverviewComponentSectionActiveInputs = (props) => {
           </div>
 
           <div
-            className={"OverviewComponentSectionActiveInputs__controllButtons"}
+            className={
+              "ContactAndBasicInfoComponentSectionActiveInputs__controllButtons"
+            }
           >
             <div
-              className={"OverviewComponentSectionActiveInputs__cancelButton"}
+              className={
+                "ContactAndBasicInfoComponentSectionActiveInputs__cancelButton"
+              }
               onClick={() => {
                 props.toggleActiveComponent(false);
               }}
@@ -273,14 +335,16 @@ const OverviewComponentSectionActiveInputs = (props) => {
             input_4.trim() === "" ? (
               <div
                 className={
-                  "OverviewComponentSectionActiveInputs__saveButton-disabled"
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton-disabled"
                 }
               >
                 <span>Save</span>
               </div>
             ) : (
               <div
-                className={"OverviewComponentSectionActiveInputs__saveButton"}
+                className={
+                  "ContactAndBasicInfoComponentSectionActiveInputs__saveButton"
+                }
                 onClick={() => {
                   props.addReducer(
                     input_1.trim(),
@@ -302,4 +366,4 @@ const OverviewComponentSectionActiveInputs = (props) => {
   }
 };
 
-export default OverviewComponentSectionActiveInputs;
+export default ContactAndBasicInfoComponentSectionActiveInputs;
