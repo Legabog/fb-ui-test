@@ -4,59 +4,59 @@ import "./FamilyAndRelationshipsComponent.css";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PersonIcon from "@material-ui/icons/Person";
 
-import FamilyAndRelationshipsComponentAddButton from "./FamilyAndRelationshipsComponentAddButton/FamilyAndRelationshipsComponentAddButton";
-import FamilyAndRelationshipsComponentNotNullSection from "./FamilyAndRelationshipsComponentNotNullSection/FamilyAndRelationshipsComponentNotNullSection";
+import FamilyAndRelationshipsComponentSection from "./FamilyAndRelationshipsComponentSection/FamilyAndRelationshipsComponentSection";
+import CirclePreloader from "../../../common/CirclePreloader/CirclePreloader";
 
 const FamilyAndRelationshipsComponent = (props) => {
   return (
     <div className={"FamilyAndRelationshipsComponent__wrapper"}>
-      <div className={"FamilyAndRelationshipsComponent"}>
-        <div className={"FamilyAndRelationshipsComponent__section"}>
-          <div className={"FamilyAndRelationshipsComponent__sectionTitle"}>
-            <span>Relationship</span>
-          </div>
+      {props.fetchFullUserInfoAbout ? (
+        <CirclePreloader />
+      ) : (
+        <div className={"FamilyAndRelationshipsComponent"}>
+          <FamilyAndRelationshipsComponentSection
+            componentArguments={
+              props.fullUserInfoAbout === null
+                ? null
+                : props.fullUserInfoAbout.FamilyAndRelationships.Relationship
+            }
+            fieldReducer={props.overviewAddARelationshipStatus}
+            addReducer={props.changeFieldFirebase}
+            deleteReducer={props.overviewDeleteARelationshipStatus}
+            title={"Add a relationship status"}
+            titleBold={"Relationship"}
+            editTitle={"Edit a relationship status"}
+            deleteTitle={"Delete a relationship status"}
+            Icon={FavoriteIcon}
+            activeInputs={1}
+            ativeInputPlaceholder1={"Relationship status"}
+            {...props}
+          />
 
-          {props.user === null ? null : props.user.FullInfo
-              .FamilyAndRelationships.Relationship === "" ? (
-            <FamilyAndRelationshipsComponentAddButton
-              title={"Add a relationship status"}
-            />
-          ) : (
-            <FamilyAndRelationshipsComponentNotNullSection
-              editTitle={"a relationship status"}
-              title={props.user.FullInfo.FamilyAndRelationships.Relationship}
-              Icon={FavoriteIcon}
-            />
-          )}
+          <FamilyAndRelationshipsComponentSection
+            componentArguments={
+              props.fullUserInfoAbout === null
+                ? null
+                : props.fullUserInfoAbout.FamilyAndRelationships.FamilyMembers
+            }
+            fieldReducer={props.familyAndRelationshipsAddFamilyMember}
+            addReducer={props.changeFieldFirebase}
+            deleteReducer={props.familyAndRelationshipsDeleteFamilyMember}
+            title={"Add a family member"}
+            titleBold={"Family Members"}
+            editTitle={"Add a family member"}
+            deleteTitle={"Delete a family member"}
+            Icon={PersonIcon}
+            activeInputs={3}
+            ativeInputPlaceholder1={"Name"}
+            ativeInputPlaceholder2={"Sername"}
+            ativeInputPlaceholder3={"Status"}
+            {...props}
+          />
+
+          <hr />
         </div>
-
-        <hr />
-
-        <div className={"FamilyAndRelationshipsComponent__section"}>
-          <div className={"FamilyAndRelationshipsComponent__sectionTitle"}>
-            <span>Family Members</span>
-          </div>
-
-          {props.user === null ? null : props.user.FullInfo
-              .FamilyAndRelationships.FamilyMembers.length === 0 ? (
-            <FamilyAndRelationshipsComponentAddButton
-              title={"Add a family member"}
-            />
-          ) : (
-            props.user.FullInfo.FamilyAndRelationships.FamilyMembers.map(
-              (e, index) => {
-                return (
-                  <FamilyAndRelationshipsComponentNotNullSection
-                    editTitle={"a family member"}
-                    title={e.name + " " + e.sername + " Status: " + e.status}
-                    Icon={PersonIcon}
-                  />
-                );
-              }
-            )
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
