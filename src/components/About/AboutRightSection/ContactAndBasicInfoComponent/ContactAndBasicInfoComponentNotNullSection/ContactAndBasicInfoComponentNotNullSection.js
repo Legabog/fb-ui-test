@@ -68,7 +68,12 @@ const ContactAndBasicInfoComponentNotNullSection = (props) => {
             "ContactAndBasicInfoComponentNotNullSection__editWindowSection"
           }
           onClick={() => {
-            props.deleteReducer(props.index);
+            props.addReducer(
+              [props.index],
+              props.deleteReducer,
+              props.activeAccountEmail,
+              props.toggleActiveComponent(false)
+            );
             toggleEditWindow(false);
           }}
         >
