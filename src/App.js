@@ -78,6 +78,20 @@ import {
   contactAndBasicInfoDeleteReligionViews,
   contactAndBasicInfoAddPoliticalViews,
   contactAndBasicInfoDeletePoliticalViews,
+  familyAndRelationshipsAddFamilyMember,
+  familyAndRelationshipsDeleteFamilyMember,
+  detailsAboutYouAddDetails,
+  detailsAboutYouDeleteDetails,
+  detailsAboutYouAddNamePronunciations,
+  detailsAboutYouDeleteNamePronunciations,
+  detailsAboutYouAddOtherName,
+  detailsAboutYouDeleteOtherName,
+  detailsAboutYouAddFavoriteQuotes,
+  detailsAboutYouDeleteFavoriteQuotes,
+  lifeEventsAddLifeEvent,
+  lifeEventsDeleteLifeEvent,
+  changeFieldFirebase,
+
 } from "./redux/about-component-reducer";
 import { getMusicAlbumsData } from "./redux/musicalbums-reducer";
 import {
@@ -739,6 +753,7 @@ const mapStateToProps = (state) => {
     privacyGuideOpacity: state.welcomeComponentReducer.privacyGuideOpacity,
     // about component
     fullUserInfoAbout: state.aboutComponentReducer.fullUserInfoAbout,
+    fetchFullUserInfoAbout: state.aboutComponentReducer.fetchFullUserInfoAbout
   };
 };
 
@@ -798,8 +813,21 @@ export default compose(
     contactAndBasicInfoDeleteReligionViews,
     contactAndBasicInfoAddPoliticalViews,
     contactAndBasicInfoDeletePoliticalViews,
+    familyAndRelationshipsAddFamilyMember,
+    familyAndRelationshipsDeleteFamilyMember,
+    detailsAboutYouAddNamePronunciations,
+    detailsAboutYouDeleteNamePronunciations,
+    detailsAboutYouAddOtherName,
+    detailsAboutYouDeleteOtherName,
+    detailsAboutYouAddFavoriteQuotes,
+    detailsAboutYouDeleteFavoriteQuotes,
+    lifeEventsAddLifeEvent,
+    lifeEventsDeleteLifeEvent,
+    detailsAboutYouAddDetails,
+    detailsAboutYouDeleteDetails,
     placeslivedAddACity,
     placeslivedDeleteACity,
+    changeFieldFirebase,
     signIn,
     signUp,
     autoLogin,

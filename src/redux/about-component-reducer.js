@@ -1,4 +1,7 @@
+import db from "../utils/firebase/firebase";
+
 const SET_FULL_USER_INFO_ABOUT = "SET_FULL_USER_INFO_ABOUT";
+const TOGGLE_FETCH_FULL_USER_INFO_ABOUT = "TOGGLE_FETCH_FULL_USER_INFO_ABOUT";
 
 const OVERVIEW_ADD_A_WORKPLACE = "OVERVIEW_ADD_A_WORKPLACE";
 const OVERVIEW_DELETE_A_WORKPLACE = "OVERVIEW_DELETE_A_WORKPLACE";
@@ -69,8 +72,36 @@ const CONTACT_AND_BASIC_INFO_ADD_RELIGION_VIEWS =
 const CONTACT_AND_BASIC_INFO_DELETE_RELIGION_VIEWS =
   "CONTACT_AND_BASIC_INFO_DELETE_RELIGION_VIEWS";
 
+const FAMILY_AND_RELATIONSHIPS_ADD_FAMILY_MEMBER =
+  "FAMILY_AND_RELATIONSHIPS_ADD_FAMILY_MEMBER";
+const FAMILY_AND_RELATIONSHIPS_DELETE_FAMILY_MEMBER =
+  "FAMILY_AND_RELATIONSHIPS_DELETE_FAMILY_MEMBER";
+
+const DETAILS_ABOUT_YOU_ADD_DETAILS_ABOUT_YOU =
+  "DETAILS_ABOUT_YOU_ADD_DETAILS_ABOUT_YOU";
+const DETAILS_ABOUT_YOU_DELETE_DETAILS_ABOUT_YOU =
+  "DETAILS_ABOUT_YOU_DELETE_DETAILS_ABOUT_YOU";
+
+const DETAILS_ABOUT_YOU_ADD_NAME_PRONUNCIATIONS =
+  "DETAILS_ABOUT_YOU_ADD_NAME_PRONUNCIATIONS";
+const DETAILS_ABOUT_YOU_DELETE_NAME_PRONUNCIATIONS =
+  "DETAILS_ABOUT_YOU_DELETE_NAME_PRONUNCIATIONS";
+
+const DETAILS_ABOUT_YOU_ADD_OTHER_NAME = "DETAILS_ABOUT_YOU_ADD_OTHER_NAME";
+const DETAILS_ABOUT_YOU_DELETE_OTHER_NAME =
+  "DETAILS_ABOUT_YOU_DELETE_OTHER_NAME";
+
+const DETAILS_ABOUT_YOU_ADD_FAVORITE_QUOTES =
+  "DETAILS_ABOUT_YOU_ADD_FAVORITE_QUOTES";
+const DETAILS_ABOUT_YOU_DELETE_FAVORITE_QUOTES =
+  "DETAILS_ABOUT_YOU_DELETE_FAVORITE_QUOTES";
+
+const LIFE_EVENTS_ADD_LIFE_EVENT = "LIFE_EVENTS_ADD_LIFE_EVENT";
+const LIFE_EVENTS_DELETE_LIFE_EVENT = "LIFE_EVENTS_DELETE_LIFE_EVENT";
+
 let initialState = {
   fullUserInfoAbout: null,
+  fetchFullUserInfoAbout: false,
 };
 
 const aboutComponentReducer = (state = initialState, action) => {
@@ -81,6 +112,11 @@ const aboutComponentReducer = (state = initialState, action) => {
         fullUserInfoAbout: action.info,
       };
 
+    case TOGGLE_FETCH_FULL_USER_INFO_ABOUT:
+      return {
+        ...state,
+        fetchFullUserInfoAbout: action.boolean,
+      };
     // Workplace
     case OVERVIEW_ADD_A_WORKPLACE:
       return {
@@ -642,6 +678,226 @@ const aboutComponentReducer = (state = initialState, action) => {
         },
       };
 
+    // Family member
+
+    case FAMILY_AND_RELATIONSHIPS_ADD_FAMILY_MEMBER:
+      return {
+        ...state,
+
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          FamilyAndRelationships: {
+            ...state.fullUserInfoAbout.FamilyAndRelationships,
+            FamilyMembers: [
+              ...state.fullUserInfoAbout.FamilyAndRelationships.FamilyMembers,
+              {
+                name: action.name,
+                sername: action.sername,
+                status: action.status,
+              },
+            ],
+          },
+        },
+      };
+
+    case FAMILY_AND_RELATIONSHIPS_DELETE_FAMILY_MEMBER:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          FamilyAndRelationships: {
+            ...state.fullUserInfoAbout.FamilyAndRelationships,
+            FamilyMembers: [
+              ...state.fullUserInfoAbout.FamilyAndRelationships.FamilyMembers.slice(
+                0,
+                action.index
+              ).concat(
+                [
+                  ...state.fullUserInfoAbout.FamilyAndRelationships
+                    .FamilyMembers,
+                ].slice(
+                  action.index + 1,
+                  [
+                    ...state.fullUserInfoAbout.FamilyAndRelationships
+                      .FamilyMembers,
+                  ].length
+                )
+              ),
+            ],
+          },
+        },
+      };
+
+    // Details about you
+
+    case DETAILS_ABOUT_YOU_ADD_DETAILS_ABOUT_YOU:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            AboutYou: action.info,
+          },
+        },
+      };
+
+    case DETAILS_ABOUT_YOU_DELETE_DETAILS_ABOUT_YOU:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            AboutYou: "",
+          },
+        },
+      };
+
+    // Name pronunciations
+
+    case DETAILS_ABOUT_YOU_ADD_NAME_PRONUNCIATIONS:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            NamePronunciation: [
+              ...state.fullUserInfoAbout.DetailsAboutYou.NamePronunciation,
+              {
+                pronunciation: action.pronunciation,
+              },
+            ],
+          },
+        },
+      };
+
+    case DETAILS_ABOUT_YOU_DELETE_NAME_PRONUNCIATIONS:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            NamePronunciation: [
+              ...state.fullUserInfoAbout.DetailsAboutYou.NamePronunciation.slice(
+                0,
+                action.index
+              ).concat(
+                [
+                  ...state.fullUserInfoAbout.DetailsAboutYou.NamePronunciation,
+                ].slice(
+                  action.index + 1,
+                  [...state.fullUserInfoAbout.DetailsAboutYou.NamePronunciation]
+                    .length
+                )
+              ),
+            ],
+          },
+        },
+      };
+
+    // Other names
+
+    case DETAILS_ABOUT_YOU_ADD_OTHER_NAME:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            OtherNames: [
+              ...state.fullUserInfoAbout.DetailsAboutYou.OtherNames,
+              {
+                nickname: action.nickname,
+              },
+            ],
+          },
+        },
+      };
+
+    case DETAILS_ABOUT_YOU_DELETE_OTHER_NAME:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            OtherNames: [
+              ...state.fullUserInfoAbout.DetailsAboutYou.OtherNames.slice(
+                0,
+                action.index
+              ).concat(
+                [...state.fullUserInfoAbout.DetailsAboutYou.OtherNames].slice(
+                  action.index + 1,
+                  [...state.fullUserInfoAbout.DetailsAboutYou.OtherNames].length
+                )
+              ),
+            ],
+          },
+        },
+      };
+
+    // Favorite quotes
+
+    case DETAILS_ABOUT_YOU_ADD_FAVORITE_QUOTES:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            FavoriteQuotes: action.quotes,
+          },
+        },
+      };
+
+    case DETAILS_ABOUT_YOU_DELETE_FAVORITE_QUOTES:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          DetailsAboutYou: {
+            ...state.fullUserInfoAbout.DetailsAboutYou,
+            FavoriteQuotes: "",
+          },
+        },
+      };
+
+    // Life events
+
+    case LIFE_EVENTS_ADD_LIFE_EVENT:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          LifeEvents: [
+            ...state.fullUserInfoAbout.LifeEvents,
+            {
+              event: action.event,
+              description: action.description,
+            },
+          ],
+        },
+      };
+
+    case LIFE_EVENTS_DELETE_LIFE_EVENT:
+      return {
+        ...state,
+        fullUserInfoAbout: {
+          ...state.fullUserInfoAbout,
+          LifeEvents: [
+            ...state.fullUserInfoAbout.LifeEvents.slice(0, action.index).concat(
+              [...state.fullUserInfoAbout.LifeEvents].slice(
+                action.index + 1,
+                [...state.fullUserInfoAbout.LifeEvents].length
+              )
+            ),
+          ],
+        },
+      };
+
     default:
       return state;
   }
@@ -651,6 +907,13 @@ export const setFullUserInfoAbout = (info) => {
   return {
     type: SET_FULL_USER_INFO_ABOUT,
     info,
+  };
+};
+
+export const toggleFetchFullUserInfoAbout = (boolean) => {
+  return {
+    type: TOGGLE_FETCH_FULL_USER_INFO_ABOUT,
+    boolean,
   };
 };
 
@@ -841,7 +1104,7 @@ export const contactAndBasicInfoDeleteSocialLink = (index) => {
 export const contactAndBasicInfoAddGender = (gender) => {
   return {
     type: CONTACT_AND_BASIC_INFO_ADD_GENDER,
-    gender
+    gender,
   };
 };
 
@@ -856,7 +1119,7 @@ export const contactAndBasicInfoDeleteGender = () => {
 export const contactAndBasicInfoAddLanguage = (language) => {
   return {
     type: CONTACT_AND_BASIC_INFO_ADD_LANGUAGE,
-    language
+    language,
   };
 };
 
@@ -871,7 +1134,7 @@ export const contactAndBasicInfoDeleteLanguage = () => {
 export const contactAndBasicInfoAddInterestedMale = (male) => {
   return {
     type: CONTACT_AND_BASIC_INFO_ADD_INTERESTED_MALE,
-    male
+    male,
   };
 };
 
@@ -886,7 +1149,7 @@ export const contactAndBasicInfoDeleteInterestedMale = () => {
 export const contactAndBasicInfoAddBirthday = (data) => {
   return {
     type: CONTACT_AND_BASIC_INFO_ADD_BIRTHDAY,
-    data
+    data,
   };
 };
 
@@ -901,7 +1164,7 @@ export const contactAndBasicInfoDeleteBirthday = () => {
 export const contactAndBasicInfoAddReligionViews = (views) => {
   return {
     type: CONTACT_AND_BASIC_INFO_ADD_RELIGION_VIEWS,
-    views
+    views,
   };
 };
 
@@ -916,13 +1179,147 @@ export const contactAndBasicInfoDeleteReligionViews = () => {
 export const contactAndBasicInfoAddPoliticalViews = (views) => {
   return {
     type: CONTACT_AND_BASIC_INFO_ADD_POLITICAL_VIEWS,
-    views
+    views,
   };
 };
 
 export const contactAndBasicInfoDeletePoliticalViews = () => {
   return {
     type: CONTACT_AND_BASIC_INFO_DELETE_POLITICAL_VIEWS,
+  };
+};
+
+// Family members
+
+export const familyAndRelationshipsAddFamilyMember = (
+  name,
+  sername,
+  status
+) => {
+  return {
+    type: FAMILY_AND_RELATIONSHIPS_ADD_FAMILY_MEMBER,
+    name,
+    sername,
+    status,
+  };
+};
+
+export const familyAndRelationshipsDeleteFamilyMember = (index) => {
+  return {
+    type: FAMILY_AND_RELATIONSHIPS_DELETE_FAMILY_MEMBER,
+    index,
+  };
+};
+
+// Details about you
+
+export const detailsAboutYouAddDetails = (info) => {
+  return {
+    type: DETAILS_ABOUT_YOU_ADD_DETAILS_ABOUT_YOU,
+    info,
+  };
+};
+
+export const detailsAboutYouDeleteDetails = () => {
+  return {
+    type: DETAILS_ABOUT_YOU_DELETE_DETAILS_ABOUT_YOU,
+  };
+};
+
+// Name pronunciations
+
+export const detailsAboutYouAddNamePronunciations = (pronunciation) => {
+  return {
+    type: DETAILS_ABOUT_YOU_ADD_NAME_PRONUNCIATIONS,
+    pronunciation,
+  };
+};
+
+export const detailsAboutYouDeleteNamePronunciations = (index) => {
+  return {
+    type: DETAILS_ABOUT_YOU_DELETE_NAME_PRONUNCIATIONS,
+    index,
+  };
+};
+
+// Other names
+
+export const detailsAboutYouAddOtherName = (nickname) => {
+  return {
+    type: DETAILS_ABOUT_YOU_ADD_OTHER_NAME,
+    nickname,
+  };
+};
+
+export const detailsAboutYouDeleteOtherName = (index) => {
+  return {
+    type: DETAILS_ABOUT_YOU_DELETE_OTHER_NAME,
+    index,
+  };
+};
+
+// Favorite quotes
+
+export const detailsAboutYouAddFavoriteQuotes = (quotes) => {
+  return {
+    type: DETAILS_ABOUT_YOU_ADD_FAVORITE_QUOTES,
+    quotes,
+  };
+};
+
+export const detailsAboutYouDeleteFavoriteQuotes = () => {
+  return {
+    type: DETAILS_ABOUT_YOU_DELETE_FAVORITE_QUOTES,
+  };
+};
+
+// Life events
+
+export const lifeEventsAddLifeEvent = (event, description) => {
+  return {
+    type: LIFE_EVENTS_ADD_LIFE_EVENT,
+    event,
+    description,
+  };
+};
+
+export const lifeEventsDeleteLifeEvent = (index) => {
+  return {
+    type: LIFE_EVENTS_DELETE_LIFE_EVENT,
+    index,
+  };
+};
+
+//-------ABOUT INFO REDCUERS THUNK ASYNC
+
+export const changeFieldFirebase = (fieldValues, fieldReducer, email, func) => {
+  return async (dispatch, getState) => {
+    await fieldReducer(...fieldValues);
+    dispatch(toggleFetchFullUserInfoAbout(true));
+    const updated_state = getState().aboutComponentReducer.fullUserInfoAbout;
+
+    db.collection("users_database")
+      .get()
+      .then((usersDatabase) => {
+        usersDatabase.forEach((userDatabase) => {
+          if (userDatabase.data().Email === email) {
+            db.collection("users_database")
+              .doc(userDatabase.id)
+              .update({
+                FullInfo: updated_state,
+              })
+              .then(() => {
+                console.log("Upd");
+                dispatch(toggleFetchFullUserInfoAbout(false));
+                func();
+              })
+              .catch(() => {
+                console.log("Error");
+                dispatch(toggleFetchFullUserInfoAbout(false));
+              });
+          }
+        });
+      });
   };
 };
 
