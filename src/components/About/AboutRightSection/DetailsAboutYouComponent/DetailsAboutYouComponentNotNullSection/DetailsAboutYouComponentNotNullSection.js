@@ -3,7 +3,7 @@ import "./DetailsAboutYouComponentNotNullSection.css";
 
 import PublicIcon from "@material-ui/icons/Public";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 const DetailsAboutYouComponentNotNullSection = (props) => {
@@ -23,7 +23,7 @@ const DetailsAboutYouComponentNotNullSection = (props) => {
       <div className={"DetailsAboutYouComponentNotNullSection"}>
         <props.Icon />
         <div className={"DetailsAboutYouComponentNotNullSection__description"}>
-          <span>{props.title}</span>
+          <span>{props.mainTitle}</span>
         </div>
         <div className={"DetailsAboutYouComponentNotNullSection__publicIcon"}>
           <PublicIcon />
@@ -50,18 +50,31 @@ const DetailsAboutYouComponentNotNullSection = (props) => {
           className={
             "DetailsAboutYouComponentNotNullSection__editWindowSection"
           }
+          onClick={() => {
+            props.toggleActiveComponent(true);
+            toggleEditWindow(false);
+          }}
         >
-          <EditIcon />
-          <span>Edit {props.editTitle}</span>
+          <AddIcon />
+          <span>{props.editTitle}</span>
         </div>
 
         <div
           className={
             "DetailsAboutYouComponentNotNullSection__editWindowSection"
           }
+          onClick={() => {
+            props.addReducer(
+              [props.index],
+              props.deleteReducer,
+              props.activeAccountEmail,
+              props.toggleActiveComponent(false)
+            );
+            toggleEditWindow(false);
+          }}
         >
           <DeleteOutlineOutlinedIcon />
-          <span>Delete {props.editTitle}</span>
+          <span>{props.deleteTitle}</span>
         </div>
       </div>
     </>
